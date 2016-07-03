@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.pqh.dao.VstorageDao">
+    <insert id="insertVstorage" parameterType="org.pqh.entity.Vstorage">
+        INSERT INTO Vstorage (code,id)VALUES(#{code},#{id})
+    </insert>
+
+    <update id="updateVstorage" parameterType="org.pqh.entity.Vstorage">
+        UPDATE vstorage set code=#{code} where id=#{id}
+    </update>
+
+    <insert id="insertData" parameterType="org.pqh.entity.Data">
+        INSERT INTO Data (dp_done_mp4, letv_vu, dp_done_flv,aid, type, vp, author, cover, title, page, dispatch, vid, backup_vid,cache, storage_server, cid, dp_done, duration, mid, dp_done_hdmp4, letv_vid, storage,upload,upload_meta,files,dispatch_servers,letv_addr,subtitle)VALUES
+        (#{dp_done_mp4},#{letv_vu},#{dp_done_flv},#{aid},#{type},#{vp},#{author},#{cover},#{title},#{page},#{dispatch},#{vid},#{backup_vid},#{cache},#{storage_server},#{cid},#{dp_done},#{duration},#{mid},#{dp_done_hdmp4},#{letv_vid},#{storage},#{cid},#{cid},#{cid},#{cid},#{letv_addr},#{subtitle})
+   </insert>
+
+    <update id="updateData" parameterType="org.pqh.entity.Data">
+        UPDATE data SET dp_done_mp4=#{dp_done_mp4},letv_vu=#{letv_vu},dp_done_flv=#{dp_done_flv},aid=#{aid},type=#{type},vp=#{vp},author=#{author},cover=#{cover},title=#{title},page=#{page},dispatch=#{dispatch},vid=#{vid}, backup_vid=#{backup_vid},cache=#{cache}, storage_server=#{storage_server}, dp_done=#{dp_done}, duration=#{duration}, mid=#{mid}, dp_done_hdmp4=#{dp_done_hdmp4}, letv_vid=#{letv_vid}, storage=#{storage},upload=#{cid},upload_meta=#{cid},files=#{cid},dispatch_servers=#{cid},letv_addr=#{letv_addr},subtitle=#{subtitle} WHERE cid=#{cid}
+    </update>
+
+    <insert id="insertFiles" parameterType="org.pqh.entity.Files">
+        INSERT INTO Files (filesize, md5, `order`, path, length, storage_state, format,cid,id)VALUES
+        (#{filesize},#{md5},#{order},#{path},#{length},#{storage_state},#{format},#{cid},#{id})
+    </insert>
+    
+    <update id="updateFiles" parameterType="org.pqh.entity.Files">
+        UPDATE files SET filesize=#{filesize}, md5=#{md5}, `order`=#{order}, path=#{path}, length=#{length}, storage_state=#{storage_state}, format=#{format} WHERE cid=#{cid} AND id=#{id}
+    </update>
+
+    <insert id="insertDispatch_servers" parameterType="org.pqh.entity.Dispatch_servers">
+        INSERT INTO Dispatch_servers (cid,dms_id,description,server,format,is_active,`create`,create_at,done,done_at,state)VALUES(#{cid},#{dms_id},#{description},#{server},#{format},#{is_active},#{create},#{create_at},#{done},#{done_at},#{state})
+    </insert>
+
+    <insert id="insertUpload" parameterType="org.pqh.entity.Upload">
+        INSERT INTO Upload (cid,filename,timestamp,create_at,uploaded,uploaded_at,`convert`,convert_at,done,done_at,ip,encode_server,state,error_reason,node_server)VALUES(#{cid},#{filename},#{timestamp},#{create_at},#{uploaded},#{uploaded_at},#{convert},#{convert_at},#{done},#{done_at},#{ip},#{encode_server},#{state},#{error_reason},#{cid})
+    </insert>
+
+    <insert id="insertNode_server" parameterType="org.pqh.entity.Node_server">
+        INSERT INTO Node_server (cid,node_id,server_id,sid,ip,perferred_zones,domain,allow_upload)VALUES(#{cid},#{node_id},#{server_id},#{sid},#{ip},#{perferred_zones},#{domain},#{allow_upload})
+    </insert>
+
+    <insert id="insertUpload_meta" parameterType="org.pqh.entity.Upload_meta">
+        INSERT INTO Upload_meta (cid,storage_server,storage_state,format,vp,`create`,create_at,done,done_at)VALUES(#{cid},#{storage_server},#{storage_state},#{format},#{vp},#{create},#{create_at},#{done},#{done_at})
+    </insert>
+</mapper>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="org.pqh.dao.BiliDao">
+	<select id="findByCid" parameterType="int" resultType="org.pqh.entity.Bili">
+		select * from AID where CID=#{cid}
+	</select>
+
+	<select id="findCids" resultType="org.pqh.entity.Bili">
+		select * from AID where CID BETWEEN #{startcid} AND #{overcid} ORDER BY CID
+	</select>
+	
+	<select id="findByAid" parameterType="int" resultType="org.pqh.entity.Bili">
+		select * from AID where AID=#{aid}
+	</select>
+	
+	<select id="findAids" parameterType="int" resultType="org.pqh.entity.Bili">
+		SELECT * FROM aid WHERE aid>#{aid} ORDER BY aid ASC LIMIT 20
+	</select>
+	
+	<select id="getAid" parameterType="int" resultType="int">
+		select bilibili from g where id=#{id}
+	</select>
+	
+	<select id="getLimit" parameterType="int" resultType="int">
+		SELECT aid from (SELECT * FROM aid WHERE aid>#{aid} ORDER BY aid ASC LIMIT 20) c ORDER BY aid DESC LIMIT 0,1;
+	</select>
+	<update id="setAid" parameterType="int" >
+		update g set bilibili=#{aid} where id=#{id}
+	</update>
+	
+	<insert id="insertBili" parameterType="org.pqh.entity.Bili">
+		insert into AID values(#{aid},#{tid},#{typename},#{arctype},#{play},#{review},#{video_review},#{favorites},#{title},#{allow_bp},#{allow_feed},#{allow_download},#{description},#{tag},#{pic},#{author},#{mid},#{face},#{pages},#{instant_server},#{created},#{created_at},#{credit},#{coins},#{spid},#{src},#{cid},#{partname},#{offsite},#{typename2},#{partid})
+	</insert>
+
+	<update id="updateBili" parameterType="org.pqh.entity.Bili">
+		UPDATE aid SET tid=#{tid},typename=#{typename},arctype=#{#{arctype},}play=#{play},review=#{review},video_review=#{video_review},favorites=#{favorites},title=#{title},allow_bp=#{allow_bp},allow_feed=#{allow_feed},allow_download=#{allow_download},description=#{description},tag=#{tag},pic=#{pic},author=#{author},mid=#{mid},face=#{face},pages=#{pages},instant_server=#{instant_server},created=#{created},created_at=#{created_at},credit=#{credit},coins=#{coins},spid=#{spid},src=#{src},cid=#{cid},partname=#{partname},offsite=#{offsite} WHERE aid=#{aid}
+	</update>
+
+	<insert id="insertCid" parameterType="org.pqh.entity.Bili">
+		insert into AIDCID (partid,partname,aid,cid) values(#{partid},#{partname},#{aid},#{cid})
+	</insert>
+
+	<update id="updateCid" parameterType="org.pqh.entity.Bili">
+		UPDATE AIDCID set partid=#{partid},partname=#{partname},aid=#{aid} WHERE cid=#{cid}
+	</update>
+	
+	<insert id="setLimit" parameterType="int">
+		insert into g (`limit`) values (#{aid})
+	</insert>
+	
+	<select id="count" parameterType="int" resultType="int">
+		SELECT count(*) from (SELECT * FROM aid WHERE aid>#{aid} ORDER BY aid ASC LIMIT 20) c
+	</select>
+	
+	<select id="findVCC" resultType="org.pqh.entity.Bili">
+		SELECT a.aid,a.title,b.partid,b.partname,b.cid from aid a,aidcid b where a.aid=b.aid AND a.aid BETWEEN #{startaid} AND #{overaid} ORDER BY aid,partid
+	</select>
+
+
+
+	<insert id="insertC" parameterType="map">
+		INSERT INTO cid VALUES (#{cid},#{maxlimit},#{chatid},#{server},#{vtype},#{oriurl},#{aid},#{typeid},#{pid},#{click},#{favourites},#{credits},#{coins},#{fw_click},#{duration},#{arctype},#{danmu},#{bottom},#{sinapi},#{acceptguest},#{acceptaccel})
+	</insert>
+
+	<update id="updateC" parameterType="map">
+		UPDATE cid SET maxlimit=#{maxlimit},chatid=#{chatid},server=#{server},vtype=#{vtype},oriurl=#{oriurl},aid=#{aid},typeid=#{typeid},pid=#{pid},click=#{click},favourites=#{favourites},credits=#{credits},coins=#{coins},fw_click=#{fw_click},duration=#{duration},arctype=#{arctype},danmu=#{danmu},bottom=#{bottom},sinapi=#{sinapi},acceptguest=#{acceptguest},acceptaccel=#{acceptaccel} WHERE cid=#{cid}
+	</update>
+
+	<select id="selectAvCount" resultType="org.pqh.entity.AvCount">
+		SELECT * FROM avcount
+	</select>
+
+	<insert id="insertAvPlay" parameterType="org.pqh.entity.AvPlay">
+		INSERT INTO avplay VALUES (#{title},#{play},#{timestamp});
+	</insert>
+
+	<update id="updateAvPlay" parameterType="org.pqh.entity.AvPlay">
+		UPDATE avplay SET play=#{play},"timestamp"=#{timestamp} where title=#{title}
+	</update>
+
+	<select id="selectAvPlay" resultType="org.pqh.entity.AvPlay">
+		SELECT * FROM avplay
+	</select>
+
+	<select id="getAvPlayC" resultType="int">
+		SELECT count(*) FROM avplay WHERE title='DAYS'
+	</select>
+</mapper>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+	<title></title>
+	<script type="text/javascript" src="js/echarts.min.js"></script>
+	<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var dom=document.getElementById("container");
+			var myChart=echarts.init(dom);
+			var option = null;
+			option = {
+				title: {
+					text: '正版动画播放量'
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						magicType: {show: true, type: ['line','bar']},
+						restore: {show: true},
+						saveAsImage: {show: true}
+					}
+				},
+				tooltip: {
+					trigger: 'item',
+					formatter:'动画：{a}<br/>单集平均播放量：{c}<br/>统计时间：{b}'
+				},
+				legend:{
+					data:[]
+				},
+				xAxis : [
+					{
+						type: 'category',
+						name:'统计时间',
+						nameLocation:'start',
+						nameGap:20,
+
+					}
+				],
+				yAxis : [
+					{
+						type : 'value',
+						name:'单集平均播放量                ',
+					}
+				],
+				dataZoom: [{
+					type: 'inside',
+					start: 0,
+					end: 10
+				}, {
+					start: 0,
+					end: 10
+				}],
+				series : []
+			};
+			$.get({
+				url:'findAvPlay.do',
+				dataType:'json',
+				async:false,
+				success:function(json){
+//					console.info(json);
+					var i=0;
+					for(var k in json){
+//						console.info(k+'===='+json[k]);
+						if(k!='time') {
+							var series={
+								name: k,
+								data:json[k],
+								label:{
+									normal:{
+										show:true,
+										position:'top'
+									}
+								},
+								type:'bar'
+							}
+							option.legend.data.push(k);
+							option.series.push(series);
+						}else {
+							option.xAxis[0].data = json.time;
+						}
+						i++;
+					}
+				},
+				error:function(){
+					alert('请求失败');
+				}
+			});
+			myChart.on('magictypechanged',function(params){
+				if(params.currentType=='bar'){
+					option.tooltip.trigger='item';
+					option.tooltip.formatter='动画：{a}<br/>单集平均播放量：{c}<br/>统计时间：{b}';
+				}else{
+					option.tooltip.trigger='axis';
+					option.tooltip.formatter=function(params){
+						console.info(params);
+						var s=params[0].name;
+						console.info(params);
+						for(var i=0;i<params.length;i++){
+							s+='<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params[i].color+'"></span>'
+									+'动画：'+params[i].seriesName+'<br>&nbsp;&nbsp;&nbsp;单集平均播放量：'+params[i].value
+						}
+						return s;
+					}
+				}
+				for(var i=0;i<option.series.length;i++){
+					if(params.currentType=='bar'){
+						option.series[i].type='bar';
+					}
+					else{
+						option.series[i].type='line';
+					}
+				}
+				console.info(option);
+				myChart.setOption(option);
+			});
+//			console.log(option);
+			myChart.setOption(option);
+		});
+
+	</script>
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+</body>
+</html>
