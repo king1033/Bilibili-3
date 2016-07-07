@@ -17,7 +17,6 @@
 					show: true,
 					feature: {
 						magicType: {show: true, type: ['line','bar']},
-						restore: {show: true},
 						saveAsImage: {show: true}
 					}
 				},
@@ -26,7 +25,9 @@
 					formatter:'动画：{a}<br/>单集平均播放量：{c}<br/>统计时间：{b}'
 				},
 				legend:{
-					data:[]
+					data:[],
+					left:150,
+					selected:{}
 				},
 				xAxis : [
 					{
@@ -34,7 +35,7 @@
 						name:'统计时间',
 						nameLocation:'start',
 						nameGap:20,
-
+						data:[]
 					}
 				],
 				yAxis : [
@@ -43,13 +44,9 @@
 						name:'单集平均播放量                ',
 					}
 				],
-				dataZoom: [{
-					type: 'inside',
+				dataZoom: [ {
 					start: 0,
-					end: 10
-				}, {
-					start: 0,
-					end: 10
+					end: 1
 				}],
 				series : []
 			};
@@ -58,11 +55,20 @@
 				dataType:'json',
 				async:false,
 				success:function(json){
-//					console.info(json);
-					var i=0;
-					for(var k in json){
-//						console.info(k+'===='+json[k]);
-						if(k!='time') {
+					console.info(json);
+					var size=json.DAYS.length;
+					for(var i=0;i<json.Rankings.length;i++) {
+								option.xAxis[0].data.push(json.Rankings[i].formatTime);
+							}
+					option.titles=json.Rankings[size-1].value.split(',');
+					for(var i=0;i<option.titles.length;i++){
+						var k=option.titles[i];
+						var c=size-json[k].length;
+							if(c>0){
+								for(var j=0;j<c;j++){
+									json[k].unshift(undefined);
+								}
+							}
 							var series={
 								name: k,
 								data:json[k],
@@ -74,12 +80,9 @@
 								},
 								type:'bar'
 							}
+						    option.html+='<option value='+i+'>前'+(i+1)+'名</option>'
 							option.legend.data.push(k);
-							option.series.push(series);
-						}else {
-							option.xAxis[0].data = json.time;
-						}
-						i++;
+						    option.series.push(series);
 					}
 				},
 				error:function(){
@@ -93,12 +96,11 @@
 				}else{
 					option.tooltip.trigger='axis';
 					option.tooltip.formatter=function(params){
-						console.info(params);
-						var s=params[0].name;
-						console.info(params);
+//						console.info(params);
+						var s='统计时间：'+params[0].name;
 						for(var i=0;i<params.length;i++){
 							s+='<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params[i].color+'"></span>'
-									+'动画：'+params[i].seriesName+'<br>&nbsp;&nbsp;&nbsp;单集平均播放量：'+params[i].value
+									+'动画：'+params[i].seriesName+'&nbsp;&nbsp;&nbsp;单集平均播放量：'+(params[i].value==undefined?'':params[i].value);
 						}
 						return s;
 					}
@@ -111,16 +113,44 @@
 						option.series[i].type='line';
 					}
 				}
-				console.info(option);
+//				console.info(option);
 				myChart.setOption(option);
 			});
-//			console.log(option);
+			console.log(option);
+
+			$('#container:eq(0)').append('<button value="点击出奇迹" style="position: absolute;right: 10px;top: 100px;width: 50px;height: 20px"></button>');
+			$('#container:eq(0)').append('<select value="点击出奇迹" style="position: absolute;right: 10px;top: 130px;width: 80px;height: 20px" hidden>' +
+					option.html +
+					'</select>');
+			$('button').mouseover(function(){
+				$('#container select').show();
+			});
+
+			$('#container select').mouseout(function(){
+				$('#container select').hide();
+			})
+
+			$('button').click(function(){
+				for(var i=0;i<option.titles.length;i++){
+					if(i<parseInt($('#container select').val())+1) {
+						option.legend.selected[option.titles[i]] = true;
+					}else{
+						option.legend.selected[option.titles[i]] = false;
+					}
+				}
+				myChart.setOption(option);
+			});
+
 			myChart.setOption(option);
+
+
 		});
 
 	</script>
 </head>
 <body style="height: 100%; margin: 0">
-<div id="container" style="height: 100%"></div>
+<div id="container" style="height: 100%">
+</div>
+
 </body>
 </html>

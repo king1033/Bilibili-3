@@ -8,14 +8,14 @@ import net.sf.json.JSONObject;
 import net.sf.json.util.JSONUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.apache.log4j.net.SyslogAppender;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.runner.RunWith;
 import org.pqh.dao.BiliDao;
 import org.pqh.dao.VstorageDao;
-import org.pqh.entity.Data;
-import org.pqh.entity.Vstorage;
+import org.pqh.entity.*;
 import org.pqh.service.AvCountService;
 import org.pqh.service.InsertService;
 import org.pqh.service.InsertServiceImpl;
@@ -28,15 +28,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -64,6 +62,11 @@ public class Test {
 //        JSONObject jsonObject=JSONObject.fromObject(BiliUtil.jsoupGet("http://live.bilibili.com/area/home"));
 //        String date=getInfo(getInfo("凉宫春日的忧郁2009"));
 //        test.saveDataBase();
+        System.out.println((int)(Math.random()*5));
+    }
+    @org.junit.Test
+    public void testMethod() {
+       biliDao.updateParam(new Param("Avplay","true"));
     }
 
     public static String getInfo(Document document){

@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.pqh.entity.AvCount;
 import org.pqh.entity.AvPlay;
 import org.pqh.entity.Bili;
+import org.pqh.entity.Ranking;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,8 +33,14 @@ public interface BiliDao {
 	//查询所有日期当天视频投稿量
 	List<AvCount> selectAvCount();
 
-	void insertAvPlay(AvPlay avPlay);
-	void updateAvPlay(AvPlay avPlay);
-    List<AvPlay> selectAvPlay();
-	Integer getAvPlayC();
+	void insertAvPlay(List list);
+	List<AvPlay> selectAvPlay();
+
+	List<Ranking> selectRanking();
+
+	void insertParam(org.pqh.entity.Param param);
+
+	org.pqh.entity.Param selectParam(String key);
+
+	void updateParam(org.pqh.entity.Param param);
 }

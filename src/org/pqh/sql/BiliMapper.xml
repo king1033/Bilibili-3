@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
- "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ "http://ibatis.apache.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.pqh.dao.BiliDao">
 	<select id="findByCid" parameterType="int" resultType="org.pqh.entity.Bili">
 		select * from AID where CID=#{cid}
@@ -71,19 +71,27 @@
 		SELECT * FROM avcount
 	</select>
 
-	<insert id="insertAvPlay" parameterType="org.pqh.entity.AvPlay">
-		INSERT INTO avplay VALUES (#{title},#{play},#{timestamp});
+	<insert id="insertAvPlay" parameterType="java.util.List">
+		INSERT INTO avplay VALUES<foreach collection="list" item="item" index="index" separator=",">(#{item.title},#{item.play},#{item.timestamp},#{item.ranking})</foreach>
 	</insert>
-
-	<update id="updateAvPlay" parameterType="org.pqh.entity.AvPlay">
-		UPDATE avplay SET play=#{play},"timestamp"=#{timestamp} where title=#{title}
-	</update>
 
 	<select id="selectAvPlay" resultType="org.pqh.entity.AvPlay">
 		SELECT * FROM avplay
 	</select>
 
-	<select id="getAvPlayC" resultType="int">
-		SELECT count(*) FROM avplay WHERE title='DAYS'
+	<select id="selectRanking" resultType="org.pqh.entity.Ranking">
+		SELECT timestamp AS `key`,GROUP_CONCAT(title ORDER BY ranking) AS value FROM avplay GROUP BY timestamp ORDER BY timestamp
+	</select>
+
+	<insert id="insertParam">
+		insert into param values(#{key},#{value})
+	</insert>
+
+	<update id="updateParam" parameterType="String">
+		update param set value=#{value} where `key`=#{key}
+	</update>
+
+	<select id="selectParam" parameterType="String" resultType="org.pqh.entity.Param">
+		select * from param where `key`=#{key}
 	</select>
 </mapper>

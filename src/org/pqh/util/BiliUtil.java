@@ -23,7 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BiliUtil {
-	static String cookie="";
+	static String cookie=getProperties("BILICOOKIE");
 	static boolean flag=false;
 	public static final String AIDLIST[]=new String[]{"tid","typename","play","review","video_review","favorites","title","allow_bp","allow_feed","allow_download","description","tag","pic","author","mid","face","pages","instant_server","created","created_at","credit","coins","spid","src","cid","partname","offsite"};
 	public static final  String CIDLIST[]=new String[]{"maxlimit","chatid","server","vtype","oriurl","aid","typeid","pid","click","favourites","credits","coins","fw_click","duration","arctype","danmu","bottom","sinapi","acceptguest","acceptaccel"};

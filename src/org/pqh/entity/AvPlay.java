@@ -1,14 +1,31 @@
 package org.pqh.entity;
 
 import java.sql.Timestamp;
+import java.util.Comparator;
 
 /**
  * Created by 10295 on 2016/7/3.
  */
-public class AvPlay {
+public class AvPlay{
     private String title;
     private Integer play;
     private Timestamp timestamp;
+    private Integer ranking;
+
+    public AvPlay(String title, Integer play, Timestamp timestamp, Integer ranking) {
+        this.title = title;
+        this.play = play;
+        this.timestamp = timestamp;
+        this.ranking = ranking;
+    }
+
+    public Integer getRanking() {
+        return ranking;
+    }
+
+    public void setRanking(Integer ranking) {
+        this.ranking = ranking;
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -46,6 +63,7 @@ public class AvPlay {
                 "title='" + title + '\'' +
                 ", play=" + play +
                 ", timestamp=" + timestamp +
+                ", ranking=" + ranking +
                 '}';
     }
 }
