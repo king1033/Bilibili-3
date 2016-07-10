@@ -87,7 +87,7 @@
 			<bean class="org.pqh.service.AvCountService" />
 		</property>
 		<property name="targetMethod" value="setPlays" />
-		<property name="concurrent" value="false" /><!-- 作业不并发调度 -->
+		<property name="concurrent" value="true" /><!-- 作业并发调度 -->
 	</bean>
 
 	<bean id="cronTrigger"

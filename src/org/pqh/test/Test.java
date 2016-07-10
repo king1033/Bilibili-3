@@ -8,7 +8,7 @@ import net.sf.json.JSONObject;
 import net.sf.json.util.JSONUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.apache.log4j.net.SyslogAppender;
+import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -20,7 +20,9 @@ import org.pqh.service.AvCountService;
 import org.pqh.service.InsertService;
 import org.pqh.service.InsertServiceImpl;
 import org.pqh.util.BiliUtil;
+import org.pqh.util.FindResourcesUtil;
 import org.pqh.util.TestSlf4j;
+import org.pqh.util.TsdmUtil;
 import org.springframework.core.task.TaskRejectedException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -28,13 +30,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -62,11 +64,16 @@ public class Test {
 //        JSONObject jsonObject=JSONObject.fromObject(BiliUtil.jsoupGet("http://live.bilibili.com/area/home"));
 //        String date=getInfo(getInfo("凉宫春日的忧郁2009"));
 //        test.saveDataBase();
-        System.out.println((int)(Math.random()*5));
+//        Map<String,List<BtAcg>> map=FindResourcesUtil.findBy_Btacg("伊莉雅");
+//        List list=map.get("完整动画");
+//        Collections.sort(list,new ComparatorAvPlay("size"));
+//        String filename=FindResourcesUtil.switchFileName(btAcg.getResourceName());
+//        FindResourcesUtil.downLoadTorrent("http://www.kuaipic.com/uploads/userup/231761/ef13541d77e923aeb125.jpg", FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath());
     }
+
     @org.junit.Test
     public void testMethod() {
-       biliDao.updateParam(new Param("Avplay","true"));
+        avCountService.setPlays();
     }
 
     public static String getInfo(Document document){
@@ -84,14 +91,10 @@ public class Test {
         for(Element element:elements){
             if(element.attr("title").length()!=0&&element.attr("title").contains("动画")){
                 log.info(element.attr("title")+"跳转到动画条目http://baike.baidu.com"+element.attr("href"));
-                return getInfo(BiliUtil.inputUrl("http://baike.baidu.com"+element.attr("href")));
+              return getInfo(BiliUtil.jsoupGet("http://baike.baidu.com"+element.attr("href"), Document.class,BiliUtil.GET));
             }
         }
         return "";
-    }
-
-    public static Document getInfo(String title){
-        return BiliUtil.inputUrl("http://baike.baidu.com/search/word?word="+title);
     }
 
     /**
@@ -512,36 +515,45 @@ public class Test {
         }
         return  null;
     }
+
+    public int restoreCid(int id){
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+        }
+        threadPoolTaskExecutor.getThreadPoolExecutor().getQueue().clear();
+        InsertServiceImpl.count=0;
+        return biliDao.getAid(id);
+    }
+
     @org.junit.Test
     public void testVstorage() {
+        int speed=500;
         for (int cid = biliDao.getAid(3); ;cid++) {
+            if(InsertServiceImpl.count>=10){
+                cid=restoreCid(3);
+                speed=500;
+            }else{
+                speed=100;
+            }
             Task_1 task_1=new Task_1(cid,insertService);
-            excute(threadPoolTaskExecutor,task_1,10);
+            excute(threadPoolTaskExecutor,task_1,speed);
         }
     }
 
     @org.junit.Test
     public void testThread(){
-        int cid=biliDao.getAid(2);
         int speed=500;
-        while(true) {
+        for(int cid=biliDao.getAid(2);;cid++){
             if(InsertServiceImpl.count>=10){
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
-                }
-                cid=biliDao.getAid(2);
-                threadPoolTaskExecutor.getThreadPoolExecutor().getQueue().clear();
-                InsertServiceImpl.count=0;
+                cid=restoreCid(2);
                 speed=500;
             }else{
                 speed=100;
             }
-
             Task task=new Task(cid,insertService);
             excute(threadPoolTaskExecutor,task,speed);
-            cid++;
         }
 
     }

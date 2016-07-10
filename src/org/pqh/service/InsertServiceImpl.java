@@ -2,6 +2,8 @@ package org.pqh.service;
 
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+import org.jsoup.Connection;
+import org.jsoup.nodes.Document;
 import org.pqh.dao.BiliDao;
 import org.pqh.dao.VstorageDao;
 import org.pqh.entity.Bili;
@@ -13,6 +15,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,36 +89,37 @@ public class InsertServiceImpl implements InsertService {
 					map.put(c.getName(), c.newInstance());
 				}
 			} catch (ClassNotFoundException e) {
-				log.error("错误类型：" + e.getClass() + "\t错误信息" + e.getCause().getMessage());
+				TestSlf4j.outputLog(e,log);
 			} catch (InstantiationException e) {
-				log.error("错误类型：" + e.getClass() + "\t错误信息" + e.getCause().getMessage());
+				TestSlf4j.outputLog(e,log);
 			} catch (IllegalAccessException e) {
-				log.error("错误类型：" + e.getClass() + "\t错误信息" + e.getCause().getMessage());
+				TestSlf4j.outputLog(e,log);
 			}
 		}
 		String classname = null;
 		try {
 			classname = Class.forName(classnames[0]).getName();
 		} catch (ClassNotFoundException e) {
-			log.error("错误类型：" + e.getClass() + "\t错误信息" + e.getCause().getMessage());
+			TestSlf4j.outputLog(e,log);
 		}
 
-		System.out.println("开始获取cid:" + cid + "信息");
 		String url = Test.url + cid;
-		JSONObject jsonObject = JSONObject.fromObject(BiliUtil.jsoupGet(url));
+		JSONObject jsonObject = BiliUtil.jsoupGet(url,JSONObject.class,BiliUtil.GET);
 		if(jsonObject.get("list")!=null){
+			count++;
 			return;
 		}
 
 		map = test.getMap(jsonObject, map, classname, false, 0, cid);
 		test.setData(vstorageDao, map);
 		biliDao.setAid(cid, 3);
-		System.out.println("成功获取" + cid + "信息");
+
 	}
 
 	public  void insertCid(int cid){
 		String url = "http://interface.bilibili.com/player?id=cid:"+cid;
-		String data= BiliUtil.inputUrl(url).toString().trim();
+		String data= null;
+		data = BiliUtil.jsoupGet(url, Document.class,BiliUtil.GET).toString().trim();
 		Map<String,Object> map=BiliUtil.getdata(BiliUtil.CIDLIST,data);
 		map.put("cid",cid);
 		String aid =map.get("aid").toString();
@@ -144,7 +148,7 @@ public class InsertServiceImpl implements InsertService {
 				}
 			}
 		}
-		System.out.println(map);
+
 		try {
 			biliDao.insertC(map);
 		}catch (DuplicateKeyException e){

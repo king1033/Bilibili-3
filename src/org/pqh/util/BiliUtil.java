@@ -1,5 +1,7 @@
 package org.pqh.util;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import net.sf.json.util.JSONUtils;
 import org.apache.log4j.Logger;
@@ -23,7 +25,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BiliUtil {
-	static String cookie=getProperties("BILICOOKIE");
+	public static String cookie=getProperties("BILICOOKIE");
+	static String userAgent=getProperties("User-Agent");
+	public static Map map=new HashMap();
+	public static final String GET="get";
+	public static final String POST="post";
 	static boolean flag=false;
 	public static final String AIDLIST[]=new String[]{"tid","typename","play","review","video_review","favorites","title","allow_bp","allow_feed","allow_download","description","tag","pic","author","mid","face","pages","instant_server","created","created_at","credit","coins","spid","src","cid","partname","offsite"};
 	public static final  String CIDLIST[]=new String[]{"maxlimit","chatid","server","vtype","oriurl","aid","typeid","pid","click","favourites","credits","coins","fw_click","duration","arctype","danmu","bottom","sinapi","acceptguest","acceptaccel"};
@@ -46,19 +52,19 @@ public class BiliUtil {
 				}
 				else if(S.equals("--")||S.length()==0){
 					S="-1";
-					}
-				
 				}
+
+			}
 			else if(a!=-1)
 				S=data.substring(a+bq.length()+2,b).trim();
 			else{
-				S="-1";	
+				S="-1";
 			}
 
 			map.put(bq, S);
 		}
 		return map;
-		
+
 	}
 
 	public static List setElement(List<Element> elements,List list,int index){
@@ -80,7 +86,7 @@ public class BiliUtil {
 		try {
 			document = saxReader.read("http://api.bilibili.com/view?type=xml&appkey=12737ff7776f1ade&id="+aid+"&page="+page);
 		} catch (DocumentException e) {
-			e.printStackTrace();
+			TestSlf4j.outputLog(e,log);
 		}
 		List list=new ArrayList();
 		list.add(new Bili());
@@ -94,7 +100,7 @@ public class BiliUtil {
 				try {
 					Thread.sleep(3000);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					TestSlf4j.outputLog(e,log);
 				}
 				return setView(aid, page);
 			}
@@ -102,22 +108,6 @@ public class BiliUtil {
 
 		list=setElement(element.elements(),list,0);
 		return list;
-	}
-
-	public static Document inputUrl(String url){
-		System.out.println(url);
-		try {
-			Document doc =Jsoup.connect(url).header("Cookie",cookie).timeout(3000).ignoreContentType(true).get();
-			return doc;
-		}
-		catch (IOException e) {
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
-			return inputUrl(url);
-		}
 	}
 
 	public static String getBq(String div){
@@ -167,19 +157,38 @@ public class BiliUtil {
 		return false;
 	}
 
-	public static String jsoupGet(String url){
-		Connection.Response connection=null;
+
+	public static <T>T jsoupGet(String url,Class<T> tClass,String method){
+		Connection connection=null;
+		System.out.println("连接URL:"+url);
 		try {
-			connection = Jsoup.connect(url).header("Cookie", cookie).timeout(3000).ignoreContentType(true).execute();
-			return connection.body();
+			connection=Jsoup.connect(url).header("Cookie", cookie).userAgent(userAgent).timeout(3000).data(map).ignoreContentType(true);
+			if(tClass==Document.class){
+				if(method.equals(GET)) {
+					return (T) connection.get();
+				}else if(method.equals(POST)){
+					return (T) connection.post();
+				}else{
+					throw new RuntimeException("不支持"+method+"请求");
+				}
+			}
+			else if(tClass==String.class){
+				return (T) connection.execute().body();
+			}else if(tClass==JSONObject.class){
+				return (T) JSONObject.fromObject(connection.execute().body());
+			}else if(tClass==JSONArray.class){
+				return (T) JSONArray.fromObject(connection.execute().body());
+			}else {
+				throw new RuntimeException("返回值不支持"+tClass.getName()+"这种类型");
+			}
 		}
 		catch (IOException e) {
-            try {
-                Thread.sleep(10000);
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-            }
-            return jsoupGet(url);
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			return jsoupGet(url,tClass,method);
 		}
 
 	}
@@ -192,13 +201,13 @@ public class BiliUtil {
 			p.load(in);
 			return p.getProperty(key);
 		} catch (IOException e) {
-			e.printStackTrace();
+			TestSlf4j.outputLog(e,log);
 			return "";
 		}finally {
 			try {
 				in.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				TestSlf4j.outputLog(e,log);
 			}
 		}
 	}
@@ -207,8 +216,8 @@ public class BiliUtil {
 	 * 根据文件名，包名，以及字段名字段类型组成的map对象创建一个类文件
 	 * @param name 文件名
 	 * @param $package 包名
-     * @param map 字段以及字段类型组成的键值对
-     */
+	 * @param map 字段以及字段类型组成的键值对
+	 */
 	public static void createClass(String name,String $package,Map<String,String> map){
 		String path="src\\"+$package.replace(".","\\\\")+"\\";
 		path+=name+".java";
@@ -227,15 +236,15 @@ public class BiliUtil {
 			}
 			bufferedWriter.write("}");
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			TestSlf4j.outputLog(e,log);
 		} catch (IOException e) {
-			e.printStackTrace();
+			TestSlf4j.outputLog(e,log);
 		}finally {
 			if (bufferedWriter != null) {
 				try {
 					bufferedWriter.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					TestSlf4j.outputLog(e,log);
 				}
 			}
 		}
@@ -252,55 +261,55 @@ public class BiliUtil {
 		}
 		System.out.println("PRIMARY KEY (`"+primarykey+"`)\n)\n;");
 	}
-    /**
-     * 根据json对象返回字段key以及字段类型value
-     * @param jsonObject json对象
-     * @return 返回HashMap键值对
-     */
-    public static  Map<String,Map<String,String>> getFieldType(JSONObject jsonObject){
-        Map<String,Map<String,String>> map=new HashMap<String, Map<String, String>>();
-        //存放字段类型
-        Map<String,String> mapType=new HashMap<String, String>();
-        //存放数据库数据类型
-        Map<String,String> mapSql=new HashMap<String, String>();
-         for(Object key:jsonObject.keySet()){
-                String typename=null;
-                if(JSONUtils.isBoolean(jsonObject.get(key))){
-                    typename=Boolean.class.getName();
-                }else if(JSONUtils.isNumber(jsonObject.get(key))&&jsonObject.get(key).toString().contains(".")){
-                    typename =Float.class.getName();
-                }else if(JSONUtils.isNumber(jsonObject.get(key))){
-                    typename =Integer.class.getName();
-                }else if(checkDate(jsonObject.get(key).toString())){
-                    typename =Data.class.getName();
-                }else if(JSONUtils.isArray(jsonObject.get(key))){
-                    typename= List.class.getName();
-                }else if(JSONUtils.isObject(jsonObject.get(key))){
-                    typename= Object.class.getName();
-                }else{
-                    typename= String.class.getName();
-                }
-                mapType.put(key.toString(),typename.substring(typename.lastIndexOf(".")+1));
-                mapSql.put(key.toString(),Type.getValue(typename).value);
-            }
+	/**
+	 * 根据json对象返回字段key以及字段类型value
+	 * @param jsonObject json对象
+	 * @return 返回HashMap键值对
+	 */
+	public static  Map<String,Map<String,String>> getFieldType(JSONObject jsonObject){
+		Map<String,Map<String,String>> map=new HashMap<String, Map<String, String>>();
+		//存放字段类型
+		Map<String,String> mapType=new HashMap<String, String>();
+		//存放数据库数据类型
+		Map<String,String> mapSql=new HashMap<String, String>();
+		for(Object key:jsonObject.keySet()){
+			String typename=null;
+			if(JSONUtils.isBoolean(jsonObject.get(key))){
+				typename=Boolean.class.getName();
+			}else if(JSONUtils.isNumber(jsonObject.get(key))&&jsonObject.get(key).toString().contains(".")){
+				typename =Float.class.getName();
+			}else if(JSONUtils.isNumber(jsonObject.get(key))){
+				typename =Integer.class.getName();
+			}else if(checkDate(jsonObject.get(key).toString())){
+				typename =Data.class.getName();
+			}else if(JSONUtils.isArray(jsonObject.get(key))){
+				typename= List.class.getName();
+			}else if(JSONUtils.isObject(jsonObject.get(key))){
+				typename= Object.class.getName();
+			}else{
+				typename= String.class.getName();
+			}
+			mapType.put(key.toString(),typename.substring(typename.lastIndexOf(".")+1));
+			mapSql.put(key.toString(),Type.getValue(typename).value);
+		}
 
-        map.put("Type",mapType);
-        map.put("Sql",mapSql);
-        return map;
-    }
+		map.put("Type",mapType);
+		map.put("Sql",mapSql);
+		return map;
+	}
 
-    public static boolean checkDate(String date){
-        try {
-            new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
-        } catch (ParseException e) {
-            try {
-                new SimpleDateFormat("yyyy-MM-dd").parse(date);
-            } catch (ParseException e1) {
-                return false;
-            }
-        }
-        return true;
-    }
+	public static boolean checkDate(String date){
+		try {
+			new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
+		} catch (ParseException e) {
+			try {
+				new SimpleDateFormat("yyyy-MM-dd").parse(date);
+			} catch (ParseException e1) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 
 	/**
@@ -308,15 +317,15 @@ public class BiliUtil {
 	 * @param tableName 表名
 	 * @param primarykey 主键
 	 * @param jsonObject 字段
-     */
+	 */
 	public static void createSql(String tableName,String primarykey,JSONObject jsonObject){
 		StringBuffer stringBuffer=new StringBuffer("INSERT INTO "+tableName+" VALUES(");
 		StringBuffer stringBuffer1=new StringBuffer("UPDATE "+tableName+" SET ");
 		StringBuffer stringBuffer2=new StringBuffer("(");
-        for(Object key:jsonObject.keySet()){
+		for(Object key:jsonObject.keySet()){
 			stringBuffer.append("#{"+key+"},");
 			stringBuffer2.append(key+",");
-            //除了主键之外其他字段更新
+			//除了主键之外其他字段更新
 			if(!key.equals(primarykey)) {
 				stringBuffer1.append(key + "=#{" + key + "},");
 			}
@@ -325,15 +334,16 @@ public class BiliUtil {
 		stringBuffer2.replace(stringBuffer2.length()-1,stringBuffer2.length(),")");
 		stringBuffer.replace(stringBuffer.length()-1,stringBuffer.length(),")");
 		stringBuffer1.replace(stringBuffer1.length()-1,stringBuffer1.length()," WHERE "+primarykey+"=#{"+primarykey+"}");
-        stringBuffer.insert(stringBuffer.indexOf("VALUES"),stringBuffer2);
+		stringBuffer.insert(stringBuffer.indexOf("VALUES"),stringBuffer2);
 		System.out.println("添加语句：\n"+stringBuffer+"\n更新语句：\n"+stringBuffer1);
 	}
 
 	public static String matchStr(String str,String regex){
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(str);
-		if(matcher.find())
+		while (matcher.find()) {
 			return matcher.group();
+		}
 		return "";
 
 	}
@@ -342,10 +352,11 @@ public class BiliUtil {
 		for(int i=0;i<regexs.length;i++) {
 			Pattern pattern = Pattern.compile(regexs[i]);
 			Matcher matcher = pattern.matcher(str);
-			if (matcher.find())
-				return matcher.group().replaceAll(regex,"");
+			while (matcher.find()) {
+				return matcher.group().replaceAll(regex, "");
+			}
 		}
-			return "";
+		return "";
 	}
 
 

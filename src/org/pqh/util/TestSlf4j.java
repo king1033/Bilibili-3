@@ -13,4 +13,8 @@ public class TestSlf4j {
         PropertyConfigurator.configure("src\\log4j.properties");
         return Logger.getLogger(c);
     }
+
+    public static void outputLog(Exception e,Logger logger){
+        logger.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+    }
 }

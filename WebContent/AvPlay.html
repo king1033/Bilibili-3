@@ -5,10 +5,12 @@
 	<script type="text/javascript" src="js/echarts.min.js"></script>
 	<script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
 	<script type="text/javascript">
+		var option={};
+
 		$(function(){
 			var dom=document.getElementById("container");
 			var myChart=echarts.init(dom);
-			var option = null;
+
 			option = {
 				title: {
 					text: '正版动画播放量'
@@ -27,6 +29,7 @@
 				legend:{
 					data:[],
 					left:150,
+					right:100,
 					selected:{}
 				},
 				xAxis : [
@@ -44,7 +47,7 @@
 						name:'单集平均播放量                ',
 					}
 				],
-				dataZoom: [ {
+				dataZoom: [{
 					start: 0,
 					end: 1
 				}],
@@ -57,32 +60,39 @@
 				success:function(json){
 					console.info(json);
 					var size=json.DAYS.length;
-					for(var i=0;i<json.Rankings.length;i++) {
-								option.xAxis[0].data.push(json.Rankings[i].formatTime);
-							}
-					option.titles=json.Rankings[size-1].value.split(',');
+					for(var i=0;i<json.Rankings.length;i++){
+						option.xAxis[0].data.push(json.Rankings[i].formatTime);
+					}
+
+					option.titles=json.Rankings[json.Rankings.length-1].value.split(',');
+					option.Rankings=json.Rankings;
 					for(var i=0;i<option.titles.length;i++){
 						var k=option.titles[i];
 						var c=size-json[k].length;
-							if(c>0){
-								for(var j=0;j<c;j++){
-									json[k].unshift(undefined);
+						if(c>0){
+							for(var j=0;j<c;j++){
+								json[k].unshift(undefined);
+							}
+						}
+						var series={
+							name: k,
+							data:json[k],
+							label:{
+								emphasis:{
+									show:true,
+									position:'top'
 								}
-							}
-							var series={
-								name: k,
-								data:json[k],
-								label:{
-									normal:{
-										show:true,
-										position:'top'
-									}
-								},
-								type:'bar'
-							}
-						    option.html+='<option value='+i+'>前'+(i+1)+'名</option>'
-							option.legend.data.push(k);
-						    option.series.push(series);
+							},
+							type:'bar'
+						}
+						if(i==4){
+							option.html+='<option value='+i+' selected>前'+(i+1)+'名</option>'
+						}else {
+							option.html += '<option value=' + i + '>前' + (i + 1) + '名</option>'
+						}
+						option.legend.data.push(k);
+						option.series.push(series);
+
 					}
 				},
 				error:function(){
@@ -96,7 +106,7 @@
 				}else{
 					option.tooltip.trigger='axis';
 					option.tooltip.formatter=function(params){
-//						console.info(params);
+						console.info(params);
 						var s='统计时间：'+params[0].name;
 						for(var i=0;i<params.length;i++){
 							s+='<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params[i].color+'"></span>'
@@ -116,18 +126,25 @@
 //				console.info(option);
 				myChart.setOption(option);
 			});
+
+			myChart.on('timelinechanged',function(params){
+				console.info(params);
+			});
+
 			console.log(option);
 
-			$('#container:eq(0)').append('<button value="点击出奇迹" style="position: absolute;right: 10px;top: 100px;width: 50px;height: 20px"></button>');
-			$('#container:eq(0)').append('<select value="点击出奇迹" style="position: absolute;right: 10px;top: 130px;width: 80px;height: 20px" hidden>' +
+			$('#container:eq(0)').append('<button  style="position: absolute;right: 10px;top: 100px;width: 100px;height: 20px"></button>');
+			$('#container:eq(0)').append('<select style="position: absolute;right: 10px;top: 130px;width: 80px;height: 20px" hidden>' +
 					option.html +
 					'</select>');
 			$('button').mouseover(function(){
 				$('#container select').show();
 			});
+			$('button').html('显示前'+(parseInt($('#container select').val())+1)+'名');
 
 			$('#container select').mouseout(function(){
 				$('#container select').hide();
+				$('button').html('显示前'+(parseInt($('#container select').val())+1)+'名');
 			})
 
 			$('button').click(function(){
@@ -141,10 +158,12 @@
 				myChart.setOption(option);
 			});
 
+			$('button').click();
 			myChart.setOption(option);
 
 
 		});
+
 
 	</script>
 </head>
