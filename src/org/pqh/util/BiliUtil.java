@@ -359,7 +359,13 @@ public class BiliUtil {
 		return "";
 	}
 
-
+	public static void openImage(File file){
+		try {
+			Runtime.getRuntime().exec("rundll32 c:\\\\Windows\\\\System32\\\\shimgvw.dll,ImageView_Fullscreen "+file.getAbsoluteFile());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	/*public static void getLimit(Integer i){
 		i=getBiliDao().getLimit(i);
 		System.out.println(i);

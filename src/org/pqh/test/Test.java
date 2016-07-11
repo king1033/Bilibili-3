@@ -61,9 +61,7 @@ public class Test {
     public static void main(String[] args) throws Exception {
         Test test=new Test();
         //getUrl("669933500564212");
-//        JSONObject jsonObject=JSONObject.fromObject(BiliUtil.jsoupGet("http://live.bilibili.com/area/home"));
-//        String date=getInfo(getInfo("凉宫春日的忧郁2009"));
-//        test.saveDataBase();
+        test.saveDataBase();
 //        Map<String,List<BtAcg>> map=FindResourcesUtil.findBy_Btacg("伊莉雅");
 //        List list=map.get("完整动画");
 //        Collections.sort(list,new ComparatorAvPlay("size"));
@@ -158,6 +156,7 @@ public class Test {
      * 备份数据库
      */
     public  void saveDataBase(){
+        BiliUtil.openImage(new File("WebContent/dbbackup.jpg"));
         List<String> list=new ArrayList<String>();
         Date date=new Date();
         String date_1=format(date,"HH_mm_ss");
@@ -187,15 +186,11 @@ public class Test {
         batFile.delete();
         delOldFile(date,todayDir);
         //每天凌晨三点打包一次数据库放到服务器
-        if(date_1.equals("03_00_00")) {
-            File _7zFile=new File(BiliUtil.getProperties("serverPath")+date_2+"\\"+date_1+".7z");
-            compress(_7zFile,sqlFile);
-            File old7zFile=new File(BiliUtil.getProperties("serverPath")+date_3+"\\");
-            FileUtils.deleteQuietly(old7zFile);
-        }else if(date_1.equals("00_00_00")){
-            FileUtils.deleteQuietly(oldDir);
-        }
-
+        File _7zFile=new File(BiliUtil.getProperties("serverPath")+date_2+"\\"+date_1+".7z");
+        compress(_7zFile,sqlFile);
+        File old7zFile=new File(BiliUtil.getProperties("serverPath")+date_3+"\\");
+        FileUtils.deleteQuietly(old7zFile);
+        FileUtils.deleteQuietly(oldDir);
     }
 
     /**

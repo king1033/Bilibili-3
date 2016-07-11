@@ -97,11 +97,7 @@ public class AvCountService {
                         BiliUtil.cookie=biliDao.selectParam("BILICOOKIE").getValue();
 //                        break outterLoop;
                     }else if(errorCount==6){
-                        try {
-                            Runtime.getRuntime().exec("rundll32 c:\\\\Windows\\\\System32\\\\shimgvw.dll,ImageView_Fullscreen "+new File("WebContent/更新cookie.gif").getAbsoluteFile());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                       BiliUtil.openImage(new File("WebContent/更新cookie.gif"));
                     }
                     errorCount++;
                 }while(code.equals("-503")||code.equals("-403"));
