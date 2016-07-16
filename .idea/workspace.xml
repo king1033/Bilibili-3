@@ -6,72 +6,10 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ca4e6bf-c4d9-4691-b0c2-a4be8a7de024" name="Default" comment="1.修改获取番剧播放量信息接口&#10;2.创建常量类，把接口url等常量字符串放进去&#10;3.获取btacg种子资源方法变成多线程获取&#10;4.改变筛选种子资源链接的方法&#10;5.添加数据库结构图，echart效果图，项目方法测试图&#10;6.添加创建数据库结构sql文件">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/entity/BtAcg.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/entity/Param.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/entity/Ranking.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/test/TaskBtacg.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/test/TaskCid.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/test/TaskVstorage.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/util/Constant.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/util/FindResourcesUtil.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/util/MD5Util.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/util/TsdmUtil.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/image/btacg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/image/echart动态展示效果.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/image/echart折线图.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/image/echart柱状图.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/image/报错请看.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/image/数据库结构详解.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/image/方法测试.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/image/账号密码配置.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/bilibili.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/util/config.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/util/log4j.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/applicationContext.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/bilibili.sql" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/pqh/test/TaskBtacg.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/pqh/util/Constant.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/pqh/util/MD5Util.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/pqh/util/config.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/pqh/util/log4j.properties" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/service/无标题.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/org/pqh/service/无标题.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/dao/BiliDao.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/dao/BiliDao.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/entity/Bili.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/entity/Bili.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/entity/ComparatorAvPlay.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/entity/ComparatorAvPlay.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/service/AvCountService.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/service/AvCountService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/service/InsertServiceImpl.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/service/InsertServiceImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/test/Test.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/test/Test.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/util/BiliUtil.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/util/BiliUtil.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/util/TestSlf4j.class" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/util/TestSlf4j.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/BiliBili_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/BiliBili_war_exploded.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
+    <list default="true" id="5ca4e6bf-c4d9-4691-b0c2-a4be8a7de024" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/AvPlay.html" afterPath="$PROJECT_DIR$/WebContent/AvPlay.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/applicationContext.xml" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/applicationContext.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/config.properties" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/config.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/sql/BiliMapper.xml" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/sql/BiliMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/applicationContext.xml" afterPath="$PROJECT_DIR$/src/applicationContext.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/config.properties" afterPath="$PROJECT_DIR$/src/config.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/pqh/dao/BiliDao.java" afterPath="$PROJECT_DIR$/src/org/pqh/dao/BiliDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/pqh/entity/Bili.java" afterPath="$PROJECT_DIR$/src/org/pqh/entity/Bili.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/pqh/entity/BtAcg.java" afterPath="$PROJECT_DIR$/src/org/pqh/entity/BtAcg.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/pqh/entity/ComparatorAvPlay.java" afterPath="$PROJECT_DIR$/src/org/pqh/entity/ComparatorAvPlay.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/pqh/service/AvCountService.java" afterPath="$PROJECT_DIR$/src/org/pqh/service/AvCountService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/pqh/service/InsertServiceImpl.java" afterPath="$PROJECT_DIR$/src/org/pqh/service/InsertServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/pqh/sql/BiliMapper.xml" afterPath="$PROJECT_DIR$/src/org/pqh/sql/BiliMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/pqh/test/Test.java" afterPath="$PROJECT_DIR$/src/org/pqh/test/Test.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/pqh/util/BiliUtil.java" afterPath="$PROJECT_DIR$/src/org/pqh/util/BiliUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/pqh/util/FindResourcesUtil.java" afterPath="$PROJECT_DIR$/src/org/pqh/util/FindResourcesUtil.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/pqh/util/TestSlf4j.java" afterPath="$PROJECT_DIR$/src/org/pqh/util/TestSlf4j.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/pqh/util/TsdmUtil.java" afterPath="$PROJECT_DIR$/src/org/pqh/util/TsdmUtil.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/WebContent/dbbackup.jpg" afterPath="$PROJECT_DIR$/WebContent/image/dbbackup.jpg" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/WebContent/更新cookie.gif" afterPath="$PROJECT_DIR$/WebContent/image/更新cookie.gif" />
     </list>
     <ignored path="BiliBili.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -129,11 +67,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Test.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/pqh/test/Test.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="84" column="56" selection-start-line="84" selection-start-column="56" selection-end-line="84" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="BiliUtil.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/pqh/util/BiliUtil.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+              <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.3638614">
+              <caret line="29" column="52" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -149,12 +107,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.9669604">
-              <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
+      <file leaf-file-name="bilibili.param" pinned="false" current-in-tab="false">
+        <entry file="dbDummy://dbtable:/c786a21c/715f8bf4-39a2-4518-9eae-359b5d355795/bilibili.param">
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bilibili.aid" pinned="false" current-in-tab="false">
+        <entry file="dbDummy://dbtable:/c786a21c/715f8bf4-39a2-4518-9eae-359b5d355795/bilibili.aid">
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
             </state>
           </provider>
         </entry>
@@ -264,9 +242,10 @@
     <treeState />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-25" />
+    <option name="x" value="-40" />
+    <option name="y" value="6" />
     <option name="width" value="1612" />
-    <option name="height" value="893" />
+    <option name="height" value="862" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -368,11 +347,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="WebContent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="image" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -434,7 +409,7 @@
       <recent name="K:\java\workspace\BiliBili\WebContent\WEB-INF\lib" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.Test.testVstorage">
+  <component name="RunManager" selected="JUnit.Test.testMethod">
     <configuration default="false" name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -1050,10 +1025,10 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.Test.testVstorage" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.Test.testThread" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.Test.testView" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.Test.testMethod" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.Test.testMethod" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.Test.testVstorage" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.Test.testThread" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.Test.testView" />
         <item index="4" class="java.lang.String" itemvalue="Application.Test" />
       </list>
     </recent_temporary>
@@ -1150,7 +1125,7 @@
       <workItem from="1468581722264" duration="12696000" />
       <workItem from="1468605753780" duration="51612000" />
       <workItem from="1468693824653" duration="257000" />
-      <workItem from="1468694128141" duration="4939000" />
+      <workItem from="1468694128141" duration="6806000" />
     </task>
     <task id="LOCAL-00001" summary="abc">
       <created>1467554043811</created>
@@ -1182,12 +1157,18 @@
       <option name="project" value="LOCAL" />
       <updated>1468651231449</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="1.修改获取番剧播放量信息接口&#10;2.创建常量类，把接口url等常量字符串放进去&#10;3.获取btacg种子资源方法变成多线程获取&#10;4.改变筛选种子资源链接的方法&#10;5.添加数据库结构图，echart效果图，项目方法测试图&#10;6.添加创建数据库结构sql文件">
+      <created>1468699121294</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1468699121294</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Test_testThread - 2016.07.16 at 23h 46m 40s.xml">
-      <configuration name="Test.testThread" configurationId="JUnit" />
+    <history-entry file="Test_testMethod - 2016.07.17 at 04h 23m 51s.xml">
+      <configuration name="Test.testMethod" configurationId="JUnit" />
     </history-entry>
     <history-entry file="Test_testThread - 2016.07.17 at 02h 31m 55s.xml">
       <configuration name="Test.testThread" configurationId="JUnit" />
@@ -1218,7 +1199,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="694251000" />
+    <option name="totallyTimeSpent" value="696118000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1230,7 +1211,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-25" y="0" width="1612" height="893" extended-state="0" />
+    <frame x="-40" y="6" width="1612" height="862" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3257979" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -1243,11 +1224,11 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32840723" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38335606" sideWeight="0.49389312" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38319087" sideWeight="0.49389312" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3975265" sideWeight="0.50610685" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22824427" sideWeight="0.5102564" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.366985" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30286494" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30286494" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286219" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1283,7 +1264,8 @@
     <MESSAGE value="1.增加按番剧播放量排名显示图表&#10;2.增加天使动漫获取音乐云盘链接工具类&#10;3.增加BtAcg论坛爬取种子连接工具类&#10;4.配置参数增加用户代理以及天使动漫cookie信息&#10;5.对象比较方法重写&#10;6.日志输出信息封装成方法&#10;7.jsoup爬虫方法重写，同时支持get,post请求以及可以返回json数据&#10;8.增加Cookie信息过期提醒" />
     <MESSAGE value="1.封装调用windows图片查看器打开图片方法&#10;2.增加数据库备份提醒" />
     <MESSAGE value="1.配置参数实体类增加备注属性&#10;2.更新cookie过期提示并同步配置文件以及数据库配置&#10;3.更新匹配正则表达式方法&#10;4.获取配置信息方法拆开两个方法，获取单个和获取所有&#10;5.添加从网站上爬取代理方法&#10;6.添加下载comment.bilibili.com/{cid}.xml弹幕文件的方法&#10;7." />
-    <option name="LAST_COMMIT_MESSAGE" value="1.配置参数实体类增加备注属性&#10;2.更新cookie过期提示并同步配置文件以及数据库配置&#10;3.更新匹配正则表达式方法&#10;4.获取配置信息方法拆开两个方法，获取单个和获取所有&#10;5.添加从网站上爬取代理方法&#10;6.添加下载comment.bilibili.com/{cid}.xml弹幕文件的方法&#10;7." />
+    <MESSAGE value="1.修改获取番剧播放量信息接口&#10;2.创建常量类，把接口url等常量字符串放进去&#10;3.获取btacg种子资源方法变成多线程获取&#10;4.改变筛选种子资源链接的方法&#10;5.添加数据库结构图，echart效果图，项目方法测试图&#10;6.添加创建数据库结构sql文件" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.修改获取番剧播放量信息接口&#10;2.创建常量类，把接口url等常量字符串放进去&#10;3.获取btacg种子资源方法变成多线程获取&#10;4.改变筛选种子资源链接的方法&#10;5.添加数据库结构图，echart效果图，项目方法测试图&#10;6.添加创建数据库结构sql文件" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1308,6 +1290,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1466732226228" expanded="true" signature="289:340" placeholder="INSERT INTO Vstorage... " />
+            <marker date="1466732226228" expanded="true" signature="437:484" placeholder="UPDATE vstor... " />
+            <marker date="1466732226228" expanded="true" signature="573:1144" placeholder="INSERT INTO Data... " />
+            <marker date="1466732226228" expanded="true" signature="1232:1779" placeholder="UPDATE data " />
+            <marker date="1466732226228" expanded="true" signature="1870:2058" placeholder="INSERT INTO Files... " />
+            <marker date="1466732226228" expanded="true" signature="2153:2332" placeholder="UPDATE files... " />
+            <marker date="1466732226228" expanded="true" signature="2445:2683" placeholder="INSERT INTO Dispatch_servers... " />
+            <marker date="1466732226228" expanded="true" signature="2776:3110" placeholder="INSERT INTO Upload... " />
+            <marker date="1466732226228" expanded="true" signature="3213:3399" placeholder="INSERT INTO Node_server... " />
+            <marker date="1466732226228" expanded="true" signature="3502:3709" placeholder="INSERT INTO Upload_meta... " />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1508,18 +1502,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbDummy://dbtable:/c786a21c/715f8bf4-39a2-4518-9eae-359b5d355795/bilibili.aid">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/pqh/entity/Ranking.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
@@ -1664,27 +1646,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbDummy://dbtable:/c786a21c/715f8bf4-39a2-4518-9eae-359b5d355795/bilibili.param">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/pqh/test/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="56" selection-start-line="84" selection-start-column="56" selection-end-line="84" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/WebContent/AvPlay.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.107143">
@@ -1714,10 +1675,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="dbDummy://dbtable:/c786a21c/715f8bf4-39a2-4518-9eae-359b5d355795/bilibili.aid">
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/pqh/util/BiliUtil.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <caret line="39" column="20" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/pqh/test/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="84" column="56" selection-start-line="84" selection-start-column="56" selection-end-line="84" selection-end-column="56" />
           <folding />
         </state>
       </provider>
@@ -1730,10 +1712,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="dbDummy://dbtable:/c786a21c/715f8bf4-39a2-4518-9eae-359b5d355795/bilibili.param">
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.9669604">
-          <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
+        <state vertical-scroll-proportion="1.3638614">
+          <caret line="29" column="52" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
           <folding />
         </state>
       </provider>
