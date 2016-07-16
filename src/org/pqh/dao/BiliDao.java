@@ -1,10 +1,7 @@
 package org.pqh.dao;
 
 import org.apache.ibatis.annotations.Param;
-import org.pqh.entity.AvCount;
-import org.pqh.entity.AvPlay;
-import org.pqh.entity.Bili;
-import org.pqh.entity.Ranking;
+import org.pqh.entity.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,9 +23,9 @@ public interface BiliDao {
 	void updateCid(Bili bili);
 	int count(int aid);
 	List<Bili> findVCC(@Param("startaid")int a,@Param("overaid")int b);
-	//获取CID号
+
 	void insertC(Map<String,Object> Cid);
-	//更新CID号
+
 	void updateC(Map<String,Object> Cid);
 	//查询所有日期当天视频投稿量
 	List<AvCount> selectAvCount();
@@ -46,4 +43,9 @@ public interface BiliDao {
 
 	void updateParam(org.pqh.entity.Param param);
 
+	void insertBangumi(Bangumi bangumi);
+
+	void updateBangumi(Bangumi bangumi);
+
+	Bangumi selectBangumi(Integer bangumi_id);
 }

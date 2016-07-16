@@ -5,9 +5,11 @@ import org.apache.log4j.Logger;
 import org.jsoup.nodes.Document;
 import org.pqh.dao.BiliDao;
 import org.pqh.dao.VstorageDao;
+import org.pqh.entity.Bangumi;
 import org.pqh.entity.Bili;
 import org.pqh.test.Test;
 import org.pqh.util.BiliUtil;
+import org.pqh.util.Constant;
 import org.pqh.util.TestSlf4j;
 import org.quartz.CronTrigger;
 import org.springframework.dao.DuplicateKeyException;
@@ -36,10 +38,14 @@ public class InsertServiceImpl implements InsertService {
 	}
 
 	public static int count;
+
+
 	@Override
 	public void insertBili(int aid,int page) {
 		Map<String, Object> map;
 		Bili bili=null;
+		Bangumi bangumi=null;
+
 		while(true){
 			do{
 				List list=BiliUtil.setView(aid,page);
@@ -47,11 +53,15 @@ public class InsertServiceImpl implements InsertService {
 					break;
 				}
 				bili= (Bili) list.get(0);
+				bangumi= (Bangumi) list.get(1);
 				bili.setAid(aid);
 				bili.setTypename2(BiliUtil.getBq(bili.getTypename()));
 				bili.setPartid(page);
 				try{
 					if(page==1){
+						if(bangumi.getBangumi_id()!=null){
+							biliDao.insertBangumi(bangumi);
+						}
 						biliDao.insertBili(bili);
 					}
 					biliDao.insertCid(bili);
@@ -59,7 +69,10 @@ public class InsertServiceImpl implements InsertService {
 				catch(DuplicateKeyException e){
 					if(e.getMessage().contains("insertBili")){
 						biliDao.updateBili(bili);
-					}else{
+					}else if(e.getMessage().contains("insertBangumi")){
+						biliDao.updateBangumi(bangumi);
+					}
+					else{
 						biliDao.updateCid(bili);
 					}
 				}
@@ -74,7 +87,7 @@ public class InsertServiceImpl implements InsertService {
 	public void insertVstorage(int cid){
 		Map<String, Object> map = new HashMap<String, Object>();
 		Test test =new Test();
-		String classnames[] = BiliUtil.getPropertie("classname").split(",");
+		String classnames[] = Constant.CLASSNAME.split(",");
 		for (String classname : classnames) {
 			try {
 				if (classname.contains("<")) {
@@ -101,8 +114,8 @@ public class InsertServiceImpl implements InsertService {
 			TestSlf4j.outputLog(e,log);
 		}
 
-		String url = Test.url + cid;
-		JSONObject jsonObject = BiliUtil.jsoupGet(url,JSONObject.class,BiliUtil.GET);
+		String url = Constant.VSTORAGEAPI + cid;
+		JSONObject jsonObject = BiliUtil.jsoupGet(url,JSONObject.class,Constant.GET);
 		if(jsonObject.get("list")!=null){
 			count++;
 			return;
@@ -115,10 +128,10 @@ public class InsertServiceImpl implements InsertService {
 	}
 
 	public  void insertCid(int cid){
-		String url = "http://interface.bilibili.com/player?id=cid:"+cid;
+		String url = Constant.CIDAPI+cid;
 		String data= null;
-		data = BiliUtil.jsoupGet(url, Document.class,BiliUtil.GET).toString().trim();
-		Map<String,Object> map=BiliUtil.getdata(BiliUtil.CIDLIST,data);
+		data = BiliUtil.jsoupGet(url, Document.class,Constant.GET).toString().trim();
+		Map<String,Object> map=BiliUtil.getdata(Constant.CIDLIST,data);
 		map.put("cid",cid);
 		String aid =map.get("aid").toString();
 		if(aid.equals("-1")||aid.equals("1")){

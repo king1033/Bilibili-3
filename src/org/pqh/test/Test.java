@@ -27,10 +27,7 @@ import org.pqh.entity.*;
 import org.pqh.service.AvCountService;
 import org.pqh.service.InsertService;
 import org.pqh.service.InsertServiceImpl;
-import org.pqh.util.BiliUtil;
-import org.pqh.util.FindResourcesUtil;
-import org.pqh.util.TestSlf4j;
-import org.pqh.util.TsdmUtil;
+import org.pqh.util.*;
 import org.springframework.core.task.TaskRejectedException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -46,6 +43,8 @@ import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -55,7 +54,6 @@ import java.util.zip.GZIPInputStream;
 @ContextConfiguration("classpath:applicationContext.xml")
 public class Test {
     private static Logger log= TestSlf4j.getLogger(Test.class);
-    public static String url="http://api.bilibili.com/vstorage/state?cid=";
     @Resource
     ThreadPoolTaskExecutor threadPoolTaskExecutor;
     @Resource
@@ -69,19 +67,22 @@ public class Test {
         Test test=new Test();
         //getUrl("669933500564212");
 //        test.saveDataBase();
-//        Map<String,List<BtAcg>> map=FindResourcesUtil.findBy_Btacg("伊莉雅");
-//        List list=map.get("完整动画");
-//        Collections.sort(list,new ComparatorAvPlay("size"));
+
+
 //        String filename=FindResourcesUtil.switchFileName(btAcg.getResourceName());
 //        FindResourcesUtil.downLoadTorrent("http://www.kuaipic.com/uploads/userup/231761/ef13541d77e923aeb125.jpg", FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath());
 //         FindResourcesUtil.downLoadTorrent("http://comment.bilibili.com/3974749.xml","G:\\");
 
     }
 
+    /**
+     * 测试各种方法
+     */
     @org.junit.Test
     public void testMethod() {
-
-
+//        Map<String,List<BtAcg>> map=FindResourcesUtil.findBy_Btacg(threadPoolTaskExecutor,"银魂");
+//        Map<String,String> hrefMap=FindResourcesUtil.screenUrl(map,new BtAcg("BDRIP",null,null));
+            BiliUtil.createConfig(biliDao,new File("src/config.properties"));
     }
 
     public static String getInfo(Document document){
@@ -98,8 +99,8 @@ public class Test {
         Elements elements=document.select("ul.polysemantList-wrapper>.item>a");
         for(Element element:elements){
             if(element.attr("title").length()!=0&&element.attr("title").contains("动画")){
-                log.info(element.attr("title")+"跳转到动画条目http://baike.baidu.com"+element.attr("href"));
-                return getInfo(BiliUtil.jsoupGet("http://baike.baidu.com"+element.attr("href"), Document.class,BiliUtil.GET));
+                log.info(element.attr("title")+"跳转到动画条目"+Constant.BAIKEINDEX+element.attr("href"));
+                return getInfo(BiliUtil.jsoupGet(Constant.BAIKEINDEX+element.attr("href"), Document.class, Constant.GET));
             }
         }
         return "";
@@ -117,7 +118,7 @@ public class Test {
         try {
             FileUtils.writeLines(file,"GBK",list);
         } catch (IOException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         }
         runCommand(file.getAbsolutePath());
         file.delete();
@@ -183,12 +184,12 @@ public class Test {
         File sqlFile=new File(todayDir+date_1+".sql");
         File oldDir=new File(yesterday);
         //调用mysqldump备份命令备份数据库
-        list.add("\"K:\\MySQL\\MySQL Server 5.7\\bin\\mysqldump\" --opt -uroot -p123456 bilibili data cid> "+sqlFile.getAbsolutePath());
+        list.add("\"K:\\MySQL\\MySQL Server 5.7\\bin\\mysqldump\" --opt -uroot -p123456 bilibili "+BiliUtil.getPropertie("backuptables")+"> "+sqlFile.getAbsolutePath());
         File batFile=new File(todayDir+date_1+".bat");
         try {
             FileUtils.writeLines(batFile,"GBK",list);
         } catch (IOException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         }
         //命令写进文件进行备份
         Test.runCommand(batFile.getAbsolutePath());
@@ -223,7 +224,7 @@ public class Test {
             long b=System.currentTimeMillis();
             log.info("运行命令花费时间"+(b-a)+"ms");
         } catch (IOException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         }
     }
     /**
@@ -241,7 +242,7 @@ public class Test {
             try {
                 field = object.getClass().getSuperclass().getDeclaredField(key);
             } catch (NoSuchFieldException e1) {
-                log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+                TestSlf4j.outputLog(e1,log);
             }
         }
         field.setAccessible(true);
@@ -270,14 +271,14 @@ public class Test {
                 try {
                     field.set(object,null);
                 } catch (IllegalAccessException e1) {
-                    e1.printStackTrace();
+                    TestSlf4j.outputLog(e,log);
                 }
             }
         }
         catch (ParseException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         } catch (IllegalAccessException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         }
         return object;
     }
@@ -303,7 +304,7 @@ public class Test {
                 }
             }
         } catch (ClassNotFoundException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         }
         return null;
     }
@@ -318,15 +319,15 @@ public class Test {
             c = Class.forName(classname);
             return c.getMethod("getParents").invoke(c.newInstance()).toString();
         } catch (ClassNotFoundException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         } catch (NoSuchMethodException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         } catch (IllegalAccessException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         } catch (InstantiationException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         } catch (InvocationTargetException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         }
         return null;
     }
@@ -340,11 +341,11 @@ public class Test {
         try {
             return Class.forName(classname).newInstance();
         } catch (InstantiationException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         } catch (IllegalAccessException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         } catch (ClassNotFoundException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         }
         return null;
     }
@@ -366,7 +367,7 @@ public class Test {
                 boolean flag_1=getChildNode(classname,key.toString()).equals(String.class.getName());
                 classname = flag_1?classname:getChildNode(classname,key.toString());
                 if(flag_1){
-                    String value=parseByJackson(Test.url+cid,key.toString());
+                    String value=parseByJackson(Constant.VSTORAGEAPI+cid,key.toString());
                     map.put(classname, setObject(map.get(Data.class.getName()), key.toString(),value));
                     continue;
                 }
@@ -419,9 +420,9 @@ public class Test {
                 insertMethod = c.getDeclaredMethod("insert" + name, Class.forName(key));
                 updateMethod = c.getDeclaredMethod("update" + name, Class.forName(key));
             } catch (NoSuchMethodException e) {
-                log.error("错误类型：" + e.getClass() + "\t错误信息" + e.getCause().getMessage());
+                TestSlf4j.outputLog(e,log);
             } catch (ClassNotFoundException e) {
-                log.error("错误类型：" + e.getClass() + "\t错误信息" + e.getCause().getMessage());
+                TestSlf4j.outputLog(e,log);
             }
             if (map.get(key).getClass().getName().contains("List")) {
                 List list = (List) map.get(key);
@@ -449,12 +450,12 @@ public class Test {
                         } catch (NoSuchFieldException e1) {
                             log.error(object+"无法获取详细报错信息！！！");
                         } catch (IllegalAccessException e1) {
-                            log.error("错误类型：" + e1.getClass() + "\t错误信息" + e1.getCause().getMessage());
+                            TestSlf4j.outputLog(e1,log);
                         } catch (InvocationTargetException e1) {
-                            log.error("错误类型：" + e1.getClass() + "\t错误信息" + e1.getCause().getMessage());
+                            TestSlf4j.outputLog(e1,log);
                         }
                     } catch (IllegalAccessException e) {
-                        log.error("错误类型：" + e.getClass() + "\t错误信息" + e.getCause().getMessage());
+                        TestSlf4j.outputLog(e,log);
                     }
                 }
 
@@ -468,10 +469,10 @@ public class Test {
                     if(e.getTargetException().getClass().equals(DuplicateKeyException.class)){
                         log.info("更新"+name+"主键："+key+"信息");
                     }else{
-                        log.error("错误类型：" + e.getClass() + "\t错误信息" + e.getCause().getMessage());
+                        TestSlf4j.outputLog(e,log);
                     }
                 } catch (IllegalAccessException e) {
-                    log.error("错误类型：" + e.getClass() + "\t错误信息" + e.getCause().getMessage());
+                    TestSlf4j.outputLog(e,log);
                 }
             }
         }
@@ -491,7 +492,7 @@ public class Test {
             }
             return true;
         } catch (IllegalAccessException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         }
         return true;
     }
@@ -509,13 +510,13 @@ public class Test {
             }
 
         } catch (JsonParseException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         } catch (JsonMappingException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         } catch (MalformedURLException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         } catch (IOException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         }
         return  null;
     }
@@ -524,7 +525,7 @@ public class Test {
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         }
         threadPoolTaskExecutor.getThreadPoolExecutor().getQueue().clear();
         InsertServiceImpl.count=0;
@@ -572,25 +573,15 @@ public class Test {
             try {
                 Thread.sleep(3600000);
             } catch (InterruptedException e) {
-                log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+                TestSlf4j.outputLog(e,log);
             }
         }
         catch (InterruptedException e) {
-            log.error("错误类型："+e.getClass()+"\t错误信息"+e.getCause().getMessage());
+            TestSlf4j.outputLog(e,log);
         }
     }
-
     @org.junit.Test
-    public void testCid(){
-        int cid=biliDao.getAid(2);
-        while (true){
-            insertService.insertCid(cid);
-            cid++;
-        }
-    }
-
-    @org.junit.Test
-    public void test01(){
+    public void testView(){
         insertService.insertBili(biliDao.getAid(1),1);
     }
 

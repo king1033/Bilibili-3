@@ -14,16 +14,18 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.jsoup.select.Evaluator;
 import org.pqh.entity.BtAcg;
+import org.pqh.entity.ComparatorAvPlay;
+import org.pqh.test.TaskBtacg;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.DeflaterInputStream;
 import java.util.zip.GZIPInputStream;
 
@@ -32,22 +34,94 @@ import java.util.zip.GZIPInputStream;
  */
 public class FindResourcesUtil {
     private static Logger log=TestSlf4j.getLogger(FindResourcesUtil.class);
-    public static Map<String,List<BtAcg>> findBy_Btacg(String keyword){
-        Map<String,List<BtAcg>> map=new HashMap<String, List<BtAcg>>();
-        int countPage=1;
-        boolean flag=true;
-        for(int page=1;page<=countPage;page++) {
-            Document document = BiliUtil.jsoupGet("http://bt.acg.gg/search.php?keyword=" + keyword + "&page=" + page, Document.class, BiliUtil.GET);
-            if(flag) {
-                countPage = Integer.parseInt(document.select(".pager-last").html());
-                flag=false;
-            }
-            Elements elements = document.select("#listTable>tbody>tr");
-            map = eachTable(elements, map);
+    public static Map<String,List<BtAcg>> map=new HashMap<String, List<BtAcg>>();
+
+    /**
+     * 多线程从Btacg搜索关键字资源种子
+     * @param threadPoolTaskExecutor
+     * @param keyword
+     * @return
+     */
+    public static Map<String,List<BtAcg>> findBy_Btacg(ThreadPoolTaskExecutor threadPoolTaskExecutor,String keyword) {
+
+        int page = 1;
+        eachPage(keyword, page);
+        if (TaskBtacg.pages > 1) {
+            page = 2;
+            do {
+                TaskBtacg taskBtacg = new TaskBtacg(page, keyword);
+                if (!taskBtacg.getFlag()) {
+                    threadPoolTaskExecutor.execute(taskBtacg);
+                    page++;
+                }
+            } while (!(threadPoolTaskExecutor.getThreadPoolExecutor().getCompletedTaskCount() == TaskBtacg.pages - 1));
+        }
+        for (String key : map.keySet()) {
+            Collections.sort(map.get(key), new ComparatorAvPlay("size"));
         }
         return map;
     }
 
+    /**
+     * 获取单页搜索结果
+     * @param keyword 关键字
+     * @param page 页数
+     */
+    public static void eachPage(String keyword,int page){
+        Document document = BiliUtil.jsoupGet(Constant.BTACG+ keyword + "&page=" + page, Document.class, Constant.GET);
+        if(page==1) {
+            String message=document.select(".text_bold").text();
+            System.out.println(message);
+            int i=Integer.parseInt(BiliUtil.matchStr(message,"\\d+条",String.class).replaceAll("条",""));
+            TaskBtacg.pages=i/30+(i%30==0?0:1);
+        }
+        Elements elements = document.select("#listTable>tbody>tr");
+        eachTable(elements, map);
+    }
+
+    /**
+     * 种子资源筛选
+     * @param map 筛选种子
+     * @param bt  筛选条件
+     * @return
+     */
+    public static Map<String,String> screenUrl(Map<String,List<BtAcg>> map,BtAcg bt){
+        Map<String,String> href=new HashMap<String, String>();
+        Field fields[]=bt.getClass().getDeclaredFields();
+        for(String type:map.keySet()) {
+            List<BtAcg> btAcgs=map.get(type);
+            for(BtAcg btAcg:btAcgs) {
+                boolean flag=true;
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    try {
+                        if(field.getName().equals("resourceName")&&!field.get(btAcg).toString().contains(field.get(bt).toString())){
+                            flag=false;
+                            break;
+                        }
+                        else if(field.get(bt)!=null&&field.get(btAcg).equals(field.get(bt))){
+                            flag=false;
+                            break;
+                        }
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if(flag){
+                    href.put(btAcg.getResourceName(),btAcg.getHref());
+                }
+            }
+        }
+
+        return href;
+    }
+
+    /**
+     * 遍历Btacg每一页的表格信息
+     * @param elements
+     * @param map
+     * @return
+     */
     private static Map<String,List<BtAcg>> eachTable(Elements elements, Map<String, List<BtAcg>> map){
         Field[] fields= BtAcg.class.getDeclaredFields();
         for(Element element:elements){
@@ -85,7 +159,12 @@ public class FindResourcesUtil {
         return map;
     }
 
-    public static void downLoadTorrent(String href,String outputPath){
+    /**
+     * 下载资源
+     * @param href 下载链接
+     * @param outputPath 输出文件
+     */
+    public static void downLoad(String href,String outputPath){
         System.out.println("下载链接"+href);
         OutputStream fos = null;
         HttpURLConnection connection = null;
@@ -116,20 +195,20 @@ public class FindResourcesUtil {
                 filename=System.currentTimeMillis()+"";
             }
             File file=new File(outputPath+filename);
-            FileUtils.writeStringToFile(file,str);
             if(contentEncoding.contains("deflate")) {
+                FileUtils.writeStringToFile(file,str);
                 return;
             }
-           fos = new FileOutputStream(file);
+            fos = new FileOutputStream(file);
             byte[] buf = new byte[1024];
             int size=0;
             while ((size = inputStream.read(buf)) != -1) {
                 fos.write(buf, 0, size);
             }
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            TestSlf4j.outputLog(e,log);
         } catch (IOException e) {
-            e.printStackTrace();
+            TestSlf4j.outputLog(e,log);
         }finally {
             try{
                 if(inputStream!=null){
@@ -142,12 +221,17 @@ public class FindResourcesUtil {
                     connection.disconnect();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                TestSlf4j.outputLog(e,log);
             }
         }
 
     }
 
+    /**
+     * 文件名替换非法字符
+     * @param filename 文件名
+     * @return
+     */
     public static String switchFileName(String filename){
         return filename.replaceAll("\\\\","").replaceAll("/","").replaceAll(":","").replaceAll("<","").replaceAll(">","").replaceAll("|","");
     }

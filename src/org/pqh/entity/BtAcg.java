@@ -11,6 +11,15 @@ public class BtAcg {
     private String author;
     private String href;
 
+    public BtAcg(){
+
+    }
+    public BtAcg(String resourceName, String type, String author) {
+        this.resourceName = resourceName;
+        this.type = type;
+        this.author = author;
+    }
+
     public String getResourceName() {
         return resourceName;
     }

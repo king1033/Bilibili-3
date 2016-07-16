@@ -14,10 +14,10 @@
 
 
 	<bean id="mysql" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="username" value="${username}"></property>
-		<property name="password" value="${password}"></property>
+		<property name="username" value="${dbusername}"></property>
+		<property name="password" value="${dbpassword}"></property>
 		<property name="driverClassName" value="${driverClassName}"></property>
-		<property name="url" value="${url}"></property>
+		<property name="url" value="${dburl}"></property>
 	</bean>
 
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

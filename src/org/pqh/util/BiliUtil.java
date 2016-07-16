@@ -27,6 +27,7 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.SocketAddress;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -34,17 +35,29 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BiliUtil {
-	public static String cookie= getPropertie("BILICOOKIE");
+	//接口 cookie信息
+	public static String cookie= "";
+	//模拟浏览器userAgent
 	static String userAgent= getPropertie("User-Agent");
+	//连接超时
 	static int timeout= Integer.parseInt(getPropertie("timeout"));
+	//发送的表单数据
 	public static Map<String,String> formMap=new HashMap<String, String>();
+	//代理服务器
 	public static List<Proxy> proxyList=new ArrayList<Proxy>();
-	public static final String GET="get";
-	public static final String POST="post";
-	static boolean flag=false;
-	public static final String AIDLIST[]=new String[]{"tid","typename","play","review","video_review","favorites","title","allow_bp","allow_feed","allow_download","description","tag","pic","author","mid","face","pages","instant_server","created","created_at","credit","coins","spid","src","cid","partname","offsite"};
-	public static final  String CIDLIST[]=new String[]{"maxlimit","chatid","server","vtype","oriurl","aid","typeid","pid","click","favourites","credits","coins","fw_click","duration","arctype","danmu","bottom","sinapi","acceptguest","acceptaccel"};
+
 	private static Logger log=TestSlf4j.getLogger(BiliUtil.class);
+
+	private static String aidurl="";
+
+//	private static String aidurl=Constant.AIDAPI;
+
+	/**
+	 * 获取html标签里面的文本内容
+	 * @param list 标签名数组
+	 * @param data html数据
+     * @return 返回标签名标签值的map对象
+     */
 	public static Map<String, Object> getdata(String[] list,String data){
 		Map<String, Object> map=new HashMap<String, Object>();
 		for(String bq:list){
@@ -78,12 +91,22 @@ public class BiliUtil {
 
 	}
 
+	/**
+	 * 把xml节点值通过反射注入到不同对象
+	 * @param elements  xml文档节点列表
+	 * @param list 反射的类对象
+	 * @param index 反射类索引
+     * @return
+     */
 	public static List setElement(List<Element> elements,List list,int index){
 		Test test=new Test();
 		for(org.dom4j.Element element:elements){
 			if(element.elements().size()>0){
 				setElement(element.elements(),list,1);
 			}else{
+				if(element.getName().equals("sp_title")){
+                       String a="";
+				}
 				test.setObject(list.get(index),element.getName(),element.getText());
 			}
 
@@ -91,12 +114,23 @@ public class BiliUtil {
 		return list;
 	}
 
-	public static List setView(int aid,int page){
+	/**
+	 * 爬取接口api.bilibili.com/view的信息
+	 * @param aid  视频av号
+	 * @param page 视频分P
+     * @return 返回接口数据注入的对象集合
+     */
+	public static List setView(int aid, int page){
 		SAXReader saxReader=new SAXReader();
 		org.dom4j.Document document= null;
 		try {
-			document = saxReader.read("http://api.bilibili.com/view?type=xml&appkey=12737ff7776f1ade&id="+aid+"&page="+page);
+			String url=aidurl+"&id="+aid+"&page="+page;
+			document = saxReader.read(url);
+			log.info("读取xml文档："+url+"");
 		} catch (DocumentException e) {
+			if(e.toString().contains("Connection timed out")||e.toString().contains("Server returned HTTP response code: 500")){
+				setView(aid,page);
+			}
 			TestSlf4j.outputLog(e,log);
 		}
 		List list=new ArrayList();
@@ -105,7 +139,7 @@ public class BiliUtil {
 		Element element=document.getRootElement();
 		Element code=element.element("code");
 		if(code!=null) {
-			if (code.getText().equals("-403") || code.getText().equals("-404")) {
+			if (code.getText().equals("-403") || code.getText().equals("-404")||code.getText().equals("10")) {
 				return null;
 			} else if (code.getText().equals("-503")) {
 				try {
@@ -121,44 +155,45 @@ public class BiliUtil {
 		return list;
 	}
 
-	public static String getBq(String div){
-		if(checkbq(div, dougan)){
+	/**
+	 * 根据视频二级分类返回一级分类
+	 * @param type 二级分类
+	 * @return
+     */
+	public static String getBq(String type){
+		if(checkbq(type, Constant.dougan)){
 			return "动画";
-		}else if(checkbq(div, bangumi)){
+		}else if(checkbq(type, Constant.bangumi)){
 			return "番剧";
-		}else if(checkbq(div, music)){
+		}else if(checkbq(type, Constant.music)){
 			return "音乐";
-		}else if(checkbq(div, dance)){
+		}else if(checkbq(type, Constant.dance)){
 			return "舞蹈";
-		}else if(checkbq(div, game)){
+		}else if(checkbq(type, Constant.game)){
 			return "游戏";
-		}else if(checkbq(div, technology)){
+		}else if(checkbq(type, Constant.technology)){
 			return "科技";
-		}else if(checkbq(div, ent)){
+		}else if(checkbq(type, Constant.ent)){
 			return "娱乐";
-		}else if(checkbq(div, kichiku)){
+		}else if(checkbq(type, Constant.kichiku)){
 			return "鬼畜";
-		}else if(checkbq(div, movie)){
+		}else if(checkbq(type, Constant.movie)){
 			return "电影";
-		}else if(checkbq(div, teleplay)){
+		}else if(checkbq(type, Constant.teleplay)){
 			return "电视剧";
-		}else if(checkbq(div, fashion)){
+		}else if(checkbq(type, Constant.fashion)){
 			return "时尚";
 		}else{
 			return null;
 		}
 	}
-	static String dougan[]={"MAD·AMV", "MMD·3D", "短片·手书·配音", "综合"};
-	static String bangumi[]={"连载动画", "完结动画", "资讯", "官方延伸", "国产动画", "新番Index"};
-	static String music[]={"翻唱", "VOCALOID·UTAU", "演奏", "三次元音乐", "同人音乐", "OP/ED/OST", "音乐选集"};
-	static String dance[]={"宅舞", "三次元舞蹈", "舞蹈教程"};
-	static String game[]={"单机联机", "网游·电竞", "音游", "Mugen", "GMV"};
-	static String technology[]={"纪录片", "趣味科普人文", "野生技术协会", "演讲•公开课", "军事", "数码", "机械"};
-	static String ent[]={"搞笑", "生活", "动物圈", "美食圈", "综艺", "娱乐圈", "Korea相关"};
-	static String kichiku[]={"二次元鬼畜", "三次元鬼畜", "人力VOCALOID", "教程演示"};
-	static String movie[]={"欧美电影", "日本电影", "国产电影", "其他国家", "短片", "电影相关"};
-	static String teleplay[]={"连载剧集", "完结剧集", "特摄·布袋", "电视剧相关"};
-	static String fashion[]={"美妆健身", "服饰", "资讯"};
+
+	/**
+	 *
+	 * @param em 二级分类
+	 * @param list 二级分类列表
+     * @return 二级分类若存在返回true,否则返回flase
+     */
 	private static boolean checkbq(String em,String[] list){
 		for(String ems:list){
 			if(em.equals(ems)){
@@ -168,7 +203,14 @@ public class BiliUtil {
 		return false;
 	}
 
-
+	/**
+	 *
+	 * @param url 爬虫的网址
+	 * @param tClass 返回的类对象
+	 * @param method 请求方式
+	 * @param <T>
+     * @return  返回文档信息
+     */
 	public static <T>T jsoupGet(String url,Class<T> tClass,String method){
 		Connection connection=null;
 		System.out.println("连接URL:"+url);
@@ -184,9 +226,9 @@ public class BiliUtil {
 				connection = connection.proxy(proxyList.get(i));
 			}
 			if(tClass==Document.class){
-				if (method.equals(GET)) {
+				if (method.equals(Constant.GET)) {
 					return (T) connection.get();
-				} else if (method.equals(POST)) {
+				} else if (method.equals(Constant.POST)) {
 					return (T) connection.post();
 				} else {
 					throw new RuntimeException("不支持" + method + "请求");
@@ -204,14 +246,14 @@ public class BiliUtil {
 			}
 		}
 		catch (IOException e) {
-			if(e.getMessage().contains("timed out")&&proxyList.size()>0){
+			if(e.toString().contains("timed out")&&proxyList.size()>0){
 				proxyList.remove(i);
 				return jsoupGet(url,tClass,method);
 			}
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e1) {
-				e1.printStackTrace();
+				TestSlf4j.outputLog(e1,log);
 			}
 			return jsoupGet(url,tClass,method);
 		} catch (DocumentException e) {
@@ -233,7 +275,7 @@ public class BiliUtil {
 			return p;
 		} catch (IOException e) {
 			TestSlf4j.outputLog(e,log);
-			return null;
+			return  null;
 		}finally {
 			try {
 				in.close();
@@ -281,7 +323,7 @@ public class BiliUtil {
 			}
 			FileUtils.writeLines(file,"UTF-8",strings);
 		} catch (IOException e) {
-			e.printStackTrace();
+			TestSlf4j.outputLog(e,log);
 		}
 	}
 
@@ -295,12 +337,12 @@ public class BiliUtil {
 		List<String> stringList=new ArrayList<String>();
 		for(Param param:list){
 			stringList.add(param.getDesc());
-			stringList.add(param.getKey()+"="+param.getValue());
+			stringList.add(param.getKey()+"="+(param.getValue()!=null?param.getValue():""));
 		}
 		try {
 			FileUtils.writeLines(file,"UTF-8",stringList);
 		} catch (IOException e) {
-			e.printStackTrace();
+			TestSlf4j.outputLog(e,log);
 		}
 	}
 
@@ -342,6 +384,12 @@ public class BiliUtil {
 		}
 	}
 
+	/**
+	 * 生成创建表sql
+	 * @param tablename 表名
+	 * @param primarykey 表主键
+     * @param map 存放表字段，字段类型map对象
+     */
 	public static void createTable(String tablename,String primarykey,Map<String,String> map){
 		System.out.println("创建表语句\nCREATE TABLE `"+tablename+"` (");
 		for(String key:map.keySet()){
@@ -390,7 +438,12 @@ public class BiliUtil {
 		return map;
 	}
 
-	public static boolean checkDate(String date){
+	/**
+	 * 检查日期格式有效性
+	 * @param date 日期
+	 * @return
+     */
+	private static boolean checkDate(String date){
 		try {
 			new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(date);
 		} catch (ParseException e) {
@@ -430,6 +483,14 @@ public class BiliUtil {
 		System.out.println("添加语句：\n"+stringBuffer+"\n更新语句：\n"+stringBuffer1);
 	}
 
+	/**
+	 * 正则表达式匹配
+	 * @param str 匹配字符串
+	 * @param regex 正则表达式
+	 * @param c 返回类型
+	 * @param <T>
+     * @return
+     */
 	public static <T>T matchStr(String str,String regex,Class<T> c){
 		List list=new ArrayList();
 		Pattern pattern = Pattern.compile(regex);
@@ -447,7 +508,13 @@ public class BiliUtil {
 
 	}
 
-
+	/**
+	 * 正则表达式匹配内容以外的结果
+	 * @param str 匹配字符串
+	 * @param regexs 正则表达式数组
+	 * @param regex
+     * @return
+     */
 	public static String matchStr(String str,String []regexs,String regex){
 		for(int i=0;i<regexs.length;i++) {
 			Pattern pattern = Pattern.compile(regexs[i]);
@@ -465,22 +532,23 @@ public class BiliUtil {
 	 */
 	public static void openImage(File file){
 		try {
-			Runtime.getRuntime().exec("rundll32 c:\\\\Windows\\\\System32\\\\shimgvw.dll,ImageView_Fullscreen "+file.getAbsoluteFile());
+			Runtime.getRuntime().exec("rundll32 c:\\Windows\\System32\\shimgvw.dll,ImageView_Fullscreen "+file.getAbsoluteFile());
 		} catch (IOException e) {
-			e.printStackTrace();
+			TestSlf4j.outputLog(e,log);
 		}
 	}
 
 	/**
-	 * 添加代理
-	 */
-	public static void addProxy(){
-		Document document = BiliUtil.jsoupGet("http://www.xicidaili.com/nn", Document.class, BiliUtil.GET);
+	 * 获取代理服务器
+	 * @param address 服务器地址
+     */
+	public static void addProxy(String address){
+		Document document = BiliUtil.jsoupGet(Constant.PROXYURL, Document.class, Constant.GET);
 		Elements elements=document.select("#ip_list tr:gt(0)");
 		for(org.jsoup.nodes.Element element:elements){
 //			System.out.println(element.select("td:eq(1)")+"\t"+element.select("td:eq(2)"));
-			if(element.select("td:eq(3)").text().equals("广东广州")) {
-				SocketAddress socketAddress = new InetSocketAddress(element.select("td:eq(1)").text(), Integer.parseInt(element.select("td:eq(2)").text()));
+			SocketAddress socketAddress = new InetSocketAddress(element.select("td:eq(1)").text(), Integer.parseInt(element.select("td:eq(2)").text()));
+			if(element.select("td:eq(3)").text().equals(address)) {
 				Proxy proxy = new Proxy(Proxy.Type.HTTP, socketAddress);
 				BiliUtil.proxyList.add(proxy);
 			}
@@ -507,13 +575,44 @@ public class BiliUtil {
 			TestSlf4j.outputLog(e,log);
 		}
 	}
-	/*public static void getLimit(Integer i){
-		i=getBiliDao().getLimit(i);
-		System.out.println(i);
-		if(i==null){
-			return;
+
+	/**
+	 * 获取Accesskey
+	 * @param username bilibili帐号
+	 * @param pwd bilibili密码
+     * @return
+     */
+	public static String getAccesskey(String username,String pwd) {
+		String appkey=getPropertie("appkey");
+		String	app_secret=getPropertie("app_secret");
+		if("".equals(username)||"".equals(pwd)){
+			throw new RuntimeException("账号和密码不能为空");
 		}
-		getBiliDao().setLimit(i);
-		getLimit(i);
-	}*/
+
+		try {
+			username= URLEncoder.encode(username,"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			TestSlf4j.outputLog(e,log);
+		}
+
+		String cs="appkey=" + appkey +"&captcha=&platform=ios&pwd="+pwd +"&type=json&userid="+username ;
+		String sign=MD5Util.MD5(cs+app_secret).toLowerCase();
+
+		String url=Constant.ACCESS_KEY+cs+"&sign="+ sign;
+		JSONObject jsonObject=BiliUtil.jsoupGet(url,JSONObject.class,Constant.GET);
+		String code=jsonObject.get("code").toString();
+		if(code.equals("-626")){
+			throw new RuntimeException("账号:"+username+"不存在");
+		}
+		else if(code.equals("-627")){
+			throw new RuntimeException("密码:"+pwd+"错误");
+		}
+
+		else if(jsonObject.get("code").toString().equals("0")){
+			return jsonObject.get("access_key").toString();
+		}else{
+			throw new RuntimeException("未知错误");
+		}
+	}
+
 }

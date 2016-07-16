@@ -34,6 +34,69 @@ public class Bili implements Serializable{
 	private String offsite;
 	private String typename2;
 	private Integer partid;
+	private String sp_title;
+	private String season_id;
+	private String season_index;
+	private String season_episode;
+	private String code;
+	private String error;
+	private String link;
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
+
+	public String getSeason_index() {
+		return season_index;
+	}
+
+	public void setSeason_index(String season_index) {
+		this.season_index = season_index;
+	}
+
+	public String getSeason_episode() {
+		return season_episode;
+	}
+
+	public void setSeason_episode(String season_episode) {
+		this.season_episode = season_episode;
+	}
+
+	public String getSp_title() {
+		return sp_title;
+	}
+
+	public void setSp_title(String sp_title) {
+		this.sp_title = sp_title;
+	}
+
+	public String getSeason_id() {
+		return season_id;
+	}
+
+	public void setSeason_id(String season_id) {
+		this.season_id = season_id;
+	}
 
 	public String getArctype() {
 		return arctype;

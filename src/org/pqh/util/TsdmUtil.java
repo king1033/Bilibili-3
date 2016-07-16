@@ -25,7 +25,7 @@ public class TsdmUtil {
     public static List getNewBangumi(){
         List<String> list=new ArrayList<String>();
         Document document= null;
-        document = BiliUtil.jsoupGet(musicHref, Document.class,BiliUtil.GET);
+        document = BiliUtil.jsoupGet(musicHref, Document.class,Constant.GET);
         Elements elements=document.select("#postmessage_3261490>a");
 
         for(Element element:elements){
@@ -41,7 +41,7 @@ public class TsdmUtil {
         List<String> musicHref=new ArrayList<String>();
         for(String href:list) {
             Document document = null;
-            document = BiliUtil.jsoupGet(href,Document.class,BiliUtil.GET);
+            document = BiliUtil.jsoupGet(href,Document.class,Constant.GET);
             Elements elements=document.select("a:contains(OP)");
             if(elements.size()!=0){
                 musicHref.add(elements.get(0).attr("href"));
@@ -58,7 +58,7 @@ public class TsdmUtil {
         Map<String,String> yunHref=new HashMap<String, String>();
         for(String href:list) {
             Document document = null;
-            document = BiliUtil.jsoupGet(href,Document.class,BiliUtil.GET);
+            document = BiliUtil.jsoupGet(href,Document.class,Constant.GET);
             for(Element element:document.select("a[href^=http://pan.baidu.com]")){
                 href=element.attr("href");
                 String pwd=BiliUtil.matchStr(document.html(),"密码:\\s*\\w+",String.class).replaceAll("\\W+","");
@@ -71,7 +71,7 @@ public class TsdmUtil {
     public static String switchZN (String chinese,String font){
         BiliUtil.formMap.put("code",chinese);
         BiliUtil.formMap.put("operate",font);
-        JSONObject jsonObject=BiliUtil.jsoupGet("http://tool.lu/zhconvert/ajax.html",JSONObject.class,BiliUtil.POST);
+        JSONObject jsonObject=BiliUtil.jsoupGet("http://tool.lu/zhconvert/ajax.html",JSONObject.class,Constant.POST);
         return jsonObject.get("text").toString();
     }
 }

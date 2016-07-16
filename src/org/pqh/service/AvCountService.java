@@ -9,6 +9,7 @@ import org.pqh.dao.BiliDao;
 import org.pqh.entity.*;
 import org.pqh.test.Test;
 import org.pqh.util.BiliUtil;
+import org.pqh.util.Constant;
 import org.quartz.*;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -50,67 +51,21 @@ public class AvCountService {
     }
 
     public  void setPlays() {
-
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Calendar calendar=Calendar.getInstance();
-        calendar.setTime(new Date());
-        int minute=calendar.get(Calendar.MINUTE);
-        if(minute!=0&&minute%10!=0){
-            return;
-        }
-        calendar.set(Calendar.SECOND,0);
-
-        Date date=calendar.getTime();
-        String datestr=simpleDateFormat.format(date);
-        Timestamp timestamp=Timestamp.valueOf(datestr);
-        List<String> stringList= new ArrayList<String>();
+        Timestamp timestamp=new Timestamp(System.currentTimeMillis());
         List<AvPlay> avPlays=new ArrayList<AvPlay>();
-        JSONObject jsonObject = BiliUtil.jsoupGet("http://www.bilibili.com/api_proxy?app=bangumi&action=get_season_by_tag_v2&tag_id=143&page=1&pagesize=50&indexType=1",JSONObject.class,BiliUtil.GET);
+        JSONObject jsonObject = BiliUtil.jsoupGet(Constant.BANGUMIAPI,JSONObject.class, Constant.GET);
         JSONArray jsonArray=jsonObject.getJSONObject("result").getJSONArray("list");
         for (Object object : jsonArray) {
-            jsonObject = JSONObject.fromObject(object);
-            String season_id = jsonObject.get("season_id").toString();
-            String title = jsonObject.get("title").toString();
-            Document document = BiliUtil.jsoupGet("http://bangumi.bilibili.com/anime/" + season_id,Document.class,BiliUtil.GET);
-            Elements elements = document.select(".v1-long-text");
-            if (elements.size() == 0) {
-//                log.info("动画："+title+"：未开播");
-                continue;
-            }
-            Integer plays=0;
-            outterLoop:for (Element element : elements) {
-                String href = element.attr("href");
-                href = href.substring(href.lastIndexOf("/") + 1);
-                jsonObject = BiliUtil.jsoupGet("http://bangumi.bilibili.com/web_api/episode/get_source?episode_id=" + href,JSONObject.class,BiliUtil.GET);
-                href = "http://api.bilibili.com/view?type=xml&appkey=12737ff7776f1ade&id=" + jsonObject.getJSONObject("result").get("aid").toString();
-                String code="";
-                int errorCount=0;
-                do {
-                    document = BiliUtil.jsoupGet(href,Document.class,BiliUtil.GET);
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    code=document.select("code").html();
-                    if(errorCount==10){
-                        BiliUtil.openImage(new File("WebContent/更新cookie.gif"));
-                        String cookie=JOptionPane.showInputDialog("更新cookie");
-                        BiliUtil.cookie=cookie;
-                        Param param=biliDao.selectParam("BILICOOKIE");
-                        param.setValue(cookie);
-                        biliDao.updateParam(param);
-                        BiliUtil.updateConfig(biliDao,"BILICOOKIE");
-//                        break outterLoop;
-                    }
-                    errorCount++;
-                }while(code.equals("-503")||code.equals("-403"));
-//                log.info("动画："+title+" 单集："+document.title()+"：播放量："+document.select("play").text());
-                stringList.add("'"+title+"'");
-                plays+=Integer.parseInt(document.select("play").text());
-            }
-            plays=plays / elements.size();
-            AvPlay avPlay=new AvPlay(title,plays,timestamp);
+            jsonObject=JSONObject.fromObject(object);
+            String bgmid=jsonObject.get("season_id").toString();
+            String title=jsonObject.get("title").toString();
+            Document document=BiliUtil.jsoupGet(Constant.BGMIDAPI+bgmid+".ver",Document.class,Constant.GET);
+            String jsonStr=document.body().html();
+            jsonStr=jsonStr.substring(jsonStr.indexOf("{"),jsonStr.lastIndexOf("}"))+"}";
+            jsonObject=JSONObject.fromObject(jsonStr).getJSONObject("result");
+            int newest_ep_index=jsonObject.getInt("newest_ep_index");
+            int avgPlay=jsonObject.getInt("play_count")/newest_ep_index;
+            AvPlay avPlay=new AvPlay(title,avgPlay,timestamp);
             avPlays.add(avPlay);
         }
         Collections.sort(avPlays,new ComparatorAvPlay("play"));
