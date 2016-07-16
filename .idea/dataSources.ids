@@ -648,29 +648,32 @@ timestamp</columns>
         <data-type>varchar(255)</data-type>
       </column>
       <column id="214" parent="18" name="value">
+        <data-type>varchar(1024)</data-type>
+      </column>
+      <column id="215" parent="18" name="desc">
         <data-type>varchar(255)</data-type>
       </column>
-      <key id="215" parent="18" name="PRIMARY">
+      <key id="216" parent="18" name="PRIMARY">
         <columns>key</columns>
         <primary>1</primary>
       </key>
-      <column id="216" parent="19" name="aid">
+      <column id="217" parent="19" name="aid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="217" parent="19" name="cid">
+      <column id="218" parent="19" name="cid">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="218" parent="19" name="pid">
+      <column id="219" parent="19" name="pid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="219" parent="19" name="typeid">
+      <column id="220" parent="19" name="typeid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="220" parent="19" name="title">
+      <column id="221" parent="19" name="title">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="221" parent="19" name="subtitle">
+      <column id="222" parent="19" name="subtitle">
         <data-type>varchar(255)</data-type>
       </column>
     </database-model>

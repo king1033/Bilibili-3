@@ -1,9 +1,16 @@
 package org.pqh.util;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import net.sf.json.util.JSONUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.DeflateDecompressingEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -11,13 +18,15 @@ import org.dom4j.io.SAXReader;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.pqh.entity.Bangumi;
-import org.pqh.entity.Bili;
-import org.pqh.entity.Data;
-import org.pqh.entity.Type;
+import org.jsoup.select.Elements;
+import org.pqh.dao.BiliDao;
+import org.pqh.entity.*;
 import org.pqh.test.Test;
 
 import java.io.*;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.SocketAddress;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -25,9 +34,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BiliUtil {
-	public static String cookie=getProperties("BILICOOKIE");
-	static String userAgent=getProperties("User-Agent");
-	public static Map map=new HashMap();
+	public static String cookie= getPropertie("BILICOOKIE");
+	static String userAgent= getPropertie("User-Agent");
+	static int timeout= Integer.parseInt(getPropertie("timeout"));
+	public static Map<String,String> formMap=new HashMap<String, String>();
+	public static List<Proxy> proxyList=new ArrayList<Proxy>();
 	public static final String GET="get";
 	public static final String POST="post";
 	static boolean flag=false;
@@ -161,15 +172,24 @@ public class BiliUtil {
 	public static <T>T jsoupGet(String url,Class<T> tClass,String method){
 		Connection connection=null;
 		System.out.println("连接URL:"+url);
+		int i=0;
 		try {
-			connection=Jsoup.connect(url).header("Cookie", cookie).userAgent(userAgent).timeout(3000).data(map).ignoreContentType(true);
+		if(tClass== org.dom4j.Document.class){
+			return (T) new SAXReader().read(url);
+		}
+		i=(int) (Math.random() * proxyList.size() - 1);
+
+			connection = Jsoup.connect(url).header("Cookie", cookie).userAgent(userAgent).data(formMap).timeout(timeout).ignoreContentType(true);
+			if(proxyList.size()>0) {
+				connection = connection.proxy(proxyList.get(i));
+			}
 			if(tClass==Document.class){
-				if(method.equals(GET)) {
+				if (method.equals(GET)) {
 					return (T) connection.get();
-				}else if(method.equals(POST)){
+				} else if (method.equals(POST)) {
 					return (T) connection.post();
-				}else{
-					throw new RuntimeException("不支持"+method+"请求");
+				} else {
+					throw new RuntimeException("不支持" + method + "请求");
 				}
 			}
 			else if(tClass==String.class){
@@ -178,37 +198,109 @@ public class BiliUtil {
 				return (T) JSONObject.fromObject(connection.execute().body());
 			}else if(tClass==JSONArray.class){
 				return (T) JSONArray.fromObject(connection.execute().body());
-			}else {
+			}
+			else {
 				throw new RuntimeException("返回值不支持"+tClass.getName()+"这种类型");
 			}
 		}
 		catch (IOException e) {
+			if(e.getMessage().contains("timed out")&&proxyList.size()>0){
+				proxyList.remove(i);
+				return jsoupGet(url,tClass,method);
+			}
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
 			return jsoupGet(url,tClass,method);
+		} catch (DocumentException e) {
+			throw new RuntimeException("不能识别为xml文档");
 		}
 
 	}
 
-	public static String getProperties(String key){
+	/**
+	 * 获取配置文件所有配置项
+	 * @return
+	 */
+	public static Properties getProperties(){
 		InputStream in=null;
 		try {
 			in = new BufferedInputStream(new FileInputStream("src\\config.properties"));
 			Properties p = new Properties();
 			p.load(in);
-			return p.getProperty(key);
+			return p;
 		} catch (IOException e) {
 			TestSlf4j.outputLog(e,log);
-			return "";
+			return null;
 		}finally {
 			try {
 				in.close();
 			} catch (IOException e) {
 				TestSlf4j.outputLog(e,log);
 			}
+		}
+	}
+
+
+	/**
+	 * 获取配置文件指定配置项
+	 */
+	public static String getPropertie(String key){
+		return (String) BiliUtil.getProperties().get(key);
+	}
+
+	/**
+	 * 从数据库同步配置
+	 * @param biliDao
+	 * @param key 同步的配置项
+     */
+	public static void updateConfig(BiliDao biliDao,String key){
+		String oldValue=BiliUtil.getPropertie(key);
+		Param param=biliDao.selectParam(key);
+		String newValue=param.getValue();
+
+		File file=new File("src/config.properties");
+		List<String> strings=null;
+		try {
+			strings= FileUtils.readLines(file);
+			if(oldValue==null){
+				strings.add(param.getDesc());
+				strings.add(param.getKey()+"="+param.getValue());
+			}else {
+				for (String s : strings) {
+					if (s.contains(oldValue)) {
+						int index = strings.indexOf(s);
+						s = s.replaceAll(oldValue, newValue);
+						strings.remove(index);
+						strings.add(index, s);
+						break;
+					}
+				}
+			}
+			FileUtils.writeLines(file,"UTF-8",strings);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 从数据库创建配置项
+	 * @param biliDao
+	 * @param file 生成的配置文件对象
+     */
+	public static void createConfig(BiliDao biliDao,File file){
+		List<Param> list=biliDao.selectParams();
+		List<String> stringList=new ArrayList<String>();
+		for(Param param:list){
+			stringList.add(param.getDesc());
+			stringList.add(param.getKey()+"="+param.getValue());
+		}
+		try {
+			FileUtils.writeLines(file,"UTF-8",stringList);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -338,15 +430,23 @@ public class BiliUtil {
 		System.out.println("添加语句：\n"+stringBuffer+"\n更新语句：\n"+stringBuffer1);
 	}
 
-	public static String matchStr(String str,String regex){
+	public static <T>T matchStr(String str,String regex,Class<T> c){
+		List list=new ArrayList();
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(str);
 		while (matcher.find()) {
-			return matcher.group();
+			if(c==String.class) {
+				return (T) matcher.group();
+			}else if(c==List.class){
+				list.add(matcher.group());
+			}else{
+				throw  new RuntimeException(c.getClass().getName()+"参数类型错误");
+			}
 		}
-		return "";
+		return (T) list;
 
 	}
+
 
 	public static String matchStr(String str,String []regexs,String regex){
 		for(int i=0;i<regexs.length;i++) {
@@ -359,11 +459,52 @@ public class BiliUtil {
 		return "";
 	}
 
+	/**
+	 * 调用window图片查看器打开图片
+	 * @param file 图片文件对象
+	 */
 	public static void openImage(File file){
 		try {
 			Runtime.getRuntime().exec("rundll32 c:\\\\Windows\\\\System32\\\\shimgvw.dll,ImageView_Fullscreen "+file.getAbsoluteFile());
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 添加代理
+	 */
+	public static void addProxy(){
+		Document document = BiliUtil.jsoupGet("http://www.xicidaili.com/nn", Document.class, BiliUtil.GET);
+		Elements elements=document.select("#ip_list tr:gt(0)");
+		for(org.jsoup.nodes.Element element:elements){
+//			System.out.println(element.select("td:eq(1)")+"\t"+element.select("td:eq(2)"));
+			if(element.select("td:eq(3)").text().equals("广东广州")) {
+				SocketAddress socketAddress = new InetSocketAddress(element.select("td:eq(1)").text(), Integer.parseInt(element.select("td:eq(2)").text()));
+				Proxy proxy = new Proxy(Proxy.Type.HTTP, socketAddress);
+				BiliUtil.proxyList.add(proxy);
+			}
+		}
+	}
+
+	/**
+	 * 解压gizp网页并下载到文件
+	 * @param file
+	 * @param url
+     */
+	public static void downLoadDanMu(File file,String url){
+		try {
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpGet httpGet = new HttpGet(url);
+			org.apache.http.HttpResponse httpResponse = httpclient.execute(httpGet);
+			HttpEntity entity = httpResponse.getEntity();
+			String xml = EntityUtils.toString(new DeflateDecompressingEntity(entity));
+			FileUtils.writeStringToFile(file, xml);
+			log.info("下载成功，文件路径："+file.getAbsoluteFile());
+		} catch (ClientProtocolException e) {
+			TestSlf4j.outputLog(e,log);
+		} catch (IOException e) {
+			TestSlf4j.outputLog(e,log);
 		}
 	}
 	/*public static void getLimit(Integer i){

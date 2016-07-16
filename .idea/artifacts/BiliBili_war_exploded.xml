@@ -7,7 +7,6 @@
           <element id="module-output" name="BiliBili" />
         </element>
         <element id="directory" name="lib">
-          <element id="library" level="project" name="lib" />
           <element id="library" level="module" name="JUnit4" module-name="BiliBili" />
         </element>
       </element>

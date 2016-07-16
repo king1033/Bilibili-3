@@ -3,12 +3,20 @@ package org.pqh.test;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.deploy.net.HttpResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.util.JSONUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.DeflateDecompressingEntity;
+import org.apache.http.client.entity.GzipDecompressingEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
-import org.jsoup.Connection;
+import org.dom4j.io.SAXReader;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -30,16 +38,15 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.zip.GZIPInputStream;
 
 /**
  * Created by Reborn on 2016/2/5.
@@ -61,17 +68,20 @@ public class Test {
     public static void main(String[] args) throws Exception {
         Test test=new Test();
         //getUrl("669933500564212");
-        test.saveDataBase();
+//        test.saveDataBase();
 //        Map<String,List<BtAcg>> map=FindResourcesUtil.findBy_Btacg("伊莉雅");
 //        List list=map.get("完整动画");
 //        Collections.sort(list,new ComparatorAvPlay("size"));
 //        String filename=FindResourcesUtil.switchFileName(btAcg.getResourceName());
 //        FindResourcesUtil.downLoadTorrent("http://www.kuaipic.com/uploads/userup/231761/ef13541d77e923aeb125.jpg", FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath());
+//         FindResourcesUtil.downLoadTorrent("http://comment.bilibili.com/3974749.xml","G:\\");
+
     }
 
     @org.junit.Test
     public void testMethod() {
-        avCountService.setPlays();
+
+
     }
 
     public static String getInfo(Document document){
@@ -89,7 +99,7 @@ public class Test {
         for(Element element:elements){
             if(element.attr("title").length()!=0&&element.attr("title").contains("动画")){
                 log.info(element.attr("title")+"跳转到动画条目http://baike.baidu.com"+element.attr("href"));
-              return getInfo(BiliUtil.jsoupGet("http://baike.baidu.com"+element.attr("href"), Document.class,BiliUtil.GET));
+                return getInfo(BiliUtil.jsoupGet("http://baike.baidu.com"+element.attr("href"), Document.class,BiliUtil.GET));
             }
         }
         return "";
@@ -102,7 +112,7 @@ public class Test {
      */
     public static void compress(File _7zFile,File sqlFile){
         List<String> list=new ArrayList<String>();
-        list.add("7z a -t7z "+_7zFile.getAbsolutePath()+" "+sqlFile.getAbsolutePath()+" -mx=9 -m0=LZMA2:a=2:d=26 -ms=4096m -mmt");
+        list.add("7z a -t7z "+_7zFile.getAbsolutePath()+" "+sqlFile.getAbsolutePath()+" -mx=9 -m0=LZMA2:a=2:d=26 -ms=4096m -mmt -pA班姬路");
         File file=new File(sqlFile.getParent()+"\\Test.bat");
         try {
             FileUtils.writeLines(file,"GBK",list);
@@ -167,13 +177,13 @@ public class Test {
         Date date1=c.getTime();
         String date_3=format(date1,"yyyy_MM_dd");
         //当前日期年月日作为备份数据库的目录
-        String todayDir=BiliUtil.getProperties("localPath")+date_2+"\\";
-        String yesterday=BiliUtil.getProperties("localPath")+date_3+"\\";
+        String todayDir=BiliUtil.getPropertie("localPath")+date_2+"\\";
+        String yesterday=BiliUtil.getPropertie("localPath")+date_3+"\\";
         //当前日期时分秒作为备份数据库文件的文件名
         File sqlFile=new File(todayDir+date_1+".sql");
         File oldDir=new File(yesterday);
         //调用mysqldump备份命令备份数据库
-        list.add("\"K:\\MySQL\\MySQL Server 5.7\\bin\\mysqldump\" --opt -u root --password=123456 bilibili > "+sqlFile.getAbsolutePath());
+        list.add("\"K:\\MySQL\\MySQL Server 5.7\\bin\\mysqldump\" --opt -uroot -p123456 bilibili data cid> "+sqlFile.getAbsolutePath());
         File batFile=new File(todayDir+date_1+".bat");
         try {
             FileUtils.writeLines(batFile,"GBK",list);
@@ -186,9 +196,9 @@ public class Test {
         batFile.delete();
         delOldFile(date,todayDir);
         //每天凌晨三点打包一次数据库放到服务器
-        File _7zFile=new File(BiliUtil.getProperties("serverPath")+date_2+"\\"+date_1+".7z");
+        File _7zFile=new File(BiliUtil.getPropertie("serverPath")+date_2+"\\"+date_1+".7z");
         compress(_7zFile,sqlFile);
-        File old7zFile=new File(BiliUtil.getProperties("serverPath")+date_3+"\\");
+        File old7zFile=new File(BiliUtil.getPropertie("serverPath")+date_3+"\\");
         FileUtils.deleteQuietly(old7zFile);
         FileUtils.deleteQuietly(oldDir);
     }
@@ -300,7 +310,6 @@ public class Test {
 
     /**
      * 获取父节点
-     * @param classname
      * @return
      */
     public String getParentsNode(String classname){
@@ -397,7 +406,7 @@ public class Test {
     public void setData(VstorageDao vstorageDao,Map<String,Object> map){
         Class c=vstorageDao.getClass();
         String name=null;
-        String classnames[] = BiliUtil.getProperties("exclude").split(",");
+        String classnames[] = BiliUtil.getPropertie("exclude").split(",");
         for(String classname:classnames){
             map.remove(classname);
         }
@@ -432,7 +441,7 @@ public class Test {
                             field=Throwable.class.getDeclaredField("detailMessage");
                             field.setAccessible(true);
                             detailMessage=field.get(e.getTargetException().getCause()).toString();
-                            detailMessage=BiliUtil.matchStr(detailMessage,"\\d+\\-\\d+");
+                            detailMessage=BiliUtil.matchStr(detailMessage,"\\d+\\-\\d+",String.class);
                             if(detailMessage.length()!=0){
                                 log.info("更新"+name+"复合主键："+detailMessage+"信息");
                                 updateMethod.invoke(vstorageDao, object);
@@ -532,8 +541,8 @@ public class Test {
             }else{
                 speed=100;
             }
-            Task_1 task_1=new Task_1(cid,insertService);
-            excute(threadPoolTaskExecutor,task_1,speed);
+            TaskVstorage taskVstorage=new TaskVstorage(cid,insertService);
+            excute(threadPoolTaskExecutor,taskVstorage,speed);
         }
     }
 
@@ -547,8 +556,8 @@ public class Test {
             }else{
                 speed=100;
             }
-            Task task=new Task(cid,insertService);
-            excute(threadPoolTaskExecutor,task,speed);
+            TaskCid taskCid=new TaskCid(cid,insertService);
+            excute(threadPoolTaskExecutor,taskCid,speed);
         }
 
     }

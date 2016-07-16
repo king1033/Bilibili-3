@@ -2,13 +2,10 @@ package org.pqh.util;
 
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
-import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.pqh.entity.Type;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +20,7 @@ public class TsdmUtil {
     public static final String SC="zh-hans";
     public static final String TC="zh-hant";
     static {
-        BiliUtil.cookie=BiliUtil.getProperties("TSDMCookie");
+        BiliUtil.cookie=BiliUtil.getPropertie("TSDMCookie");
     }
     public static List getNewBangumi(){
         List<String> list=new ArrayList<String>();
@@ -64,7 +61,7 @@ public class TsdmUtil {
             document = BiliUtil.jsoupGet(href,Document.class,BiliUtil.GET);
             for(Element element:document.select("a[href^=http://pan.baidu.com]")){
                 href=element.attr("href");
-                String pwd=BiliUtil.matchStr(document.html(),"密码:\\s*\\w+").replaceAll("\\W+","");
+                String pwd=BiliUtil.matchStr(document.html(),"密码:\\s*\\w+",String.class).replaceAll("\\W+","");
                 yunHref.put(href,pwd);
             }
         }
@@ -72,8 +69,8 @@ public class TsdmUtil {
     }
 
     public static String switchZN (String chinese,String font){
-        BiliUtil.map.put("code",chinese);
-        BiliUtil.map.put("operate",font);
+        BiliUtil.formMap.put("code",chinese);
+        BiliUtil.formMap.put("operate",font);
         JSONObject jsonObject=BiliUtil.jsoupGet("http://tool.lu/zhconvert/ajax.html",JSONObject.class,BiliUtil.POST);
         return jsonObject.get("text").toString();
     }

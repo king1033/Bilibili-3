@@ -93,11 +93,15 @@ public class AvCountService {
                         e.printStackTrace();
                     }
                     code=document.select("code").html();
-                    if(errorCount==3){
-                        BiliUtil.cookie=biliDao.selectParam("BILICOOKIE").getValue();
+                    if(errorCount==10){
+                        BiliUtil.openImage(new File("WebContent/更新cookie.gif"));
+                        String cookie=JOptionPane.showInputDialog("更新cookie");
+                        BiliUtil.cookie=cookie;
+                        Param param=biliDao.selectParam("BILICOOKIE");
+                        param.setValue(cookie);
+                        biliDao.updateParam(param);
+                        BiliUtil.updateConfig(biliDao,"BILICOOKIE");
 //                        break outterLoop;
-                    }else if(errorCount==6){
-                       BiliUtil.openImage(new File("WebContent/更新cookie.gif"));
                     }
                     errorCount++;
                 }while(code.equals("-503")||code.equals("-403"));

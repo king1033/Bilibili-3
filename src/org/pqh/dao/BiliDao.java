@@ -42,5 +42,8 @@ public interface BiliDao {
 
 	org.pqh.entity.Param selectParam(String key);
 
+	List<org.pqh.entity.Param> selectParams();
+
 	void updateParam(org.pqh.entity.Param param);
+
 }

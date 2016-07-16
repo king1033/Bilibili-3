@@ -84,14 +84,18 @@
 	</select>
 
 	<insert id="insertParam">
-		insert into param values(#{key},#{value})
+		insert into param values(#{key},#{value},#{desc})
 	</insert>
 
 	<update id="updateParam" parameterType="String">
-		update param set value=#{value} where `key`=#{key}
+		update param set value=#{value},`desc`=#{desc} where `key`=#{key}
 	</update>
 
 	<select id="selectParam" parameterType="String" resultType="org.pqh.entity.Param">
 		select * from param where `key`=#{key}
+	</select>
+
+	<select id="selectParams" resultType="org.pqh.entity.Param">
+		select * from param
 	</select>
 </mapper>

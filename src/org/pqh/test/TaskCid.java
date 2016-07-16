@@ -6,11 +6,11 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 /**
  * Created by 10295 on 2016/5/9.
  */
-public class Task implements Runnable {
+public class TaskCid implements Runnable {
     private int cid;
     private InsertService insertService;
 
-    public Task(int cid,InsertService insertService) {
+    public TaskCid(int cid, InsertService insertService) {
         this.cid = cid;
         this.insertService=insertService;
     }

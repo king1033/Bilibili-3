@@ -2,7 +2,6 @@ package org.pqh.service;
 
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
-import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.pqh.dao.BiliDao;
 import org.pqh.dao.VstorageDao;
@@ -15,7 +14,6 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +74,7 @@ public class InsertServiceImpl implements InsertService {
 	public void insertVstorage(int cid){
 		Map<String, Object> map = new HashMap<String, Object>();
 		Test test =new Test();
-		String classnames[] = BiliUtil.getProperties("classname").split(",");
+		String classnames[] = BiliUtil.getPropertie("classname").split(",");
 		for (String classname : classnames) {
 			try {
 				if (classname.contains("<")) {
@@ -133,7 +131,7 @@ public class InsertServiceImpl implements InsertService {
 			if(oriurl.contains("vid")) {
 				String o = oriurl.substring(0, oriurl.indexOf("vid=") + "vid=".length());
 				try {
-					int vid = Integer.parseInt(BiliUtil.matchStr(oriurl, ">\\d+<").replaceAll("\\D", ""));
+					int vid = Integer.parseInt(BiliUtil.matchStr(oriurl, ">\\d+<",String.class).replaceAll("\\D", ""));
 					o+= vid;
 					map.put("oriurl", o);
 				} catch (NumberFormatException e) {

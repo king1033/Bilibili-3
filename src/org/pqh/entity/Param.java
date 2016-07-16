@@ -6,10 +6,20 @@ package org.pqh.entity;
 public class Param {
     private String key;
     private String value;
+    private String desc;
 
-    public Param(String key, String value) {
+    public Param(String key, String value, String desc) {
         this.key = key;
         this.value = value;
+        this.desc = desc;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public String getKey() {

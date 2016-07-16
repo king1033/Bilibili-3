@@ -1,6 +1,13 @@
 package org.pqh.util;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.DeflateDecompressingEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.CharArrayBuffer;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,10 +15,7 @@ import org.jsoup.select.Elements;
 import org.jsoup.select.Evaluator;
 import org.pqh.entity.BtAcg;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -20,6 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.DeflaterInputStream;
+import java.util.zip.GZIPInputStream;
 
 /**
  * Created by 10295 on 2016/7/10.
@@ -81,28 +87,43 @@ public class FindResourcesUtil {
 
     public static void downLoadTorrent(String href,String outputPath){
         System.out.println("下载链接"+href);
-        BufferedInputStream bis = null;
-        FileOutputStream fos = null;
+        OutputStream fos = null;
         HttpURLConnection connection = null;
+        InputStream inputStream=null;
         try {
             URL url = new URL(href);
             connection = (HttpURLConnection) url.openConnection();
             connection.connect();
-            bis = new BufferedInputStream(connection.getInputStream());
-            String type=HttpURLConnection.guessContentTypeFromStream(bis);
-            File file=new File(outputPath);
-            String filename=href.substring(href.lastIndexOf("/"))==""?href.substring(href.lastIndexOf("=")):"";
-            if(file.exists()){
-                if(file.isDirectory()){
-                    filename+=(type!=null?"."+type:"");
-                }
-            }else{
-                throw  new RuntimeException("不存在这个文件或目录");
+            String contentEncoding=connection.getContentEncoding();
+            String str=null;
+            if(contentEncoding.contains("deflate")) {
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpGet httpGet = new HttpGet(href);
+                org.apache.http.HttpResponse httpResponse=httpclient.execute(httpGet);
+                HttpEntity entity = httpResponse.getEntity();
+                str= EntityUtils.toString(new DeflateDecompressingEntity(entity));
+            }else {
+                inputStream = new BufferedInputStream(connection.getInputStream());
             }
-            fos = new FileOutputStream(file);
+
+            String filename=null;
+            if(href.lastIndexOf("=")!=-1){
+                filename=href.substring(href.lastIndexOf("=")+1);
+            }else if(href.lastIndexOf("/")!=-1){
+                filename=href.substring(href.lastIndexOf("/")+1);
+            }
+            else{
+                filename=System.currentTimeMillis()+"";
+            }
+            File file=new File(outputPath+filename);
+            FileUtils.writeStringToFile(file,str);
+            if(contentEncoding.contains("deflate")) {
+                return;
+            }
+           fos = new FileOutputStream(file);
             byte[] buf = new byte[1024];
             int size=0;
-            while ((size = bis.read(buf)) != -1) {
+            while ((size = inputStream.read(buf)) != -1) {
                 fos.write(buf, 0, size);
             }
         } catch (MalformedURLException e) {
@@ -111,8 +132,8 @@ public class FindResourcesUtil {
             e.printStackTrace();
         }finally {
             try{
-                if(bis!=null){
-                    bis.close();
+                if(inputStream!=null){
+                    inputStream.close();
                 }
                 if(fos!=null){
                     fos.close();
