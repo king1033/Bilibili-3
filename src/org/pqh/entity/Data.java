@@ -33,6 +33,39 @@ public class Data implements Serializable,Node{
 	private Float duration;
 	private String letv_addr;
 
+	public Data(){};
+
+	public Data(Integer cid, String type, String backup_vid, String letv_vu, Integer letv_vid, String vid, Integer aid, Integer page, String title, Integer mid, String author, String cover, String cache, Integer dispatch, Integer storage, Integer storage_server, Integer vp, List<Files> files, Boolean dp_done, Boolean dp_done_flv, Boolean dp_done_mp4, Boolean dp_done_hdmp4, List<Dispatch_servers> dispatch_servers, String subtitle, Upload upload, List<Upload_meta> upload_meta, Float duration, String letv_addr) {
+		this.cid = cid;
+		this.type = type;
+		this.backup_vid = backup_vid;
+		this.letv_vu = letv_vu;
+		this.letv_vid = letv_vid;
+		this.vid = vid;
+		this.aid = aid;
+		this.page = page;
+		this.title = title;
+		this.mid = mid;
+		this.author = author;
+		this.cover = cover;
+		this.cache = cache;
+		this.dispatch = dispatch;
+		this.storage = storage;
+		this.storage_server = storage_server;
+		this.vp = vp;
+		this.files = files;
+		this.dp_done = dp_done;
+		this.dp_done_flv = dp_done_flv;
+		this.dp_done_mp4 = dp_done_mp4;
+		this.dp_done_hdmp4 = dp_done_hdmp4;
+		this.dispatch_servers = dispatch_servers;
+		this.subtitle = subtitle;
+		this.upload = upload;
+		this.upload_meta = upload_meta;
+		this.duration = duration;
+		this.letv_addr = letv_addr;
+	}
+
 	@Override
 	public String toString() {
 		return "Data{" +

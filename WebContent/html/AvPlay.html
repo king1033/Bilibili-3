@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+	<title></title>
+	<script type="text/javascript" src="../js/echarts.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-2.2.3.min.js"></script>
+	<script type="text/javascript">
+		var option={};
+
+		$(function(){
+			var dom=document.getElementById("container");
+			var myChart=echarts.init(dom);
+
+			option = {
+				title: {
+					text: '版权番剧播放量'
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						magicType: {show: true, type: ['line','bar']},
+						saveAsImage: {show: true}
+					}
+				},
+				tooltip: {
+					trigger: 'item',
+					formatter:'动画：{a}<br/>单集平均播放量：{c}<br/>统计时间：{b}'
+				},
+				legend:{
+					data:[],
+					left:150,
+					right:100,
+					selected:{}
+				},
+				xAxis : [
+					{
+						type: 'category',
+						name:'统计时间',
+						nameLocation:'start',
+						nameGap:20,
+						data:[]
+					}
+				],
+				yAxis : [
+					{
+						type : 'value',
+						name:'单集平均播放量                '
+					}
+				],
+				dataZoom: [{
+					start: 99,
+					end: 100
+				}, {
+					type: 'inside',
+					start: 99,
+					end: 100,
+					handleSize: '80%'
+				}],
+				series : []
+			};
+			$.get({
+				url:'/findAvPlay.do',
+				dataType:'json',
+				async:false,
+				success:function(json){
+					console.info(json);
+					var size=json.DAYS.length;
+					for(var i=0;i<json.Rankings.length;i++){
+						option.xAxis[0].data.push(json.Rankings[i].formatTime);
+					}
+
+					option.titles=json.Rankings[json.Rankings.length-1].value.split(',');
+					option.Rankings=json.Rankings;
+					for(var i=0;i<option.titles.length;i++){
+						var k=option.titles[i];
+						var c=size-json[k].length;
+						if(c>0){
+							for(var j=0;j<c;j++){
+								json[k].unshift(undefined);
+							}
+						}
+						var series={
+							name: k,
+							data:json[k],
+							label:{
+								emphasis:{
+									show:true,
+									position:'top'
+								}
+							},
+							type:'bar'
+						}
+						if(i==4){
+							option.html+='<option value='+i+' selected>前'+(i+1)+'名</option>'
+						}else {
+							option.html += '<option value=' + i + '>前' + (i + 1) + '名</option>'
+						}
+						option.legend.data.push(k);
+						option.series.push(series);
+
+					}
+				},
+				error:function(){
+					alert('请求失败');
+				}
+			});
+			myChart.on('magictypechanged',function(params){
+				if(params.currentType=='bar'){
+					option.tooltip.trigger='item';
+					option.tooltip.formatter='动画：{a}<br/>单集平均播放量：{c}<br/>统计时间：{b}';
+				}else{
+					option.tooltip.trigger='axis';
+					option.tooltip.formatter=function(params){
+						console.info(params);
+						var s='统计时间：'+params[0].name;
+						for(var i=0;i<params.length;i++){
+							s+='<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:'+params[i].color+'"></span>'
+									+'动画：'+params[i].seriesName+'&nbsp;&nbsp;&nbsp;单集平均播放量：'+(params[i].value==undefined?'':params[i].value);
+						}
+						return s;
+					}
+				}
+				for(var i=0;i<option.series.length;i++){
+					if(params.currentType=='bar'){
+						option.series[i].type='bar';
+					}
+					else{
+						option.series[i].type='line';
+					}
+				}
+//				console.info(option);
+				myChart.setOption(option);
+			});
+
+			myChart.on('timelinechanged',function(params){
+				console.info(params);
+			});
+
+			console.log(option);
+
+			$('#container:eq(0)').append('<button  style="position: absolute;right: 10px;top: 100px;width: 100px;height: 20px"></button>');
+			$('#container:eq(0)').append('<select style="position: absolute;right: 10px;top: 130px;width: 80px;height: 20px" hidden>' +
+					option.html +
+					'</select>');
+
+
+
+			$('button:eq(0)').mouseover(function(){
+				$('#container select').show();
+			});
+			$('button:eq(0)').html('显示前'+(parseInt($('#container select').val())+1)+'名');
+
+			$('#container select').mouseout(function(){
+				$('#container select').hide();
+				$('button:eq(0)').html('显示前'+(parseInt($('#container select').val())+1)+'名');
+			})
+
+			$('button:eq(0)').click(function(){
+				for(var i=0;i<option.titles.length;i++){
+					if(i<parseInt($('#container select').val())+1) {
+						option.legend.selected[option.titles[i]] = true;
+					}else{
+						option.legend.selected[option.titles[i]] = false;
+					}
+				}
+				myChart.setOption(option);
+			});
+
+			$('button:eq(0)').click();
+			myChart.setOption(option);
+
+
+		});
+
+
+	</script>
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%">
+</div>
+
+</body>
+</html>

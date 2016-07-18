@@ -41,6 +41,15 @@ public class Bili implements Serializable{
 	private String code;
 	private String error;
 	private String link;
+	private Integer bangumi_id;
+
+	public Integer getBangumi_id() {
+		return bangumi_id;
+	}
+
+	public void setBangumi_id(Integer bangumi_id) {
+		this.bangumi_id = bangumi_id;
+	}
 
 	public String getLink() {
 		return link;

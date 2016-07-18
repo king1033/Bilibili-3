@@ -3,6 +3,9 @@ package org.pqh.dao;
 import org.pqh.entity.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by 10295 on 2016/5/22.
  */
@@ -15,6 +18,8 @@ public interface VstorageDao {
     void insertData(Data data);
 
     void updateData(Data data);
+
+    List<Data> selectData(Map<String,String> map);
 
     void insertFiles(Files files);
 

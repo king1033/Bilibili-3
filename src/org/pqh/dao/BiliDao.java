@@ -47,5 +47,7 @@ public interface BiliDao {
 
 	void updateBangumi(Bangumi bangumi);
 
-	Bangumi selectBangumi(Integer bangumi_id);
+	Bangumi selectBangumi_id(Integer bangumi_id);
+
+
 }

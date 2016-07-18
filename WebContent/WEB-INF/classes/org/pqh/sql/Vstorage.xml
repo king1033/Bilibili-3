@@ -43,4 +43,29 @@
     <insert id="insertUpload_meta" parameterType="org.pqh.entity.Upload_meta">
         INSERT INTO Upload_meta (cid,storage_server,storage_state,format,vp,`create`,create_at,done,done_at)VALUES(#{cid},#{storage_server},#{storage_state},#{format},#{vp},#{create},#{create_at},#{done},#{done_at})
     </insert>
+
+    <select id="selectData" parameterType="map" resultType="org.pqh.entity.Data">
+        SELECT aid,cid,page,title,subtitle FROM data WHERE
+        <choose>
+            <when test="cid!=null and aid==null">
+                cid in (${cid})
+            </when>
+            <when test="cid!=null and aid!=null">
+                cid in(${cid}) or aid in(${aid})
+            </when>
+            <when test="cid==null and aid!=null">
+                aid in (${aid})
+            </when>
+            <when test="title!=null">
+                title LIKE '%${title}%'
+            </when>
+        </choose>
+
+    </select>
+
+    <select id="selectDataCid" parameterType="map" resultType="org.pqh.entity.Data">
+        SELECT c.aid AS aid,c.cid AS cid,c.pid AS page,d.title AS title,d.subtitle AS subtitle FROM cid c JOIN data d ON c.cid=d.cid AND d.title LIKE '%${title}%' AND c.typeid IN (${typeid})
+    </select>
+
+
 </mapper>

@@ -60,7 +60,11 @@ public class InsertServiceImpl implements InsertService {
 				try{
 					if(page==1){
 						if(bangumi.getBangumi_id()!=null){
+							bili.setBangumi_id(bangumi.getBangumi_id());
 							biliDao.insertBangumi(bangumi);
+						}
+						if(bili.getLink()==""){
+							bili.setLink(null);
 						}
 						biliDao.insertBili(bili);
 					}

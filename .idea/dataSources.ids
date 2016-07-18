@@ -129,470 +129,473 @@
       <column id="51" parent="2" name="season_episode">
         <data-type>varchar(255)</data-type>
       </column>
-      <key id="52" parent="2" name="PRIMARY">
+      <column id="52" parent="2" name="bangumi_id">
+        <data-type>int(11)</data-type>
+      </column>
+      <key id="53" parent="2" name="PRIMARY">
         <columns>aid</columns>
         <primary>1</primary>
       </key>
-      <column id="53" parent="3" name="aid">
+      <column id="54" parent="3" name="aid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="54" parent="3" name="cid">
+      <column id="55" parent="3" name="cid">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="55" parent="3" name="partid">
+      <column id="56" parent="3" name="partid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="56" parent="3" name="partname">
+      <column id="57" parent="3" name="partname">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="57" parent="4" name="date">
+      <column id="58" parent="4" name="date">
         <mandatory>1</mandatory>
         <data-type>date</data-type>
       </column>
-      <column id="58" parent="4" name="count">
+      <column id="59" parent="4" name="count">
         <data-type>int(11)</data-type>
       </column>
-      <column id="59" parent="5" name="cid">
+      <column id="60" parent="5" name="cid">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="60" parent="5" name="maxlimit">
+      <column id="61" parent="5" name="maxlimit">
         <data-type>int(11)</data-type>
       </column>
-      <column id="61" parent="5" name="chatid">
+      <column id="62" parent="5" name="chatid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="62" parent="5" name="server">
+      <column id="63" parent="5" name="server">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="63" parent="5" name="vtype">
+      <column id="64" parent="5" name="vtype">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="64" parent="5" name="oriurl">
+      <column id="65" parent="5" name="oriurl">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="65" parent="5" name="aid">
+      <column id="66" parent="5" name="aid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="66" parent="5" name="typeid">
+      <column id="67" parent="5" name="typeid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="67" parent="5" name="pid">
+      <column id="68" parent="5" name="pid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="68" parent="5" name="click">
+      <column id="69" parent="5" name="click">
         <data-type>int(11)</data-type>
       </column>
-      <column id="69" parent="5" name="favourites">
+      <column id="70" parent="5" name="favourites">
         <data-type>int(11)</data-type>
       </column>
-      <column id="70" parent="5" name="credits">
+      <column id="71" parent="5" name="credits">
         <data-type>int(11)</data-type>
       </column>
-      <column id="71" parent="5" name="coins">
+      <column id="72" parent="5" name="coins">
         <data-type>int(11)</data-type>
       </column>
-      <column id="72" parent="5" name="fw_click">
+      <column id="73" parent="5" name="fw_click">
         <data-type>int(255)</data-type>
       </column>
-      <column id="73" parent="5" name="duration">
+      <column id="74" parent="5" name="duration">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="74" parent="5" name="arctype">
+      <column id="75" parent="5" name="arctype">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="75" parent="5" name="danmu">
+      <column id="76" parent="5" name="danmu">
         <data-type>int(11)</data-type>
       </column>
-      <column id="76" parent="5" name="bottom">
+      <column id="77" parent="5" name="bottom">
         <data-type>int(11)</data-type>
       </column>
-      <column id="77" parent="5" name="sinapi">
+      <column id="78" parent="5" name="sinapi">
         <data-type>int(11)</data-type>
       </column>
-      <column id="78" parent="5" name="acceptguest">
+      <column id="79" parent="5" name="acceptguest">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="79" parent="5" name="acceptaccel">
+      <column id="80" parent="5" name="acceptaccel">
         <data-type>varchar(255)</data-type>
       </column>
-      <key id="80" parent="5" name="PRIMARY">
+      <key id="81" parent="5" name="PRIMARY">
         <columns>cid</columns>
         <primary>1</primary>
       </key>
-      <column id="81" parent="6" name="dp_done_mp4">
+      <column id="82" parent="6" name="dp_done_mp4">
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="82" parent="6" name="letv_vu">
+      <column id="83" parent="6" name="letv_vu">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="83" parent="6" name="dp_done_flv">
+      <column id="84" parent="6" name="dp_done_flv">
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="84" parent="6" name="upload_meta">
+      <column id="85" parent="6" name="upload_meta">
         <data-type>int(11)</data-type>
       </column>
-      <column id="85" parent="6" name="aid">
+      <column id="86" parent="6" name="aid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="86" parent="6" name="type">
+      <column id="87" parent="6" name="type">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="87" parent="6" name="vp">
+      <column id="88" parent="6" name="vp">
         <data-type>int(11)</data-type>
       </column>
-      <column id="88" parent="6" name="upload">
+      <column id="89" parent="6" name="upload">
         <data-type>int(11)</data-type>
       </column>
-      <column id="89" parent="6" name="author">
+      <column id="90" parent="6" name="author">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="90" parent="6" name="cover">
+      <column id="91" parent="6" name="cover">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="91" parent="6" name="title">
+      <column id="92" parent="6" name="title">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="92" parent="6" name="page">
+      <column id="93" parent="6" name="page">
         <data-type>int(11)</data-type>
       </column>
-      <column id="93" parent="6" name="dispatch">
+      <column id="94" parent="6" name="dispatch">
         <data-type>int(11)</data-type>
       </column>
-      <column id="94" parent="6" name="vid">
+      <column id="95" parent="6" name="vid">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="95" parent="6" name="backup_vid">
+      <column id="96" parent="6" name="backup_vid">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="96" parent="6" name="files">
+      <column id="97" parent="6" name="files">
         <data-type>int(11)</data-type>
       </column>
-      <column id="97" parent="6" name="dispatch_servers">
+      <column id="98" parent="6" name="dispatch_servers">
         <data-type>int(11)</data-type>
       </column>
-      <column id="98" parent="6" name="cache">
+      <column id="99" parent="6" name="cache">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="99" parent="6" name="storage_server">
+      <column id="100" parent="6" name="storage_server">
         <data-type>int(11)</data-type>
       </column>
-      <column id="100" parent="6" name="cid">
+      <column id="101" parent="6" name="cid">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="101" parent="6" name="dp_done">
+      <column id="102" parent="6" name="dp_done">
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="102" parent="6" name="duration">
+      <column id="103" parent="6" name="duration">
         <data-type>float</data-type>
       </column>
-      <column id="103" parent="6" name="mid">
+      <column id="104" parent="6" name="mid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="104" parent="6" name="dp_done_hdmp4">
+      <column id="105" parent="6" name="dp_done_hdmp4">
         <data-type>tinyint(1)</data-type>
       </column>
-      <column id="105" parent="6" name="letv_vid">
+      <column id="106" parent="6" name="letv_vid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="106" parent="6" name="storage">
+      <column id="107" parent="6" name="storage">
         <data-type>int(11)</data-type>
       </column>
-      <column id="107" parent="6" name="letv_addr">
+      <column id="108" parent="6" name="letv_addr">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="108" parent="6" name="subtitle">
+      <column id="109" parent="6" name="subtitle">
         <data-type>varchar(255)</data-type>
       </column>
-      <key id="109" parent="6" name="PRIMARY">
+      <key id="110" parent="6" name="PRIMARY">
         <columns>cid</columns>
         <primary>1</primary>
       </key>
-      <column id="110" parent="7" name="is_active">
+      <column id="111" parent="7" name="is_active">
         <data-type>int(11)</data-type>
       </column>
-      <column id="111" parent="7" name="description">
+      <column id="112" parent="7" name="description">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="112" parent="7" name="done">
+      <column id="113" parent="7" name="done">
         <data-type>int(11)</data-type>
       </column>
-      <column id="113" parent="7" name="state">
+      <column id="114" parent="7" name="state">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="114" parent="7" name="done_at">
+      <column id="115" parent="7" name="done_at">
         <data-type>datetime</data-type>
       </column>
-      <column id="115" parent="7" name="create_at">
+      <column id="116" parent="7" name="create_at">
         <data-type>datetime</data-type>
       </column>
-      <column id="116" parent="7" name="dms_id">
+      <column id="117" parent="7" name="dms_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="117" parent="7" name="server">
+      <column id="118" parent="7" name="server">
         <data-type>int(11)</data-type>
       </column>
-      <column id="118" parent="7" name="format">
+      <column id="119" parent="7" name="format">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="119" parent="7" name="create">
+      <column id="120" parent="7" name="create">
         <data-type>int(11)</data-type>
       </column>
-      <column id="120" parent="7" name="cid">
+      <column id="121" parent="7" name="cid">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="121" parent="7" name="id">
+      <column id="122" parent="7" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <key id="122" parent="7" name="PRIMARY">
+      <key id="123" parent="7" name="PRIMARY">
         <columns>id
 cid</columns>
         <primary>1</primary>
       </key>
-      <column id="123" parent="8" name="filesize">
+      <column id="124" parent="8" name="filesize">
         <data-type>mediumtext</data-type>
       </column>
-      <column id="124" parent="8" name="order">
+      <column id="125" parent="8" name="order">
         <data-type>int(11)</data-type>
       </column>
-      <column id="125" parent="8" name="md5">
+      <column id="126" parent="8" name="md5">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="126" parent="8" name="path">
+      <column id="127" parent="8" name="path">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="127" parent="8" name="length">
+      <column id="128" parent="8" name="length">
         <data-type>int(11)</data-type>
       </column>
-      <column id="128" parent="8" name="storage_state">
+      <column id="129" parent="8" name="storage_state">
         <data-type>int(11)</data-type>
       </column>
-      <column id="129" parent="8" name="format">
+      <column id="130" parent="8" name="format">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="130" parent="8" name="cid">
+      <column id="131" parent="8" name="cid">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="131" parent="8" name="id">
+      <column id="132" parent="8" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <key id="132" parent="8" name="PRIMARY">
+      <key id="133" parent="8" name="PRIMARY">
         <columns>id
 cid</columns>
         <primary>1</primary>
       </key>
-      <column id="133" parent="9" name="sid">
+      <column id="134" parent="9" name="sid">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="134" parent="9" name="server_id">
+      <column id="135" parent="9" name="server_id">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="135" parent="9" name="perferred_zones">
+      <column id="136" parent="9" name="perferred_zones">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="136" parent="9" name="domain">
+      <column id="137" parent="9" name="domain">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="137" parent="9" name="allow_upload">
+      <column id="138" parent="9" name="allow_upload">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="138" parent="9" name="ip">
+      <column id="139" parent="9" name="ip">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="139" parent="9" name="node_id">
+      <column id="140" parent="9" name="node_id">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="140" parent="9" name="cid">
+      <column id="141" parent="9" name="cid">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="141" parent="9" name="id">
+      <column id="142" parent="9" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <key id="142" parent="9" name="PRIMARY">
+      <key id="143" parent="9" name="PRIMARY">
         <columns>id
 cid</columns>
         <primary>1</primary>
       </key>
-      <column id="143" parent="10" name="encode_server">
+      <column id="144" parent="10" name="encode_server">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="144" parent="10" name="done">
+      <column id="145" parent="10" name="done">
         <data-type>int(11)</data-type>
       </column>
-      <column id="145" parent="10" name="state">
+      <column id="146" parent="10" name="state">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="146" parent="10" name="create_at">
+      <column id="147" parent="10" name="create_at">
         <data-type>datetime</data-type>
       </column>
-      <column id="147" parent="10" name="done_at">
+      <column id="148" parent="10" name="done_at">
         <data-type>datetime</data-type>
       </column>
-      <column id="148" parent="10" name="uploaded">
+      <column id="149" parent="10" name="uploaded">
         <data-type>int(11)</data-type>
       </column>
-      <column id="149" parent="10" name="convert">
+      <column id="150" parent="10" name="convert">
         <data-type>int(11)</data-type>
       </column>
-      <column id="150" parent="10" name="error_reason">
+      <column id="151" parent="10" name="error_reason">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="151" parent="10" name="ip">
+      <column id="152" parent="10" name="ip">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="152" parent="10" name="timestamp">
+      <column id="153" parent="10" name="timestamp">
         <data-type>int(11)</data-type>
       </column>
-      <column id="153" parent="10" name="filename">
+      <column id="154" parent="10" name="filename">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="154" parent="10" name="uploaded_at">
+      <column id="155" parent="10" name="uploaded_at">
         <data-type>datetime</data-type>
       </column>
-      <column id="155" parent="10" name="convert_at">
+      <column id="156" parent="10" name="convert_at">
         <data-type>datetime</data-type>
       </column>
-      <column id="156" parent="10" name="node_server">
+      <column id="157" parent="10" name="node_server">
         <data-type>int(11)</data-type>
       </column>
-      <column id="157" parent="10" name="cid">
+      <column id="158" parent="10" name="cid">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <key id="158" parent="10" name="PRIMARY">
+      <key id="159" parent="10" name="PRIMARY">
         <columns>cid</columns>
         <primary>1</primary>
       </key>
-      <column id="159" parent="11" name="storage_server">
+      <column id="160" parent="11" name="storage_server">
         <data-type>int(11)</data-type>
       </column>
-      <column id="160" parent="11" name="done">
+      <column id="161" parent="11" name="done">
         <data-type>int(11)</data-type>
       </column>
-      <column id="161" parent="11" name="done_at">
+      <column id="162" parent="11" name="done_at">
         <data-type>datetime</data-type>
       </column>
-      <column id="162" parent="11" name="create_at">
+      <column id="163" parent="11" name="create_at">
         <data-type>datetime</data-type>
       </column>
-      <column id="163" parent="11" name="storage_state">
+      <column id="164" parent="11" name="storage_state">
         <data-type>int(11)</data-type>
       </column>
-      <column id="164" parent="11" name="format">
+      <column id="165" parent="11" name="format">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="165" parent="11" name="vp">
+      <column id="166" parent="11" name="vp">
         <data-type>int(11)</data-type>
       </column>
-      <column id="166" parent="11" name="create">
+      <column id="167" parent="11" name="create">
         <data-type>int(11)</data-type>
       </column>
-      <column id="167" parent="11" name="cid">
+      <column id="168" parent="11" name="cid">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="168" parent="11" name="id">
+      <column id="169" parent="11" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <key id="169" parent="11" name="PRIMARY">
+      <key id="170" parent="11" name="PRIMARY">
         <columns>cid
 id</columns>
         <primary>1</primary>
       </key>
-      <column id="170" parent="12" name="id">
+      <column id="171" parent="12" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="171" parent="12" name="code">
+      <column id="172" parent="12" name="code">
         <data-type>int(11)</data-type>
       </column>
-      <key id="172" parent="12" name="PRIMARY">
+      <key id="173" parent="12" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="173" parent="13" name="title">
+      <column id="174" parent="13" name="title">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="174" parent="13" name="play">
+      <column id="175" parent="13" name="play">
         <data-type>int(255)</data-type>
       </column>
-      <column id="175" parent="13" name="timestamp">
+      <column id="176" parent="13" name="timestamp">
         <mandatory>1</mandatory>
         <data-type>datetime</data-type>
       </column>
-      <column id="176" parent="13" name="ranking">
+      <column id="177" parent="13" name="ranking">
         <data-type>int(11)</data-type>
       </column>
-      <key id="177" parent="13" name="PRIMARY">
+      <key id="178" parent="13" name="PRIMARY">
         <columns>title
 timestamp</columns>
         <primary>1</primary>
       </key>
-      <column id="178" parent="14" name="key">
+      <column id="179" parent="14" name="key">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="179" parent="14" name="value">
+      <column id="180" parent="14" name="value">
         <data-type>varchar(1024)</data-type>
       </column>
-      <column id="180" parent="14" name="desc">
+      <column id="181" parent="14" name="desc">
         <data-type>varchar(255)</data-type>
       </column>
-      <key id="181" parent="14" name="PRIMARY">
+      <key id="182" parent="14" name="PRIMARY">
         <columns>key</columns>
         <primary>1</primary>
       </key>
-      <column id="182" parent="15" name="bangumi_id">
+      <column id="183" parent="15" name="bangumi_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="183" parent="15" name="season_id">
+      <column id="184" parent="15" name="season_id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="184" parent="15" name="title">
+      <column id="185" parent="15" name="title">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="185" parent="15" name="allow_download">
+      <column id="186" parent="15" name="allow_download">
         <data-type>varchar(255)</data-type>
       </column>
-      <key id="186" parent="15" name="PRIMARY">
+      <key id="187" parent="15" name="PRIMARY">
         <columns>bangumi_id</columns>
         <primary>1</primary>
       </key>
-      <column id="187" parent="16" name="id">
+      <column id="188" parent="16" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="188" parent="16" name="bilibili">
+      <column id="189" parent="16" name="bilibili">
         <data-type>int(11)</data-type>
       </column>
-      <column id="189" parent="17" name="aid">
+      <column id="190" parent="17" name="aid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="190" parent="17" name="cid">
+      <column id="191" parent="17" name="cid">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="191" parent="17" name="pid">
+      <column id="192" parent="17" name="pid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="192" parent="17" name="typeid">
+      <column id="193" parent="17" name="typeid">
         <data-type>int(11)</data-type>
       </column>
-      <column id="193" parent="17" name="title">
+      <column id="194" parent="17" name="title">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="194" parent="17" name="subtitle">
+      <column id="195" parent="17" name="subtitle">
         <data-type>varchar(255)</data-type>
       </column>
     </database-model>

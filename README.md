@@ -11,44 +11,61 @@ IDEA 15<br/>
 部署Web容器：<br/>
 Tomcat7<br/>
 ----------------------------------------------<br/>
-<h1 style="color:red">实现功能：</h1><br/>
-<h2 style="color:green">1.获取以下三个接口信息并写入数据库</h2><br/>
-http://api.bilibili.com/view<br/>
-http://interface.bilibili.com/player?id=cid:<br/>
-http://api.bilibili.com/vstorage/state?cid=<br/>
-<br/>
-<h2 style="color:green">2.获取天使论坛当季番剧音乐资源</h2><br/>
-<h2 style="color:green">3.根据关键字获取bt.acg.gg上的动画资源的种子链接</h2><br/>
+<h1 >实现功能：</h1><br/>
+<h2 >1.获取以下三个接口信息并写入数据库</h2><br/>
+接口一：http://api.bilibili.com/view<br/>
+接口二：http://interface.bilibili.com/player?id=cid:<br/>
+接口三：http://api.bilibili.com/vstorage/state?cid=<br/>
+然后这三个接口的数据有什么卵用？</br>
+<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998341572173949/pid/005Jr6NYgw1f5x82npzo1g310b0lse8e">接口数据作用一睹为快</a></br>
+就是拿来看视频用的，应该有小伙伴尝试过用黑科技通过aid(AV号)或者cid(弹幕号)下架视频，这些接口就是用</br>
+来收集这些数据的，虽然现在已经有很多好心人分享各种弹幕包，但是资源是在别人手中，资源失效或者不是自</br>
+己想要的那是多尴尬，所以最好的办法就是资源放在自己手中，知道bilibli整个网站视频的数据，想撸什么片就</br>
+撸什么片。目前2016年7月18日为止，数据库入库数据cid有876万条，包括审核不过、被删、下架的数据，所以上</br>
+面 To Love Ru Darkness 2nd 搜这部番剧相关数据用了将近八分钟，当然跟数据库结构没做过优化有关，不过我建议</br>
+弹幕数据提前备份，当然几分钟时间看一下鬼畜什么的一会儿就过去了。</br>
+ 
+我每天都有把数据库放到服务器习惯，目前用的OneDriver，<a href="#down">下载链接</a></br>
+本来还想同步到百度云，不过暂时没有想到用java把文件自动上传到网盘的方案，毕竟我只是个菜鸡，如果哪位大神有</br>
+什么办法希望可以指点一二，o(*≧▽≦)ツ</br>
+
+<h2 >2.获取天使论坛当季番剧音乐资源</h2><br/>
+<h2 >3.根据关键字获取bt.acg.gg上的动画资源的种子链接</h2><br/>
 ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/btacg.png)<br/>
-<h2 style="color:green">4.对哔哩哔哩201616年7月版权番剧单集平均播放量定时进行统计，                          （相关活动页见：http://www.bilibili.com/html/activity-20160620newbangumi.html）<br/>
+<h2 >4.对哔哩哔哩201616年7月版权番剧单集平均播放量定时进行统计，                          （相关活动页见：http://www.bilibili.com/html/activity-20160620newbangumi.html）<br/>
 并用js echart库以图表形式展示</h2><br/>
-<h3 style="color:blue">echart折线图</h3><br/>
-![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/echart%e6%8a%98%e7%ba%bf%e5%9b%be.png)<br/>
-<h3 style="color:blue">echart柱状图</h3><br/>
-![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/echart%e6%9f%b1%e7%8a%b6%e5%9b%be.png)<br/>
+<h3 >echart折线图</h3><br/>
+![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/echart折线图.png)<br/>
+<h3 >echart柱状图</h3><br/>
+![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/echart柱状图.png)<br/>
 <br/>
-<h3 style="color:blue">动态效果见(动态图接近15M,小水管慎重打开)：</h3><br/>
-WebContent\image\echart动态展示效果.gif<br/>
+<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998282424045592/pid/005Jr6NYgw1f5x1fnohh7g30zg0i07wv">echart动态效果(动态图有15M多,小水管慎重打开)：</a><br/>
 -----------------------------------------------------------------------------------------------------------------<br/>
 项目初始化：<br/>
-第一步：当然就是Clone项目到本地，自带项目IDEA配置文件，直接用IDEA Clone不需要配置，其他IDE需要自行配置。<br/>
+第一步：当然就是Clone项目到本地，自带项目IDEA配置文件，直接用<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998323147026568/pid/005Jr6NYgw1f5x65v49sag310b0klu0x">IDEA Clone</a>只需要配置好tomcat路径可以即可直接运行。<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998282424045592/pid/005Jr6NYgw1f5x1hv77cog30tx0l0b29">IDEA Tomcat配置<a/><br/>
 第二步：用src目录下的bilibili.sql创建数据库<br/>
-第三步：方法调试详见<br/>
-![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/%e6%96%b9%e6%b3%95%e6%b5%8b%e8%af%95.png)<br/>
-备注：测试接口初始化类会读取bilibli账号密码配置，，如果为空或填写不正确会报错，如果不需要获取接口一信息可以直接注释掉<br/>
-        详见：<br/>
-        ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/%e6%8a%a5%e9%94%99%e8%af%b7%e7%9c%8b.png)<br/>
-        账号密码配置<br/>
-        ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/%e8%b4%a6%e5%8f%b7%e5%af%86%e7%a0%81%e9%85%8d%e7%bd%ae.png)<br/>
+![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/创建数据库.png)<br/>
+如无意外创建完毕表结构应该跟下图一样。
+数据库结构图
+![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/数据库结构详解.png)<br/>
+<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998288506219148/pid/005Jr6NYgw1f5x22mc4zlg30x40bye81">数据库部分数据展示</a>
+第三步：方法调试<br/>
+![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/方法测试.png)<br/>
+
+备注：调试接口一需要配置bilibli账号密码，否则会报错，如图所示：
+![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/bilibli账号密码配置.png)<br/>
 -------------------------------------------------------------------------------------------------------------------------------------------------<br/>
+
+
+
 数据库打包到OneDriver：<br/>
-https://1drv.ms/u/s!AqIrS5Y3YYnjjwi2ViTDFeAryonE<br/>
+<a name="down" href="https://1drv.ms/f/s!AqIrS5Y3YYnjg00rhqs5pOw6KO4n">数据库下载</a><br/>
 数据库文件信息自行校验<br/>
-大小：	524, 720, 850 字节<br/>
-修改时间：2016-07-17 00:35:20<br/>
-MD5：	4C38CB6DB8F887447F28E4D1D0876DCB<br/>
-SHA1：	2B402A34B698F61E9BE0171FF51C372AE8B4F1B6<br/>
-CRC32：C50497BB<br/>
-压缩包解压密码“A班姬路”，也是我贴吧ID,关于项目问题可以留言。<br/>
+大小：	532, 435, 394 字节
+修改时间：2016-07-19 00:33:09
+MD5：	6A52D8FC8D2FED0EBCCDFDD1A6B69E3F
+SHA1：	196EFB289BE0D40F053FCEB767600CE04B35E3B8
+CRC32：2E7005C8
+压缩包解压密码“A班姬路”，也是我贴吧ID,关于项目问题可以<a href="http://tieba.baidu.com/im/pcmsg?from=820363216">私信</a>。<br/>
 数据库如无意外会每天更新一次，视网络情况而定<br/>
 以上~~~~~~~~~~~~~~~~~~~~~~<br/>

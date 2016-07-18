@@ -2,17 +2,14 @@ package org.pqh.util;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.DeflateDecompressingEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.CharArrayBuffer;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.jsoup.select.Evaluator;
 import org.pqh.entity.BtAcg;
 import org.pqh.entity.ComparatorAvPlay;
 import org.pqh.test.TaskBtacg;
@@ -20,14 +17,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.io.*;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.*;
-import java.util.zip.DeflaterInputStream;
-import java.util.zip.GZIPInputStream;
 
 /**
  * Created by 10295 on 2016/7/10.
@@ -35,7 +26,6 @@ import java.util.zip.GZIPInputStream;
 public class FindResourcesUtil {
     private static Logger log=TestSlf4j.getLogger(FindResourcesUtil.class);
     public static Map<String,List<BtAcg>> map=new HashMap<String, List<BtAcg>>();
-
     /**
      * 多线程从Btacg搜索关键字资源种子
      * @param threadPoolTaskExecutor
@@ -104,7 +94,7 @@ public class FindResourcesUtil {
                             break;
                         }
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        TestSlf4j.outputLog(e,log);
                     }
                 }
                 if(flag){
@@ -166,62 +156,87 @@ public class FindResourcesUtil {
      */
     public static void downLoad(String href,String outputPath){
         System.out.println("下载链接"+href);
-        OutputStream fos = null;
-        HttpURLConnection connection = null;
-        InputStream inputStream=null;
+        OutputStream outputStream = null;
+        HttpEntity httpEntity=null;
+        String filename=null;
+        String str=null;
+        CloseableHttpResponse closeableHttpResponse=null;
         try {
-            URL url = new URL(href);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.connect();
-            String contentEncoding=connection.getContentEncoding();
-            String str=null;
-            if(contentEncoding.contains("deflate")) {
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpGet httpGet = new HttpGet(href);
-                org.apache.http.HttpResponse httpResponse=httpclient.execute(httpGet);
-                HttpEntity entity = httpResponse.getEntity();
-                str= EntityUtils.toString(new DeflateDecompressingEntity(entity));
-            }else {
-                inputStream = new BufferedInputStream(connection.getInputStream());
+            closeableHttpResponse=BiliUtil.doGet(href);
+            httpEntity=closeableHttpResponse.getEntity();
+            Class c=httpEntity.getClass().getSuperclass();
+            Field field=c.getDeclaredField("wrappedEntity");
+            field.setAccessible(true);
+            String values=field.get(httpEntity).toString();
+            values=values.substring(values.indexOf("[")+1,values.indexOf("]"));
+            Map<String,String> map=new HashMap<String, String>();
+            for(String value:values.split(",")){
+                map.put(value.split(":")[0],value.split(":")[1].trim());
+            }
+            File file=new File(outputPath);
+            FileUtils.write(file,"UTF-8");
+            outputStream=new FileOutputStream(file);
+            httpEntity.writeTo(outputStream);
+            if(href.contains("comment.bilibili.com")) {
+                saveDanmu(outputStream,file);
             }
 
-            String filename=null;
-            if(href.lastIndexOf("=")!=-1){
-                filename=href.substring(href.lastIndexOf("=")+1);
-            }else if(href.lastIndexOf("/")!=-1){
-                filename=href.substring(href.lastIndexOf("/")+1);
-            }
-            else{
-                filename=System.currentTimeMillis()+"";
-            }
-            File file=new File(outputPath+filename);
-            if(contentEncoding.contains("deflate")) {
-                FileUtils.writeStringToFile(file,str);
-                return;
-            }
-            fos = new FileOutputStream(file);
-            byte[] buf = new byte[1024];
-            int size=0;
-            while ((size = inputStream.read(buf)) != -1) {
-                fos.write(buf, 0, size);
-            }
         } catch (MalformedURLException e) {
             TestSlf4j.outputLog(e,log);
         } catch (IOException e) {
+            if(e.toString().contains("Connection timed out")){
+                downLoad(href,outputPath);
+            }
+        } catch (NoSuchFieldException e) {
             TestSlf4j.outputLog(e,log);
-        }finally {
-            try{
-                if(inputStream!=null){
-                    inputStream.close();
-                }
-                if(fos!=null){
-                    fos.close();
-                }
-                if(connection!=null) {
-                    connection.disconnect();
-                }
+        } catch (IllegalAccessException e) {
+            TestSlf4j.outputLog(e,log);
+        } finally {
+            try {
+                EntityUtils.consume(httpEntity);
             } catch (IOException e) {
                 TestSlf4j.outputLog(e,log);
+            }
+        }
+
+    }
+
+    public static void saveDanmu(OutputStream outputStream,File file){
+        SAXReader saxReader=new SAXReader();
+        InputStream inputStream=null;
+        int count=0;
+        int max_count=0;
+        int min_count=0;
+        try {
+            inputStream=new FileInputStream(file);
+            org.dom4j.Document document=saxReader.read(inputStream);
+            count=saxReader.read(file).getRootElement().elements("d").size();
+            max_count=Integer.parseInt(document.getRootElement().element("maxlimit").getStringValue());
+            min_count=Integer.parseInt(BiliUtil.getPropertie("danmu%"));
+            if(min_count==0){
+                min_count=1;
+            }else if(Integer.parseInt(BiliUtil.getPropertie("danmu%"))<100){
+                min_count=max_count*min_count/100;
+            }
+
+        } catch (DocumentException e) {
+            TestSlf4j.outputLog(e,log);
+        } catch (FileNotFoundException e) {
+            TestSlf4j.outputLog(e,log);
+        }finally {
+            if(count<min_count){
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                log.info(file.getName()+"只有"+count+"条弹幕达不到"+min_count+"条最低标准不予保留！！！");
+                file.delete();
             }
         }
 

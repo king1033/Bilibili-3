@@ -30,11 +30,11 @@
 	</update>
 	
 	<insert id="insertBili" parameterType="org.pqh.entity.Bili">
-		insert into AID values(#{aid},#{tid},#{typename},#{arctype},#{play},#{review},#{video_review},#{favorites},#{title},#{allow_bp},#{allow_feed},#{allow_download},#{description},#{tag},#{pic},#{author},#{mid},#{face},#{pages},#{instant_server},#{created},#{created_at},#{credit},#{coins},#{spid},#{src},#{cid},#{partname},#{offsite},#{typename2},#{partid},#{season_id},#{season_index},#{season_episode})
+		insert into AID values(#{aid},#{tid},#{typename},#{arctype},#{play},#{review},#{video_review},#{favorites},#{title},#{allow_bp},#{allow_feed},#{allow_download},#{description},#{tag},#{pic},#{author},#{mid},#{face},#{pages},#{instant_server},#{created},#{created_at},#{credit},#{coins},#{spid},#{src},#{cid},#{partname},#{offsite},#{typename2},#{partid},#{sp_title},#{season_id},#{season_index},#{season_episode},#{code},#{error},#{link},#{bangumi_id})
 	</insert>
 
 	<update id="updateBili" parameterType="org.pqh.entity.Bili">
-		UPDATE aid SET tid=#{tid},typename=#{typename},arctype=#{arctype},play=#{play},review=#{review},video_review=#{video_review},favorites=#{favorites},title=#{title},allow_bp=#{allow_bp},allow_feed=#{allow_feed},allow_download=#{allow_download},description=#{description},tag=#{tag},pic=#{pic},author=#{author},mid=#{mid},face=#{face},pages=#{pages},instant_server=#{instant_server},created=#{created},created_at=#{created_at},credit=#{credit},coins=#{coins},spid=#{spid},src=#{src},cid=#{cid},partname=#{partname},offsite=#{offsite},season_id=#{season_id},season_index=#{season_index},season_episode=#{season_episode} WHERE aid=#{aid}
+		UPDATE aid SET tid=#{tid},typename=#{typename},arctype=#{arctype},play=#{play},review=#{review},video_review=#{video_review},favorites=#{favorites},title=#{title},allow_bp=#{allow_bp},allow_feed=#{allow_feed},allow_download=#{allow_download},description=#{description},tag=#{tag},pic=#{pic},author=#{author},mid=#{mid},face=#{face},pages=#{pages},instant_server=#{instant_server},created=#{created},created_at=#{created_at},credit=#{credit},coins=#{coins},spid=#{spid},src=#{src},cid=#{cid},partname=#{partname},offsite=#{offsite},typename2=#{typename2},partid=#{partid},sp_title=#{sp_title},season_id=#{season_id},season_index=#{season_index},season_episode=#{season_episode},code=#{code},error=#{error},link=#{link},bangumi_id=#{bangumi_id} WHERE aid=#{aid}
 	</update>
 
 	<insert id="insertCid" parameterType="org.pqh.entity.Bili">
@@ -103,11 +103,13 @@
 		insert into bangumi values(#{bangumi_id},#{season_id},#{title},#{allow_download})
 	</insert>
 
-	<select id="selectinsertBangumi" parameterType="int" resultType="org.pqh.entity.Bangumi">
-		select * from bangumi where bangumi_id=#{bangumi_id}
+	<select id="selectBangumi_id" parameterType="String" resultType="org.pqh.entity.Bili">
+		SELECT aid,cid,partid,partname,a.bangumi_id,b.title FROM aid a JOIN bangumi b ON a.bangumi_id=b.bangumi_id AND a.bangumi_id in (${bangumi_id})
 	</select>
 
 	<update id="updateBangumi" parameterType="org.pqh.entity.Bangumi">
 		update bangumi set season_id=#{season_id},title=#{title},allow_download=#{allow_download} where bangumi_id=#{bangumi_id}
 	</update>
+
+
 </mapper>

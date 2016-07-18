@@ -6,5 +6,4 @@ public interface InsertService {
 	void insertLimit(Integer startaid);
 	void insertCid(int cid);
 	void insertVstorage(int cid);
-	Integer getTimer();
 }

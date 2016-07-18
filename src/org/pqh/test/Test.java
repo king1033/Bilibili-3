@@ -3,31 +3,26 @@ package org.pqh.test;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.deploy.net.HttpResponse;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.util.JSONUtils;
 import org.apache.commons.io.FileUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.DeflateDecompressingEntity;
-import org.apache.http.client.entity.GzipDecompressingEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
-import org.dom4j.io.SAXReader;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.runner.RunWith;
 import org.pqh.dao.BiliDao;
 import org.pqh.dao.VstorageDao;
-import org.pqh.entity.*;
+import org.pqh.entity.Data;
+import org.pqh.entity.Vstorage;
 import org.pqh.service.AvCountService;
 import org.pqh.service.InsertService;
 import org.pqh.service.InsertServiceImpl;
-import org.pqh.util.*;
+import org.pqh.util.BiliUtil;
+import org.pqh.util.Constant;
+import org.pqh.util.FindResourcesUtil;
+import org.pqh.util.TestSlf4j;
 import org.springframework.core.task.TaskRejectedException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -35,17 +30,18 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.zip.GZIPInputStream;
 
 /**
  * Created by Reborn on 2016/2/5.
@@ -59,6 +55,8 @@ public class Test {
     @Resource
     BiliDao biliDao;
     @Resource
+    VstorageDao vstorageDao;
+    @Resource
     InsertService insertService;
     @Resource
     AvCountService avCountService;
@@ -67,11 +65,9 @@ public class Test {
         Test test=new Test();
         //getUrl("669933500564212");
 //        test.saveDataBase();
-
-
 //        String filename=FindResourcesUtil.switchFileName(btAcg.getResourceName());
 //        FindResourcesUtil.downLoadTorrent("http://www.kuaipic.com/uploads/userup/231761/ef13541d77e923aeb125.jpg", FileSystemView.getFileSystemView().getHomeDirectory().getAbsolutePath());
-//         FindResourcesUtil.downLoadTorrent("http://comment.bilibili.com/3974749.xml","G:\\");
+//        FindResourcesUtil.downLoad("http://comment.bilibili.com/5275150.xml","abc/test.xml");
 
     }
 
@@ -82,9 +78,82 @@ public class Test {
     public void testMethod() {
 //        Map<String,List<BtAcg>> map=FindResourcesUtil.findBy_Btacg(threadPoolTaskExecutor,"银魂");
 //        Map<String,String> hrefMap=FindResourcesUtil.screenUrl(map,new BtAcg("BDRIP",null,null));
-            BiliUtil.createConfig(biliDao,new File("src/config.properties"));
+//            BiliUtil.createConfig(biliDao,new File("src/config.properties"));
+//        downLoadDanMu("%权力的游戏%",biliDao);
+        Map<String,String> map=new HashMap<String, String>();
+        map.put("title","权力的游戏");
+        List<Data> list=vstorageDao.selectData(map);
     }
 
+    public void checkId(Map<String,String> map){
+        int count=0;
+        for(String key:map.keySet()) {
+            String error=map.get(key)+"：不合法ID参数,ID参数正确格式应该是纯数字，如果是多个ID则数字之间要用逗号隔开";
+            if(map.get(key).indexOf(",")==-1&&map.get(key).replaceAll("\\D","").length()==0){
+                throw new RuntimeException(error);
+            }
+            for (String s : map.get(key).split(",")) {
+                if (key.contains("id")&&s.replaceAll("\\D", "").length() == 0) {
+                    throw new RuntimeException(error);
+                }else{
+                    count++;
+                }
+            }
+        }
+        log.info("共检测出"+count+"个ID准备拼接到sql语句里面进行查询");
+    }
+    /**
+     * 查询条件
+     * @param map
+     * @param biliDao
+     */
+    public void downLoadDanMu(Map<String,String> map,BiliDao biliDao){
+        long a=System.currentTimeMillis();
+        this.checkId(map);
+        List<Data> dataList=vstorageDao.selectData(map);
+        long b=System.currentTimeMillis();
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTimeInMillis(b-a);
+        log.info("查询耗费时间"+calendar.get(Calendar.MINUTE)+"m\t"+calendar.get(Calendar.SECOND)+"s");
+        Map<String,List<Data>> listMap=new HashMap<String, List<Data>>();
+        for(Data data:dataList){
+            String dirname= FindResourcesUtil.switchFileName(data.getTitle());
+            if(listMap.get(dirname)==null){
+                listMap.put(dirname,new ArrayList<Data>());
+            }
+            listMap.get(dirname).add(data);
+        }
+        for(String dirName:listMap.keySet()){
+            dataList=listMap.get(dirName);
+            for(Data data:dataList){
+                String path=dirName;
+                if(dataList.size()>1){
+                    if(data.getSubtitle()!=null){
+                        path+="/"+FindResourcesUtil.switchFileName(data.getSubtitle());
+                    }else{
+                        path+="/"+data.getCid()+"";
+                    }
+                }
+                FindResourcesUtil.downLoad("http://comment.bilibili.com/"+data.getCid()+".xml","弹幕/"+path+".xml");
+            }
+            File file=new File(dirName);
+            if(file.isDirectory()) {
+                int fileCount = file.listFiles().length;
+                if (fileCount == 0) {
+                    try {
+                        FileUtils.deleteDirectory(file);
+                    } catch (IOException e) {
+                        TestSlf4j.outputLog(e,log);
+                    }
+                }
+            }
+        }
+    }
+    /**
+     * 获取动画开播日期
+     * @param document
+     * @return
+     */
     public static String getInfo(Document document){
         if(document.select("ul.polysemantList-wrapper .selected").text().contains("动画")){
             Elements elements=document.select("div.basic-info>dl>dt");
@@ -202,6 +271,7 @@ public class Test {
         File old7zFile=new File(BiliUtil.getPropertie("serverPath")+date_3+"\\");
         FileUtils.deleteQuietly(old7zFile);
         FileUtils.deleteQuietly(oldDir);
+
     }
 
     /**

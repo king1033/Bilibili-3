@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+	<title></title>
+	<script type="text/javascript" src="../js/echarts.min.js"></script>
+	<script type="text/javascript" src="../js/jquery-2.2.3.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var dom=document.getElementById("container");
+			var myChart=echarts.init(dom);
+			var base = +new Date(1968, 9, 3);
+			var option = {
+				tooltip: {
+					trigger: 'axis',
+					position: function (pt) {
+						return [pt[0], '10%'];
+					},
+					formatter:'{b}视频投稿量为{c}个'
+				},
+				title: {
+					left: 'center',
+					text: '大数据量折线图',
+				},
+				legend: {
+					top: 'bottom',
+					data:['意向']
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						dataView: {show: true, readOnly: false},
+						magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+						restore: {show: true},
+						saveAsImage: {show: true}
+					}
+				},
+				xAxis: {
+					type: 'category',
+					boundaryGap: false,
+				},
+				yAxis: {
+					type: 'value',
+					boundaryGap: [0, '100%']
+				},
+				dataZoom: [{
+					type: 'inside',
+					start: 0,
+					end: 10
+				}, {
+					start: 0,
+					end: 10
+				}],
+				series: [
+					{
+						name:'投稿量',
+						type:'line',
+						smooth:true,
+						symbol: 'none',
+						sampling: 'average',
+						itemStyle: {
+							normal: {
+								color: 'rgb(255, 70, 131)'
+							}
+						},
+						areaStyle: {
+							normal: {
+								color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+									offset: 0,
+									color: 'rgb(255, 158, 68)'
+								}, {
+									offset: 1,
+									color: 'rgb(255, 70, 131)'
+								}])
+							}
+						},
+					}
+				]
+			};
+			$.get({
+				url:'findAvCount.do',
+				dataType:'json',
+				async:false,
+				success:function(json){
+					option.xAxis.data=json.Date;
+					option.series[0].data=json.Count;
+				},
+				error:function(){
+					alert('请求失败');
+				}
+			})
+
+			console.log(option);
+			 myChart.setOption(option);
+
+		})
+	</script>
+</head>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+</body>
+</html>

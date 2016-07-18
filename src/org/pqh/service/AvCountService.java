@@ -3,25 +3,19 @@ package org.pqh.service;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.pqh.dao.BiliDao;
-import org.pqh.entity.*;
-import org.pqh.test.Test;
+import org.pqh.entity.AvCount;
+import org.pqh.entity.AvPlay;
+import org.pqh.entity.ComparatorAvPlay;
+import org.pqh.entity.Ranking;
 import org.pqh.util.BiliUtil;
 import org.pqh.util.Constant;
-import org.quartz.*;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import javax.swing.*;
-import java.io.File;
-import java.io.IOException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Calendar;
 
 /**
  * Created by 10295 on 2016/5/19.
@@ -73,7 +67,12 @@ public class AvCountService {
         for(AvPlay avPlay1:avPlays){
             avPlay1.setRanking(ranking--);
         }
-        biliDao.insertAvPlay(avPlays);
+        try {
+            biliDao.insertAvPlay(avPlays);
+        }catch (DuplicateKeyException e){
+
+        }
+
     }
 
     public  Map<String,Object> getAvPlay(){
