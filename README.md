@@ -43,13 +43,16 @@ Tomcat7<br/>
 -----------------------------------------------------------------------------------------------------------------<br/>
 项目初始化：<br/>
 第一步：当然就是Clone项目到本地，自带项目IDEA配置文件，直接用<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998323147026568/pid/005Jr6NYgw1f5x65v49sag310b0klu0x">IDEA Clone</a>只需要配置好tomcat路径可以即可直接运行。<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998282424045592/pid/005Jr6NYgw1f5x1hv77cog30tx0l0b29">IDEA Tomcat配置<a/><br/>
-第二步：用src目录下的bilibili.sql创建数据库<br/>
+第二步：<a href="http://pan.baidu.com/s/1dFx7zOX">下载项目jar包</a>，这里没有同步到git仓库原因是spring和mybatis框架以及杂七杂八用到的jar包将近20M的体积，不方便clone进行同步，所以另外放到云盘</br>
+jar包下载完后放到项目目录里面，并进行构造路径设置。</br>
+![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/包路径设置.png)
+第三步：用src目录下的bilibili.sql创建数据库<br/>
 ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/创建数据库.png)<br/>
 如无意外创建完毕表结构应该跟下图一样。
 数据库结构图
 ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/数据库结构详解.png)<br/>
 <a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998288506219148/pid/005Jr6NYgw1f5x22mc4zlg30x40bye81">数据库部分数据展示</a>
-第三步：方法调试<br/>
+第死步：方法调试<br/>
 ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/方法测试.png)<br/>
 
 备注：调试接口一需要配置bilibli账号密码，否则会报错，如图所示：
