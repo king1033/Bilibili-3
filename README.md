@@ -42,7 +42,7 @@ Tomcat7<br/>
 <a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998282424045592/pid/005Jr6NYgw1f5x1fnohh7g30zg0i07wv">echart动态效果</a><br/>
 -----------------------------------------------------------------------------------------------------------------<br/>
 项目初始化：<br/>
-第一步：当然就是Clone项目到本地，自带项目IDEA配置文件，直接用<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998323147026568/pid/005Jr6NYgw1f5x65v49sag310b0klu0x">IDEA Clone</a>只需要配置好tomcat路径可以即可直接运行。<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998282424045592/pid/005Jr6NYgw1f5x1hv77cog30tx0l0b29">IDEA Tomcat配置<a/><br/>
+第一步：当然就是Clone项目到本地，自带项目IDEA配置文件，直接用<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998323147026568/pid/005Jr6NYgw1f5x65v49sag310b0klu0x">IDEA Clone</a>只需要配置好tomcat路径以及jar路径即可。<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998282424045592/pid/005Jr6NYgw1f5x1hv77cog30tx0l0b29">IDEA Tomcat配置<a/><br/>
 第二步：<a href="http://pan.baidu.com/s/1dFx7zOX">下载项目jar包</a>，这里没有同步到git仓库原因是spring和mybatis框架以及杂七杂八用到的jar包将近20M的体积，不方便clone进行同步，所以另外放到云盘</br>
 jar包下载完后放到项目目录里面，并进行构造路径设置。</br>
 ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/包路径设置.png)

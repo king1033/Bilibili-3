@@ -6,7 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ca4e6bf-c4d9-4691-b0c2-a4be8a7de024" name="Default" comment="不同步jar包">
+    <list default="true" id="5ca4e6bf-c4d9-4691-b0c2-a4be8a7de024" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
@@ -64,8 +64,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
             <state split_layout="FIRST">
-              <first_editor vertical-scroll-proportion="0.6422535">
-                <caret line="54" column="2" selection-start-line="54" selection-start-column="2" selection-end-line="54" selection-end-column="2" />
+              <first_editor vertical-scroll-proportion="0.7492958">
+                <caret line="44" column="189" selection-start-line="44" selection-start-column="189" selection-end-line="44" selection-end-column="189" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -1100,7 +1100,7 @@
       <workItem from="1468840177437" duration="19860000" />
       <workItem from="1468865038352" duration="97000" />
       <workItem from="1468865284850" duration="41000" />
-      <workItem from="1468865597550" duration="1094000" />
+      <workItem from="1468865597550" duration="1311000" />
     </task>
     <task id="LOCAL-00001" summary="abc">
       <created>1467554043811</created>
@@ -1162,7 +1162,13 @@
       <option name="project" value="LOCAL" />
       <updated>1468866641903</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="不同步jar包">
+      <created>1468866930290</created>
+      <option name="number" value="00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1468866930290</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1198,7 +1204,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="773995000" />
+    <option name="totallyTimeSpent" value="774212000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1693,8 +1699,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="FIRST">
-          <first_editor vertical-scroll-proportion="0.6422535">
-            <caret line="54" column="2" selection-start-line="54" selection-start-column="2" selection-end-line="54" selection-end-column="2" />
+          <first_editor vertical-scroll-proportion="0.7492958">
+            <caret line="44" column="189" selection-start-line="44" selection-start-column="189" selection-end-line="44" selection-end-column="189" />
             <folding />
           </first_editor>
           <second_editor />
