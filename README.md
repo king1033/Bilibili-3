@@ -39,7 +39,7 @@ Tomcat7<br/>
 <h3 >echart柱状图</h3><br/>
 ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/echart柱状图.png)<br/>
 <br/>
-<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998282424045592/pid/005Jr6NYgw1f5x1fnohh7g30zg0i07wv">echart动态效果(动态图有15M多,小水管慎重打开)：</a><br/>
+<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998282424045592/pid/005Jr6NYgw1f5x1fnohh7g30zg0i07wv">echart动态效果</a><br/>
 -----------------------------------------------------------------------------------------------------------------<br/>
 项目初始化：<br/>
 第一步：当然就是Clone项目到本地，自带项目IDEA配置文件，直接用<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998323147026568/pid/005Jr6NYgw1f5x65v49sag310b0klu0x">IDEA Clone</a>只需要配置好tomcat路径可以即可直接运行。<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998282424045592/pid/005Jr6NYgw1f5x1hv77cog30tx0l0b29">IDEA Tomcat配置<a/><br/>
@@ -52,7 +52,7 @@ jar包下载完后放到项目目录里面，并进行构造路径设置。</br>
 数据库结构图
 ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/数据库结构详解.png)<br/>
 <a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998288506219148/pid/005Jr6NYgw1f5x22mc4zlg30x40bye81">数据库部分数据展示</a>
-第死步：方法调试<br/>
+第四步：方法调试<br/>
 ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/方法测试.png)<br/>
 
 备注：调试接口一需要配置bilibli账号密码，否则会报错，如图所示：
