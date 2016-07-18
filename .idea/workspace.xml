@@ -6,7 +6,7 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ca4e6bf-c4d9-4691-b0c2-a4be8a7de024" name="Default" comment="1.包路径设置说明图">
+    <list default="true" id="5ca4e6bf-c4d9-4691-b0c2-a4be8a7de024" name="Default" comment="不同步jar包">
       <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/annotations-1.0.0.jar" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/commons-beanutils-1.9.2.jar" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/commons-collections-3.2.2.jar" afterPath="" />
@@ -1147,7 +1147,7 @@
       <workItem from="1468840177437" duration="19860000" />
       <workItem from="1468865038352" duration="97000" />
       <workItem from="1468865284850" duration="41000" />
-      <workItem from="1468865597550" duration="671000" />
+      <workItem from="1468865597550" duration="783000" />
     </task>
     <task id="LOCAL-00001" summary="abc">
       <created>1467554043811</created>
@@ -1197,7 +1197,13 @@
       <option name="project" value="LOCAL" />
       <updated>1468866207663</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="不同步jar包">
+      <created>1468866522594</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1468866522595</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1233,7 +1239,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="773572000" />
+    <option name="totallyTimeSpent" value="773684000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1301,7 +1307,8 @@
     <MESSAGE value="1.修改获取番剧播放量信息接口&#10;2.创建常量类，把接口url等常量字符串放进去&#10;3.获取btacg种子资源方法变成多线程获取&#10;4.改变筛选种子资源链接的方法&#10;5.添加数据库结构图，echart效果图，项目方法测试图&#10;6.添加创建数据库结构sql文件" />
     <MESSAGE value="1.增加批量导入aid(AV号)，cid(弹幕编号)查询视频信息并批量下载弹幕功能，或者根据关键字和typeid(视频分区)批量下载弹幕功能&#10;2.增加弹幕池下限配置&#10;3.增加配置说明文档" />
     <MESSAGE value="1.包路径设置说明图" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.包路径设置说明图" />
+    <MESSAGE value="不同步jar包" />
+    <option name="LAST_COMMIT_MESSAGE" value="不同步jar包" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
