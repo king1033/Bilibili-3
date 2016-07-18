@@ -6,13 +6,56 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ca4e6bf-c4d9-4691-b0c2-a4be8a7de024" name="Default" comment="1.增加批量导入aid(AV号)，cid(弹幕编号)查询视频信息并批量下载弹幕功能，或者根据关键字和typeid(视频分区)批量下载弹幕功能&#10;2.增加弹幕池下限配置&#10;3.增加配置说明文档">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/WebContent/image/包路径设置.png" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/util/config.properties" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/org/pqh/util/log4j.properties" afterPath="" />
+    <list default="true" id="5ca4e6bf-c4d9-4691-b0c2-a4be8a7de024" name="Default" comment="1.包路径设置说明图">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/annotations-1.0.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/commons-beanutils-1.9.2.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/commons-collections-3.2.2.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/commons-dbcp2-2.1.1.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/commons-io-2.4.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/commons-lang-2.6.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/commons-logging-1.2.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/commons-pool2-2.4.2.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/dom4j-2.0.0-RC1.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/ezmorph-1.0.6.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/hamcrest-core-1.3.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/httpclient-4.5.2.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/httpcore-4.4.4.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/jackson-annotations-2.7.4.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/jackson-core-2.7.4.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/jackson-databind-2.7.4.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/json-lib-2.4-jdk15.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/jsoup-1.9.2.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/junit-4.12.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/log4j-1.2.16.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/mybatis-3.4.1-20160526.192450-39.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/mybatis-spring-1.3.1-20160507.052107-8.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/mysql-connector-java-5.1.35-bin.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/org.apache.commons.io-2.4.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/quartz-2.2.3.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/quartz-jobs-2.2.3.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/slf4j-api-1.7.7.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/slf4j-log4j12-1.7.7.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-aop-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-aspects-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-beans-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-context-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-context-support-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-core-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-expression-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-instrument-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-instrument-tomcat-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-jdbc-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-jms-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-messaging-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-orm-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-oxm-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-test-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-tx-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-web-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-webmvc-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-webmvc-portlet-4.2.6.RELEASE.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-websocket-4.2.6.RELEASE.jar" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebContent/WEB-INF/classes/config.properties" afterPath="$PROJECT_DIR$/WebContent/WEB-INF/classes/config.properties" />
     </list>
     <ignored path="BiliBili.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -64,11 +107,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
             <state split_layout="FIRST">
-              <first_editor vertical-scroll-proportion="0.31547618">
+              <first_editor vertical-scroll-proportion="0.31594634">
                 <caret line="47" column="85" selection-start-line="47" selection-start-column="85" selection-end-line="47" selection-end-column="85" />
                 <folding />
               </first_editor>
@@ -80,11 +123,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.properties" pinned="false" current-in-tab="false">
+      <file leaf-file-name="config.properties" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/config.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.27737227">
+              <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -195,10 +238,10 @@
     <treeState />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-6" />
-    <option name="y" value="5" />
-    <option name="width" value="1616" />
-    <option name="height" value="916" />
+    <option name="x" value="-20" />
+    <option name="y" value="2" />
+    <option name="width" value="1612" />
+    <option name="height" value="853" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -320,24 +363,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="WebContent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BiliBili" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Bilibili" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WebContent" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="image" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1122,7 +1147,7 @@
       <workItem from="1468840177437" duration="19860000" />
       <workItem from="1468865038352" duration="97000" />
       <workItem from="1468865284850" duration="41000" />
-      <workItem from="1468865597550" duration="341000" />
+      <workItem from="1468865597550" duration="671000" />
     </task>
     <task id="LOCAL-00001" summary="abc">
       <created>1467554043811</created>
@@ -1166,7 +1191,13 @@
       <option name="project" value="LOCAL" />
       <updated>1468863928821</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="1.包路径设置说明图">
+      <created>1468866207663</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1468866207663</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1202,7 +1233,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="773242000" />
+    <option name="totallyTimeSpent" value="773572000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1214,27 +1245,28 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="5" width="1616" height="916" extended-state="0" />
-    <editor active="true" />
+    <frame x="-20" y="2" width="1612" height="853" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32867134" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13303342" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13337629" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32840723" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4083916" sideWeight="0.5109536" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22824427" sideWeight="0.5102564" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36643356" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36507937" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30053192" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286219" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977098" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32845744" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23393317" sideWeight="0.4897436" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23453608" sideWeight="0.4897436" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977098" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3251318" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
@@ -1245,7 +1277,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3257979" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3643617" sideWeight="0.4890464" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30053192" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1269,7 +1300,8 @@
     <MESSAGE value="1.配置参数实体类增加备注属性&#10;2.更新cookie过期提示并同步配置文件以及数据库配置&#10;3.更新匹配正则表达式方法&#10;4.获取配置信息方法拆开两个方法，获取单个和获取所有&#10;5.添加从网站上爬取代理方法&#10;6.添加下载comment.bilibili.com/{cid}.xml弹幕文件的方法&#10;7." />
     <MESSAGE value="1.修改获取番剧播放量信息接口&#10;2.创建常量类，把接口url等常量字符串放进去&#10;3.获取btacg种子资源方法变成多线程获取&#10;4.改变筛选种子资源链接的方法&#10;5.添加数据库结构图，echart效果图，项目方法测试图&#10;6.添加创建数据库结构sql文件" />
     <MESSAGE value="1.增加批量导入aid(AV号)，cid(弹幕编号)查询视频信息并批量下载弹幕功能，或者根据关键字和typeid(视频分区)批量下载弹幕功能&#10;2.增加弹幕池下限配置&#10;3.增加配置说明文档" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.增加批量导入aid(AV号)，cid(弹幕编号)查询视频信息并批量下载弹幕功能，或者根据关键字和typeid(视频分区)批量下载弹幕功能&#10;2.增加弹幕池下限配置&#10;3.增加配置说明文档" />
+    <MESSAGE value="1.包路径设置说明图" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.包路径设置说明图" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1674,14 +1706,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/config.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/pqh/test/Test.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1695,7 +1719,7 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="FIRST">
-          <first_editor vertical-scroll-proportion="0.31547618">
+          <first_editor vertical-scroll-proportion="0.31594634">
             <caret line="47" column="85" selection-start-line="47" selection-start-column="85" selection-end-line="47" selection-end-column="85" />
             <folding />
           </first_editor>
@@ -1708,6 +1732,14 @@
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.3638614">
           <caret line="29" column="52" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/config.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27737227">
+          <caret line="12" column="6" selection-start-line="12" selection-start-column="6" selection-end-line="12" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
