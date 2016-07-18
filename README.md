@@ -64,11 +64,11 @@ jar包下载完后放到项目目录里面，并进行构造路径设置。</br>
 数据库打包到OneDriver：<br/>
 <a name="down" href="https://1drv.ms/f/s!AqIrS5Y3YYnjg00rhqs5pOw6KO4n">数据库下载</a><br/>
 数据库文件信息自行校验<br/>
-大小：	532, 435, 394 字节
-修改时间：2016-07-19 00:33:09
-MD5：	6A52D8FC8D2FED0EBCCDFDD1A6B69E3F
-SHA1：	196EFB289BE0D40F053FCEB767600CE04B35E3B8
-CRC32：2E7005C8
+大小：	532, 435, 394 字节<br/>
+修改时间：2016-07-19 00:33:09<br/>
+MD5：	6A52D8FC8D2FED0EBCCDFDD1A6B69E3F<br/>
+SHA1：	196EFB289BE0D40F053FCEB767600CE04B35E3B8<br/>
+CRC32：2E7005C8<br/>
 压缩包解压密码“A班姬路”，也是我贴吧ID,关于项目问题可以<a href="http://tieba.baidu.com/im/pcmsg?from=820363216">私信</a>。<br/>
 数据库如无意外会每天更新一次，视网络情况而定<br/>
 以上~~~~~~~~~~~~~~~~~~~~~~<br/>
