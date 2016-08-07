@@ -42,6 +42,15 @@ public class Bili implements Serializable{
 	private String error;
 	private String link;
 	private Integer bangumi_id;
+	private Integer acpt;
+
+	public Integer getAcpt() {
+		return acpt;
+	}
+
+	public void setAcpt(Integer acpt) {
+		this.acpt = acpt;
+	}
 
 	public Integer getBangumi_id() {
 		return bangumi_id;

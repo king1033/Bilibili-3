@@ -1,7 +1,8 @@
 package org.pqh.entity;
 
+import org.pqh.util.TimeUtil;
+
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 
 /**
  * Created by 10295 on 2016/7/6.
@@ -38,6 +39,6 @@ public class Ranking {
     public Ranking(Timestamp key, String value) {
         this.key = key;
         this.value = value;
-        this.formatTime=new SimpleDateFormat("yyyy-MM-dd HH:mm").format(key);
+        this.formatTime=TimeUtil.formatDateToString(key,null);
     }
 }

@@ -1,27 +1,38 @@
 package org.pqh.test;
 
 import org.pqh.service.InsertService;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Created by 10295 on 2016/5/9.
  */
 public class TaskCid implements Runnable {
     private int cid;
-    private InsertService insertService;
+    public static InsertService insertService;
+    private Method method;
 
-    public TaskCid(int cid, InsertService insertService) {
+    public TaskCid(int cid, String methodName) {
         this.cid = cid;
-        this.insertService=insertService;
-    }
+        try {
+            this.method = insertService.getClass().getDeclaredMethod(methodName, Integer.class);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
 
+    }
 
     @Override
     public void run() {
-        insertService.insertCid(cid);
-     }
-    public void print(ThreadPoolTaskExecutor taskExecutor){
-        System.out.println("当前活动线程"+taskExecutor.getActiveCount());
+        try {
+            method.invoke(insertService,cid);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
+
 
 }

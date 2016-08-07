@@ -1,6 +1,7 @@
 package org.pqh.service;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import org.jsoup.nodes.Document;
 import org.pqh.dao.BiliDao;
@@ -8,8 +9,8 @@ import org.pqh.entity.AvCount;
 import org.pqh.entity.AvPlay;
 import org.pqh.entity.ComparatorAvPlay;
 import org.pqh.entity.Ranking;
-import org.pqh.util.BiliUtil;
 import org.pqh.util.Constant;
+import org.pqh.util.CrawlerUtil;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
@@ -47,17 +48,22 @@ public class AvCountService {
     public  void setPlays() {
         Timestamp timestamp=new Timestamp(System.currentTimeMillis());
         List<AvPlay> avPlays=new ArrayList<AvPlay>();
-        JSONObject jsonObject = BiliUtil.jsoupGet(Constant.BANGUMIAPI,JSONObject.class, Constant.GET);
+        JSONObject jsonObject = CrawlerUtil.jsoupGet(Constant.BANGUMIAPI,JSONObject.class, Constant.GET);
         JSONArray jsonArray=jsonObject.getJSONObject("result").getJSONArray("list");
         for (Object object : jsonArray) {
             jsonObject=JSONObject.fromObject(object);
             String bgmid=jsonObject.get("season_id").toString();
             String title=jsonObject.get("title").toString();
-            Document document=BiliUtil.jsoupGet(Constant.BGMIDAPI+bgmid+".ver",Document.class,Constant.GET);
+            Document document= CrawlerUtil.jsoupGet(Constant.BGMIDAPI+bgmid+".ver",Document.class,Constant.GET);
             String jsonStr=document.body().html();
             jsonStr=jsonStr.substring(jsonStr.indexOf("{"),jsonStr.lastIndexOf("}"))+"}";
             jsonObject=JSONObject.fromObject(jsonStr).getJSONObject("result");
-            int newest_ep_index=jsonObject.getInt("newest_ep_index");
+            int newest_ep_index=0;
+            try {
+                newest_ep_index = jsonObject.getInt("newest_ep_index");
+            }catch (JSONException e){
+                continue;
+            }
             int avgPlay=jsonObject.getInt("play_count")/newest_ep_index;
             AvPlay avPlay=new AvPlay(title,avgPlay,timestamp);
             avPlays.add(avPlay);
@@ -70,7 +76,7 @@ public class AvCountService {
         try {
             biliDao.insertAvPlay(avPlays);
         }catch (DuplicateKeyException e){
-
+            return;
         }
 
     }

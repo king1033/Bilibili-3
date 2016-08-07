@@ -15,17 +15,16 @@ import java.util.Map;
  * Created by 10295 on 2016/7/9.
  */
 public class TsdmUtil {
-    private static String musicHref="http://www.tsdm.net/forum.php?mod=viewthread&tid=104454";
     private static Logger log=TestSlf4j.getLogger(TsdmUtil.class);
     public static final String SC="zh-hans";
     public static final String TC="zh-hant";
     static {
-        BiliUtil.cookie=BiliUtil.getPropertie("TSDMCookie");
+        CrawlerUtil.cookie=PropertiesUtil.getProperties("TSDMCookie",String.class);
     }
     public static List getNewBangumi(){
         List<String> list=new ArrayList<String>();
         Document document= null;
-        document = BiliUtil.jsoupGet(musicHref, Document.class,Constant.GET);
+        document = CrawlerUtil.jsoupGet(Constant.TSDM_MUSIC_INDEX, Document.class,Constant.GET);
         Elements elements=document.select("#postmessage_3261490>a");
 
         for(Element element:elements){
@@ -37,11 +36,12 @@ public class TsdmUtil {
         return list;
     }
 
+
     public static List getMusicHref(List<String> list){
         List<String> musicHref=new ArrayList<String>();
         for(String href:list) {
             Document document = null;
-            document = BiliUtil.jsoupGet(href,Document.class,Constant.GET);
+            document = CrawlerUtil.jsoupGet(href,Document.class,Constant.GET);
             Elements elements=document.select("a:contains(OP)");
             if(elements.size()!=0){
                 musicHref.add(elements.get(0).attr("href"));
@@ -58,8 +58,8 @@ public class TsdmUtil {
         Map<String,String> yunHref=new HashMap<String, String>();
         for(String href:list) {
             Document document = null;
-            document = BiliUtil.jsoupGet(href,Document.class,Constant.GET);
-            for(Element element:document.select("a[href^=http://pan.baidu.com]")){
+            document = CrawlerUtil.jsoupGet(href,Document.class,Constant.GET);
+            for(Element element:document.select("a[href^="+Constant.YUNPAN+"]")){
                 href=element.attr("href");
                 String pwd=BiliUtil.matchStr(document.html(),"密码:\\s*\\w+",String.class).replaceAll("\\W+","");
                 yunHref.put(href,pwd);
@@ -69,9 +69,9 @@ public class TsdmUtil {
     }
 
     public static String switchZN (String chinese,String font){
-        BiliUtil.formMap.put("code",chinese);
-        BiliUtil.formMap.put("operate",font);
-        JSONObject jsonObject=BiliUtil.jsoupGet("http://tool.lu/zhconvert/ajax.html",JSONObject.class,Constant.POST);
+        CrawlerUtil.formMap.put("code",chinese);
+        CrawlerUtil.formMap.put("operate",font);
+        JSONObject jsonObject=CrawlerUtil.jsoupGet(Constant.ZHCONVERT,JSONObject.class,Constant.POST);
         return jsonObject.get("text").toString();
     }
 }

@@ -30,11 +30,11 @@
 	</update>
 	
 	<insert id="insertBili" parameterType="org.pqh.entity.Bili">
-		insert into AID values(#{aid},#{tid},#{typename},#{arctype},#{play},#{review},#{video_review},#{favorites},#{title},#{allow_bp},#{allow_feed},#{allow_download},#{description},#{tag},#{pic},#{author},#{mid},#{face},#{pages},#{instant_server},#{created},#{created_at},#{credit},#{coins},#{spid},#{src},#{cid},#{partname},#{offsite},#{typename2},#{partid},#{sp_title},#{season_id},#{season_index},#{season_episode},#{code},#{error},#{link},#{bangumi_id})
+		insert into AID values(#{aid},#{tid},#{typename},#{arctype},#{play},#{review},#{video_review},#{favorites},#{title},#{allow_bp},#{allow_feed},#{allow_download},#{description},#{tag},#{pic},#{author},#{mid},#{face},#{pages},#{instant_server},#{created},#{created_at},#{credit},#{coins},#{spid},#{src},#{cid},#{partname},#{offsite},#{typename2},#{partid},#{sp_title},#{season_id},#{season_index},#{season_episode},#{error},#{link},#{bangumi_id},#{code},#{acpt})
 	</insert>
 
 	<update id="updateBili" parameterType="org.pqh.entity.Bili">
-		UPDATE aid SET tid=#{tid},typename=#{typename},arctype=#{arctype},play=#{play},review=#{review},video_review=#{video_review},favorites=#{favorites},title=#{title},allow_bp=#{allow_bp},allow_feed=#{allow_feed},allow_download=#{allow_download},description=#{description},tag=#{tag},pic=#{pic},author=#{author},mid=#{mid},face=#{face},pages=#{pages},instant_server=#{instant_server},created=#{created},created_at=#{created_at},credit=#{credit},coins=#{coins},spid=#{spid},src=#{src},cid=#{cid},partname=#{partname},offsite=#{offsite},typename2=#{typename2},partid=#{partid},sp_title=#{sp_title},season_id=#{season_id},season_index=#{season_index},season_episode=#{season_episode},code=#{code},error=#{error},link=#{link},bangumi_id=#{bangumi_id} WHERE aid=#{aid}
+		UPDATE aid SET tid=#{tid},typename=#{typename},arctype=#{arctype},play=#{play},review=#{review},video_review=#{video_review},favorites=#{favorites},title=#{title},allow_bp=#{allow_bp},allow_feed=#{allow_feed},allow_download=#{allow_download},description=#{description},tag=#{tag},pic=#{pic},author=#{author},mid=#{mid},face=#{face},pages=#{pages},instant_server=#{instant_server},created=#{created},created_at=#{created_at},credit=#{credit},coins=#{coins},spid=#{spid},src=#{src},cid=#{cid},partname=#{partname},offsite=#{offsite},typename2=#{typename2},partid=#{partid},sp_title=#{sp_title},season_id=#{season_id},season_index=#{season_index},season_episode=#{season_episode},code=#{code},error=#{error},link=#{link},bangumi_id=#{bangumi_id},acpt=#{acpt} WHERE aid=#{aid}
 	</update>
 
 	<insert id="insertCid" parameterType="org.pqh.entity.Bili">
@@ -59,11 +59,11 @@
 
 
 
-	<insert id="insertC" parameterType="map">
+	<insert id="insertC" parameterType="org.pqh.entity.Cid">
 		INSERT INTO cid VALUES (#{cid},#{maxlimit},#{chatid},#{server},#{vtype},#{oriurl},#{aid},#{typeid},#{pid},#{click},#{favourites},#{credits},#{coins},#{fw_click},#{duration},#{arctype},#{danmu},#{bottom},#{sinapi},#{acceptguest},#{acceptaccel})
 	</insert>
 
-	<update id="updateC" parameterType="map">
+	<update id="updateC" parameterType="org.pqh.entity.Cid">
 		UPDATE cid SET maxlimit=#{maxlimit},chatid=#{chatid},server=#{server},vtype=#{vtype},oriurl=#{oriurl},aid=#{aid},typeid=#{typeid},pid=#{pid},click=#{click},favourites=#{favourites},credits=#{credits},coins=#{coins},fw_click=#{fw_click},duration=#{duration},arctype=#{arctype},danmu=#{danmu},bottom=#{bottom},sinapi=#{sinapi},acceptguest=#{acceptguest},acceptaccel=#{acceptaccel} WHERE cid=#{cid}
 	</update>
 

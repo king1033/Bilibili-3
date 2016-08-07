@@ -5,7 +5,6 @@ import org.pqh.entity.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Map;
 
 @Component
 public interface BiliDao {
@@ -24,9 +23,9 @@ public interface BiliDao {
 	int count(int aid);
 	List<Bili> findVCC(@Param("startaid")int a,@Param("overaid")int b);
 
-	void insertC(Map<String,Object> Cid);
+	void insertC(Cid cid);
 
-	void updateC(Map<String,Object> Cid);
+	void updateC(Cid cid);
 	//查询所有日期当天视频投稿量
 	List<AvCount> selectAvCount();
 

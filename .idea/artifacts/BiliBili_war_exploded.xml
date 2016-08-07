@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" build-on-make="true" name="BiliBili:war exploded">
-    <output-path>$PROJECT_DIR$/WebContent</output-path>
-    <root id="root">
+  <artifact type="war" name="BiliBili:war exploded">
+    <output-path>$USER_HOME$/Desktop</output-path>
+    <root id="archive" name="BiliBili_war exploded.war">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="BiliBili" />

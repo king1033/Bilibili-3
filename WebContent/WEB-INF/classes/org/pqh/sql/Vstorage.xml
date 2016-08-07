@@ -11,8 +11,8 @@
     </update>
 
     <insert id="insertData" parameterType="org.pqh.entity.Data">
-        INSERT INTO Data (dp_done_mp4, letv_vu, dp_done_flv,aid, type, vp, author, cover, title, page, dispatch, vid, backup_vid,cache, storage_server, cid, dp_done, duration, mid, dp_done_hdmp4, letv_vid, storage,upload,upload_meta,files,dispatch_servers,letv_addr,subtitle)VALUES
-        (#{dp_done_mp4},#{letv_vu},#{dp_done_flv},#{aid},#{type},#{vp},#{author},#{cover},#{title},#{page},#{dispatch},#{vid},#{backup_vid},#{cache},#{storage_server},#{cid},#{dp_done},#{duration},#{mid},#{dp_done_hdmp4},#{letv_vid},#{storage},#{cid},#{cid},#{cid},#{cid},#{letv_addr},#{subtitle})
+        INSERT INTO Data (cid,aid,dp_done_mp4, letv_vu, dp_done_flv, type, vp, author, cover, title, page, dispatch, vid, backup_vid,cache, storage_server, dp_done, duration, mid, dp_done_hdmp4, letv_vid, storage,upload,upload_meta,files,dispatch_servers,letv_addr,subtitle)VALUES
+        (#{cid},#{aid},#{dp_done_mp4},#{letv_vu},#{dp_done_flv},#{type},#{vp},#{author},#{cover},#{title},#{page},#{dispatch},#{vid},#{backup_vid},#{cache},#{storage_server},#{dp_done},#{duration},#{mid},#{dp_done_hdmp4},#{letv_vid},#{storage},#{cid},#{cid},#{cid},#{cid},#{letv_addr},#{subtitle})
    </insert>
 
     <update id="updateData" parameterType="org.pqh.entity.Data">

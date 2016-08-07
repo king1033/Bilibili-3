@@ -1,5 +1,7 @@
 package org.pqh.util;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -17,7 +19,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.io.*;
 import java.lang.reflect.Field;
-import java.net.MalformedURLException;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -58,7 +60,7 @@ public class FindResourcesUtil {
      * @param page 页数
      */
     public static void eachPage(String keyword,int page){
-        Document document = BiliUtil.jsoupGet(Constant.BTACG+ keyword + "&page=" + page, Document.class, Constant.GET);
+        Document document = CrawlerUtil.jsoupGet(Constant.BTACGSEARCH+ keyword + "&page=" + page, Document.class, Constant.GET);
         if(page==1) {
             String message=document.select(".text_bold").text();
             System.out.println(message);
@@ -131,7 +133,7 @@ public class FindResourcesUtil {
                         }
                         fields[i].set(btAcg,text);
                     } else {
-                        fields[i].set(btAcg, "http://bt.acg.gg//"+td.select("a").attr("href"));
+                        fields[i].set(btAcg, Constant.BTACGINDEX+td.select("a").attr("href"));
                     }
                 }catch (IllegalAccessException e) {
                     TestSlf4j.outputLog(e,log);
@@ -149,98 +151,6 @@ public class FindResourcesUtil {
         return map;
     }
 
-    /**
-     * 下载资源
-     * @param href 下载链接
-     * @param outputPath 输出文件
-     */
-    public static void downLoad(String href,String outputPath){
-        System.out.println("下载链接"+href);
-        OutputStream outputStream = null;
-        HttpEntity httpEntity=null;
-        String filename=null;
-        String str=null;
-        CloseableHttpResponse closeableHttpResponse=null;
-        try {
-            closeableHttpResponse=BiliUtil.doGet(href);
-            httpEntity=closeableHttpResponse.getEntity();
-            Class c=httpEntity.getClass().getSuperclass();
-            Field field=c.getDeclaredField("wrappedEntity");
-            field.setAccessible(true);
-            String values=field.get(httpEntity).toString();
-            values=values.substring(values.indexOf("[")+1,values.indexOf("]"));
-            Map<String,String> map=new HashMap<String, String>();
-            for(String value:values.split(",")){
-                map.put(value.split(":")[0],value.split(":")[1].trim());
-            }
-            File file=new File(outputPath);
-            FileUtils.write(file,"UTF-8");
-            outputStream=new FileOutputStream(file);
-            httpEntity.writeTo(outputStream);
-            if(href.contains("comment.bilibili.com")) {
-                saveDanmu(outputStream,file);
-            }
-
-        } catch (MalformedURLException e) {
-            TestSlf4j.outputLog(e,log);
-        } catch (IOException e) {
-            if(e.toString().contains("Connection timed out")){
-                downLoad(href,outputPath);
-            }
-        } catch (NoSuchFieldException e) {
-            TestSlf4j.outputLog(e,log);
-        } catch (IllegalAccessException e) {
-            TestSlf4j.outputLog(e,log);
-        } finally {
-            try {
-                EntityUtils.consume(httpEntity);
-            } catch (IOException e) {
-                TestSlf4j.outputLog(e,log);
-            }
-        }
-
-    }
-
-    public static void saveDanmu(OutputStream outputStream,File file){
-        SAXReader saxReader=new SAXReader();
-        InputStream inputStream=null;
-        int count=0;
-        int max_count=0;
-        int min_count=0;
-        try {
-            inputStream=new FileInputStream(file);
-            org.dom4j.Document document=saxReader.read(inputStream);
-            count=saxReader.read(file).getRootElement().elements("d").size();
-            max_count=Integer.parseInt(document.getRootElement().element("maxlimit").getStringValue());
-            min_count=Integer.parseInt(BiliUtil.getPropertie("danmu%"));
-            if(min_count==0){
-                min_count=1;
-            }else if(Integer.parseInt(BiliUtil.getPropertie("danmu%"))<100){
-                min_count=max_count*min_count/100;
-            }
-
-        } catch (DocumentException e) {
-            TestSlf4j.outputLog(e,log);
-        } catch (FileNotFoundException e) {
-            TestSlf4j.outputLog(e,log);
-        }finally {
-            if(count<min_count){
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                log.info(file.getName()+"只有"+count+"条弹幕达不到"+min_count+"条最低标准不予保留！！！");
-                file.delete();
-            }
-        }
-
-    }
 
     /**
      * 文件名替换非法字符

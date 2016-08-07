@@ -21,6 +21,8 @@ public interface VstorageDao {
 
     List<Data> selectData(Map<String,String> map);
 
+    List<Data> selectDataCid(Map<String,String> map);
+
     void insertFiles(Files files);
 
     void updateFiles(Files files);
