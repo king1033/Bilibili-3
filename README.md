@@ -39,10 +39,10 @@ Tomcat7<br/>
 <h3 >echart柱状图</h3><br/>
 ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/echart柱状图.png)<br/>
 <br/>
-<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998282424045592/pid/005Jr6NYgw1f5x1fnohh7g30zg0i07wv">echart动态效果</a><br/>
+<a href="http://ww2.sinaimg.cn/large/005Jr6NYgw1f5x1fnohh7g30zg0i07wv.gif">echart动态效果</a><br/>
 -----------------------------------------------------------------------------------------------------------------<br/>
 项目初始化：<br/>
-第一步：当然就是Clone项目到本地，自带项目IDEA配置文件，直接用<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998323147026568/pid/005Jr6NYgw1f5x65v49sag310b0klu0x">IDEA Clone</a>只需要配置好tomcat路径以及jar包路径即可。<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998282424045592/pid/005Jr6NYgw1f5x1hv77cog30tx0l0b29">IDEA Tomcat配置<a/><br/>
+第一步：当然就是Clone项目到本地，自带项目IDEA配置文件，直接用<a href="http://ww4.sinaimg.cn/large/005Jr6NYgw1f5x65v49sag310b0klu0x.gif">IDEA Clone</a>只需要配置好tomcat路径以及jar包路径即可。<a href="http://ww3.sinaimg.cn/large/005Jr6NYgw1f5x1hv77cog30tx0l0b29.gif">IDEA Tomcat配置<a/><br/>
 第二步：<a href="http://pan.baidu.com/s/1mio67Kc">下载项目jar包</a>，这里没有同步到git仓库原因是spring和mybatis框架以及杂七杂八用到的jar包将近20M的体积，不方便clone进行同步，所以另外放到云盘</br>
 jar包下载完后放到项目目录里面，并进行构造路径设置。</br>
 ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/包路径设置.png)
@@ -51,10 +51,10 @@ jar包下载完后放到项目目录里面，并进行构造路径设置。</br>
 如无意外创建完毕表结构应该跟下图一样。
 数据库结构图
 ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/数据库结构详解.png)<br/>
-<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998288506219148/pid/005Jr6NYgw1f5x22mc4zlg30x40bye81">数据库部分数据展示</a>
+<a href="http://ww3.sinaimg.cn/large/005Jr6NYgw1f5x22mc4zlg30x40bye81.gif">数据库部分数据展示</a><br/>
 第四步：方法调试<br/>
 ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/方法测试.png)<br/>
-判断爬虫程序是否正常运行看<a href="http://ww4.sinaimg.cn/large/005Jr6NYgw1f6lnjsvu1rg30yq0mgb2c.gif>save表</a>这个存档表。接口数据正常存入数据库的情况下，里面分别保存的当前爬取进度应该是不断刷新的<br/>
+判断爬虫程序是否正常运行看<a href="http://ww4.sinaimg.cn/large/005Jr6NYgw1f6lnjsvu1rg30yq0mgb2c.gif">save表</a>这个存档表。接口数据正常存入数据库的情况下，里面分别保存的当前爬取进度应该是不断刷新的<br/>
 备注：调试接口一需要配置bilibli账号密码，否则会报错，如图所示：
 ![image](https://github.com/luffy9412/Bilibili/blob/master/WebContent/image/bilibili账号密码配置.png)<br/>
 -------------------------------------------------------------------------------------------------------------------------------------------------<br/>
