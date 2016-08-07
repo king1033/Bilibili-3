@@ -6,9 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ca4e6bf-c4d9-4691-b0c2-a4be8a7de024" name="Default" comment="">
+    <list default="true" id="5ca4e6bf-c4d9-4691-b0c2-a4be8a7de024" name="Default" comment="1.接口统一为一个test方法测试&#10;2.工具类方法按功能拆分">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/WebContent/image/bilibli账号密码配置.png" afterPath="$PROJECT_DIR$/WebContent/image/bilibili账号密码配置.png" />
     </list>
     <ignored path="BiliBili.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -70,8 +70,9 @@
         <entry file="file://$PROJECT_DIR$/src/org/pqh/test/Test.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+              <caret line="64" column="13" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="13" />
               <folding>
+                <element signature="imports" expanded="true" />
                 <element signature="e#21712#21851#0" expanded="true" />
                 <element signature="e#21850#21851#0" expanded="true" />
                 <element signature="e#21889#22023#0" expanded="true" />
@@ -81,81 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config.properties" pinned="false" current-in-tab="false">
+      <file leaf-file-name="config.properties" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/config.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="9" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48109242">
-              <caret line="56" column="87" selection-start-line="56" selection-start-column="87" selection-end-line="56" selection-end-column="87" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bilibili.save" pinned="false" current-in-tab="false">
-        <entry file="dbDummy://dbtable:/6844dc61/165011c6-88f6-4423-8785-d5b33eda7ae4/bilibili.save">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
-          <provider editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bilibili.aid" pinned="false" current-in-tab="false">
-        <entry file="dbDummy://dbtable:/6844dc61/165011c6-88f6-4423-8785-d5b33eda7ae4/bilibili.aid">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
-          <provider editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bilibili.cid" pinned="false" current-in-tab="false">
-        <entry file="dbDummy://dbtable:/6844dc61/165011c6-88f6-4423-8785-d5b33eda7ae4/bilibili.cid">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
-          <provider editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bilibili.data" pinned="false" current-in-tab="false">
-        <entry file="dbDummy://dbtable:/6844dc61/165011c6-88f6-4423-8785-d5b33eda7ae4/bilibili.data">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
-          <provider editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.5588235">
+              <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -241,8 +172,8 @@
         <option value="$PROJECT_DIR$/src/org/pqh/util/DownLoadUtil.java" />
         <option value="$PROJECT_DIR$/src/org/pqh/test/Test.java" />
         <option value="$PROJECT_DIR$/src/org/pqh/util/CrawlerUtil.java" />
-        <option value="$PROJECT_DIR$/src/config.properties" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/config.properties" />
       </list>
     </option>
   </component>
@@ -1167,7 +1098,7 @@
       <workItem from="1470310513340" duration="6822000" />
       <workItem from="1470359491606" duration="14759000" />
       <workItem from="1470395649148" duration="4730000" />
-      <workItem from="1470519721030" duration="22159000" />
+      <workItem from="1470519721030" duration="22494000" />
     </task>
     <task id="LOCAL-00001" summary="abc">
       <created>1467554043811</created>
@@ -1265,7 +1196,13 @@
       <option name="project" value="LOCAL" />
       <updated>1470588246630</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="1.接口统一为一个test方法测试&#10;2.工具类方法按功能拆分">
+      <created>1470588703033</created>
+      <option name="number" value="00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1470588703033</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1301,7 +1238,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1133122000" />
+    <option name="totallyTimeSpent" value="1133457000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1749,19 +1686,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="dbDummy://dbtable:/6844dc61/165011c6-88f6-4423-8785-d5b33eda7ae4/bilibili.aid">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="dbDummy://dbtable:/6844dc61/165011c6-88f6-4423-8785-d5b33eda7ae4/bilibili.cid">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1788,7 +1712,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/WebContent/image/方法测试.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="94" selection-start-line="58" selection-start-column="94" selection-end-line="58" selection-end-column="94" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="dbDummy://dbtable:/6844dc61/165011c6-88f6-4423-8785-d5b33eda7ae4/bilibili.save">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/6844dc61/165011c6-88f6-4423-8785-d5b33eda7ae4/bilibili.aid">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
           <filtering enabled="true" />
@@ -1804,8 +1754,9 @@
     <entry file="file://$PROJECT_DIR$/src/org/pqh/test/Test.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+          <caret line="64" column="13" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="13" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="e#21712#21851#0" expanded="true" />
             <element signature="e#21850#21851#0" expanded="true" />
             <element signature="e#21889#22023#0" expanded="true" />
@@ -1816,21 +1767,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/config.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="9" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/WebContent/image/方法测试.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48109242">
-          <caret line="56" column="87" selection-start-line="56" selection-start-column="87" selection-end-line="56" selection-end-column="87" />
+        <state vertical-scroll-proportion="0.5588235">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
           <folding />
         </state>
       </provider>
