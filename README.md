@@ -17,7 +17,7 @@ Tomcat7<br/>
 接口二：http://interface.bilibili.com/player?id=cid:<br/>
 接口三：http://api.bilibili.com/vstorage/state?cid=<br/>
 然后这三个接口的数据有什么卵用？</br>
-<a href="http://photo.weibo.com/5252060298/wbphotos/large/mid/3998341572173949/pid/005Jr6NYgw1f5x82npzo1g310b0lse8e">接口数据作用一睹为快</a></br>
+<a href="http://ww2.sinaimg.cn/large/005Jr6NYgw1f5x82npzo1g310b0lse8e.gif">接口数据作用一睹为快</a></br>
 就是拿来看视频用的，应该有小伙伴尝试过用黑科技通过aid(AV号)或者cid(弹幕号)下架视频，这些接口就是用</br>
 来收集这些数据的，虽然现在已经有很多好心人分享各种弹幕包，但是资源是在别人手中，资源失效或者不是自</br>
 己想要的那是多尴尬，所以最好的办法就是资源放在自己手中，知道bilibli整个网站视频的数据，想撸什么片就</br>
